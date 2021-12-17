@@ -55,6 +55,13 @@ message EnterMatchReq{
   common.RoomMode mode = 1;//模式
 }
 
+//等待匹配中
+message MatchWait{
+  common.RoomMode mode = 1;//模式
+  int32 total  = 2 ;// 匹配人数
+  int32 pre_time = 3 ; //预计时间
+}
+
 message SelectInfo{
   int32 user_id = 1;//用户信息
   int32 hero_id = 2;//英雄信息
