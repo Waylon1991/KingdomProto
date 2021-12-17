@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "Protocol/common/common.proto";
+
+package protocol.gate;
+
+option go_package = "protocol/gate";
+
+service Gate {
+  rpc GateInfo(GateInfoRequest) returns (GateInfoReply);
+  rpc Broadcast(BroadcastRequest) returns (BroadcastReply);
+}
+
+message GateInfoRequest {
+  common.User user = 1;
+  common.ProtocolType protocol = 2;
+}
+
+message GateInfoReply {
+  bytes key = 1;// 用户本次连接加密key
+  string location = 2;// location 本节点 ip:port
+}
+
+message BroadcastRequest {
+  bytes msg = 1;
+  repeated common.User users = 2;
+}
+
+message BroadcastReply {
+  repeated common.User successes = 1;
+  repeated common.User failures = 2;
+}
+

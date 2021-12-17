@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "Protocol/common/common.proto";
+
+package protocol.match;
+
+option go_package = "protocol/match";
+
+service Match {
+  rpc Match(MatchRequest) returns (MatchReply);
+}
+
+message MatchRequest {
+  common.RoomMode mode = 1;//模式
+  int32 user_id = 2;//用户id
+}
+
+message SelectInfo{
+  int32 user_id = 1;//用户信息
+  int32 hero_id = 2;//英雄信息
+}
+
+message MatchReply{
+  common.RoomMode mode = 1;//模式
+  repeated common.Hero heros = 2;//英雄列表
+  repeated SelectInfo infos = 3;//选择信息
+}

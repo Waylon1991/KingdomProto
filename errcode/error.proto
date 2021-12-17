@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package protocol.errcode;
+
+option go_package = "protocol/errcode";
+option objc_class_prefix = "Errors";
+
+
+enum Error {
+  Success = 0; //成功
+  Un_Know = 1;//未知错误
+  Server_Internal_Error = 2;//服务内部错误
+
+  Login_Password_Is_Wrong = 1001; //密码错误
+  Login_User_Not_Registered = 1002; //用户未注册
+
+  Gate_Info_Failed = 2001;//网关信息获取失败
+  Gate_Connection_Is_Closed = 2002;//连接已关闭
+  Gate_Connection_Over_Maximum = 2003;//连接超过上限
+  Gate_Content_Too_Larger = 2004;//包体过大
+  Gate_Gen_Encrypt_Key_Failed = 2005;//生成加密公钥失败
+  Gate_Key_Valid_Failed = 2006;//通行证验证失败
+}

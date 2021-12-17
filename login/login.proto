@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "Protocol/errcode/error.proto";
+import "Protocol/common/common.proto";
+
+package protocol.login;
+
+option go_package = "protocol/login";
+
+// The greeting service definition.
+service Login {
+  rpc Login(LoginRequest) returns (LoginReply) {
+    option (google.api.http) = {
+      get: "/login/"
+    };
+  }
+}
+
+message LoginRequest {
+  string login = 1;  //登录类型
+  string name = 2;  //用户名
+  string pwd = 3;  //用户密码
+  string protocol = 4;//协议类型
+}
+
+message LoginReply {
+  errcode.Error error_code = 1; //错误码
+  bytes key = 2;  //加密字符串
+  string location = 3;  //要连接的地址，ip:port
+  common.User user = 4;  //用户
+}

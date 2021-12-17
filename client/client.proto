@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package protocol.client;
+
+import "Protocol/errcode/error.proto";
+import "Protocol/common/common.proto";
+
+option go_package = "protocol/client";
+
+//登录走的http ✔
+enum CP{
+  Default = 0;
+
+  Error_Code_Resp = 1; //统一的错误码返回
+  Valid_Key_Req = 2; //验证 key ✔
+
+  Heart_Ping_Req = 10; //心跳请求 空协议体 ✔
+  Heart_Ping_Resp = 11; //心跳返回 空协议体
+
+  Enter_Lobby_Resp = 101; //进入大厅返回 ✔
+
+  Create_Room_Req = 102; //创建房间
+  Create_Room_Resp = 103;
+
+  Join_Room_Req = 104; //加入房间
+
+  Enter_Match_Req = 105;//进入匹配场 ✔
+  Enter_Match_Resp = 106;
+}
+
+message ErrorCode{
+  errcode.Error code = 1;//错误码
+}
+
+message ValidKeyReq{
+  int32 user_id = 1;//用户 id
+  bytes key = 2;//key
+}
+
+message EnterLobbyResp{
+  int32 user_id = 1;//用户 id
+}
+
+message CreateRoomReq{
+  int32 user_id = 1;//用户 id
+  int32 mode = 2;//模式
+}
+
+message JoinRoomReq{
+  int32 room_id = 1;//用户 id
+  int32 mode = 2;//模式
+}
+
+message EnterMatchReq{
+  common.RoomMode mode = 1;//模式
+}
+
+message SelectInfo{
+  int32 user_id = 1;//用户信息
+  int32 hero_id = 2;//英雄信息
+}
+
+message EnterMatchResp{
+  common.RoomMode mode = 1;//模式
+  repeated common.Hero heros = 2;//英雄列表
+  repeated SelectInfo infos = 3;//选择信息
+}
+

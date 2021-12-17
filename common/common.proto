@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package protocol.common;
+
+option go_package = "protocol/common";
+
+// LoginType 登录类型
+enum LoginType {
+  guest = 0; //游客登录
+  UserPwd = 1;  //用户密码登录
+}
+
+// ProtocolType 协议类型
+enum ProtocolType {
+  ws = 0; //web socket
+  tcp = 1;  //tcp
+}
+
+// User 用户结构体
+message User {
+  int32 user_id = 1;
+}
+
+// RoomMode 房间模式
+enum RoomMode {
+  one_vs_one = 0; //1 v 1
+  chaos_faction = 1;//大乱斗
+  three_vs_three = 2; //3 v 3
+  five_vs_five = 3; //5 v 5
+}
+
+// HeroMatchState 英雄匹配中状态
+enum HeroMatchState {
+  free = 0; //空闲
+  selected = 1;//已选
+  disabled = 2; //禁用
+}
+
+// Hero 英雄
+message Hero {
+  int32 hero_id = 1;
+  HeroMatchState state = 2;
+}
