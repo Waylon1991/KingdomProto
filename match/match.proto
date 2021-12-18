@@ -15,13 +15,7 @@ message MatchRequest {
   int32 user_id = 2;//用户id
 }
 
-message SelectInfo{
-  int32 user_id = 1;//用户信息
-  int32 hero_id = 2;//英雄信息
-}
-
 message MatchReply{
-  common.RoomMode mode = 1;//模式
-  repeated common.Hero heros = 2;//英雄列表
-  repeated SelectInfo infos = 3;//选择信息
+  int32 total  = 1 ;// 匹配人数
+  int32 pre_time = 2 ; //预计时间
 }

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "Protocol/common/common.proto";
+import "Protocol/client/client.proto";
 
 package protocol.gate;
 
@@ -22,12 +23,13 @@ message GateInfoReply {
 }
 
 message BroadcastRequest {
-  bytes msg = 1;
-  repeated common.User users = 2;
+  client.CP pid = 1;
+  bytes msg = 2;
+  repeated int32 users = 3;
 }
 
 message BroadcastReply {
-  repeated common.User successes = 1;
-  repeated common.User failures = 2;
+  repeated int32 users_suc = 1;
+  repeated int32 users_fail = 2;
 }
 
