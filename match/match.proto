@@ -8,6 +8,7 @@ option go_package = "protocol/match";
 
 service Match {
   rpc Match(MatchRequest) returns (MatchReply);
+  rpc CancelMatch(CancelMatchRequest) returns (CancelMatchReply);
 }
 
 message MatchRequest {
@@ -18,4 +19,12 @@ message MatchRequest {
 message MatchReply{
   int32 total  = 1 ;// 匹配人数
   int32 pre_time = 2 ; //预计时间
+}
+
+message CancelMatchRequest {
+  int32 user_id = 1;
+}
+
+message CancelMatchReply {
+  bool suc = 1;
 }

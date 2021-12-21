@@ -11,25 +11,29 @@ option go_package = "protocol/client";
 enum CP{
   Default = 0;
 
-  Error_Code_Resp = 1; //统一的错误码返回
+  // gate 协议
+  Error_Code_Resp = 1; //统一的错误码返回 ✔
   Valid_Key_Req = 2; //验证 key ✔
-
   Heart_Ping_Req = 10; //心跳请求 空协议体 ✔
-  Heart_Ping_Resp = 11; //心跳返回 空协议体
+  Heart_Ping_Resp = 11; //心跳返回 空协议体 ✔
 
+  // lobby 协议
   Enter_Lobby_Resp = 101; //进入大厅返回 ✔
-
   Create_Room_Req = 102; //创建房间
   Create_Room_Resp = 103;
   Join_Room_Req = 104; //加入房间
-
   Enter_Match_Req = 105;//进入匹配 ✔
-  Enter_Match_Wait = 106;//进入匹配等待
-  Cancel_Match = 107;//取消匹配
-  Cancel_Match_Resp = 108;//取消匹配结果
-  Match_Suc_Resp = 109;//匹配成功返回
-  Match_Fail_Resp = 110;//匹配失败返回
+  Enter_Match_Wait_Resp = 106;//进入匹配等待 ✔
+  Cancel_Match_Req = 107;//取消匹配 ✔
+  Cancel_Match_Resp = 108;//取消匹配结果 ✔
+  Match_Suc_Resp = 109;//匹配成功返回 ✔
+  Match_Fail_Resp = 110;//匹配失败返回 ✔
 
+  //match 协议
+  Match_Select_Hero_Req = 201;//选择英雄 ✔
+  Match_Select_Hero_Resp = 202;// ✔
+  Match_Cancel_Hero_Req = 203;//取消选择 ✔
+  Match_Cancel_Hero_Resp = 204;// ✔
 }
 
 message ErrorCode{
@@ -63,7 +67,7 @@ message EnterMatchReq{
 //等待匹配中
 message MatchWait{
   common.RoomMode mode = 1;//模式
-  int32 total  = 2 ;// 匹配人数
+  int32 total = 2 ;// 匹配人数
   int32 pre_time = 3 ; //预计时间
 }
 
@@ -94,3 +98,12 @@ message MatchFailed{
   string reason = 1;
 }
 
+//选择英雄
+message MatchSelectHeroReq{
+  int32 hero_id = 1;
+}
+
+message MatchSelectHeroResp{
+  repeated SelectInfo infos = 1;
+  repeated common.Hero heros = 2;//英雄列表
+}

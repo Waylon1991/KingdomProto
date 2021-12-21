@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MatchClient interface {
 	Match(ctx context.Context, in *MatchRequest, opts ...grpc.CallOption) (*MatchReply, error)
+	CancelMatch(ctx context.Context, in *CancelMatchRequest, opts ...grpc.CallOption) (*CancelMatchReply, error)
 }
 
 type matchClient struct {
@@ -38,11 +39,21 @@ func (c *matchClient) Match(ctx context.Context, in *MatchRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *matchClient) CancelMatch(ctx context.Context, in *CancelMatchRequest, opts ...grpc.CallOption) (*CancelMatchReply, error) {
+	out := new(CancelMatchReply)
+	err := c.cc.Invoke(ctx, "/protocol.match.Match/CancelMatch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MatchServer is the server API for Match service.
 // All implementations must embed UnimplementedMatchServer
 // for forward compatibility
 type MatchServer interface {
 	Match(context.Context, *MatchRequest) (*MatchReply, error)
+	CancelMatch(context.Context, *CancelMatchRequest) (*CancelMatchReply, error)
 	mustEmbedUnimplementedMatchServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedMatchServer struct {
 
 func (UnimplementedMatchServer) Match(context.Context, *MatchRequest) (*MatchReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Match not implemented")
+}
+func (UnimplementedMatchServer) CancelMatch(context.Context, *CancelMatchRequest) (*CancelMatchReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelMatch not implemented")
 }
 func (UnimplementedMatchServer) mustEmbedUnimplementedMatchServer() {}
 
@@ -84,6 +98,24 @@ func _Match_Match_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Match_CancelMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelMatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MatchServer).CancelMatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.match.Match/CancelMatch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MatchServer).CancelMatch(ctx, req.(*CancelMatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Match_ServiceDesc is the grpc.ServiceDesc for Match service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var Match_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Match",
 			Handler:    _Match_Match_Handler,
+		},
+		{
+			MethodName: "CancelMatch",
+			Handler:    _Match_CancelMatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
