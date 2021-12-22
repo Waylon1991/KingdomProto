@@ -33,21 +33,20 @@ const (
 	CP_Heart_Ping_Req  CP = 10 //心跳请求 空协议体 ✔
 	CP_Heart_Ping_Resp CP = 11 //心跳返回 空协议体 ✔
 	// lobby 协议
-	CP_Enter_Lobby_Resp      CP = 101 //进入大厅返回 ✔
-	CP_Create_Room_Req       CP = 102 //创建房间
-	CP_Create_Room_Resp      CP = 103
-	CP_Join_Room_Req         CP = 104 //加入房间
-	CP_Enter_Match_Req       CP = 105 //进入匹配 ✔
-	CP_Enter_Match_Wait_Resp CP = 106 //进入匹配等待 ✔
-	CP_Cancel_Match_Req      CP = 107 //取消匹配 ✔
-	CP_Cancel_Match_Resp     CP = 108 //取消匹配结果 ✔
-	CP_Match_Suc_Resp        CP = 109 //匹配成功返回 ✔
-	CP_Match_Fail_Resp       CP = 110 //匹配失败返回 ✔
+	CP_Enter_Lobby_Resp  CP = 101 //进入大厅返回 ✔
+	CP_Create_Room_Req   CP = 102 //创建房间
+	CP_Create_Room_Resp  CP = 103
+	CP_Join_Room_Req     CP = 104 //加入房间
+	CP_Enter_Match_Req   CP = 105 //进入匹配 ✔
+	CP_Enter_Match_Resp  CP = 106 //进入匹配返回 ✔
+	CP_Cancel_Match_Req  CP = 107 //取消匹配 ✔
+	CP_Cancel_Match_Resp CP = 108 //取消匹配返回 ✔
+	CP_Match_Suc_Push    CP = 109 //匹配成功推送 ✔
+	CP_Match_Fail_Push   CP = 110 //匹配失败推送 ✔
 	//match 协议
-	CP_Match_Select_Hero_Req  CP = 201 //选择英雄 ✔
-	CP_Match_Select_Hero_Resp CP = 202 // ✔
-	CP_Match_Cancel_Hero_Req  CP = 203 //取消选择 ✔
-	CP_Match_Cancel_Hero_Resp CP = 204 // ✔
+	CP_Match_Select_Hero_Req  CP = 201 //选择英雄 选择或者取消失败走 error code
+	CP_Match_Cancel_Hero_Req  CP = 202 //取消选择
+	CP_Match_Select_Info_Push CP = 203 //服务端推送
 )
 
 // Enum value maps for CP.
@@ -63,15 +62,14 @@ var (
 		103: "Create_Room_Resp",
 		104: "Join_Room_Req",
 		105: "Enter_Match_Req",
-		106: "Enter_Match_Wait_Resp",
+		106: "Enter_Match_Resp",
 		107: "Cancel_Match_Req",
 		108: "Cancel_Match_Resp",
-		109: "Match_Suc_Resp",
-		110: "Match_Fail_Resp",
+		109: "Match_Suc_Push",
+		110: "Match_Fail_Push",
 		201: "Match_Select_Hero_Req",
-		202: "Match_Select_Hero_Resp",
-		203: "Match_Cancel_Hero_Req",
-		204: "Match_Cancel_Hero_Resp",
+		202: "Match_Cancel_Hero_Req",
+		203: "Match_Select_Info_Push",
 	}
 	CP_value = map[string]int32{
 		"Default":                0,
@@ -84,15 +82,14 @@ var (
 		"Create_Room_Resp":       103,
 		"Join_Room_Req":          104,
 		"Enter_Match_Req":        105,
-		"Enter_Match_Wait_Resp":  106,
+		"Enter_Match_Resp":       106,
 		"Cancel_Match_Req":       107,
 		"Cancel_Match_Resp":      108,
-		"Match_Suc_Resp":         109,
-		"Match_Fail_Resp":        110,
+		"Match_Suc_Push":         109,
+		"Match_Fail_Push":        110,
 		"Match_Select_Hero_Req":  201,
-		"Match_Select_Hero_Resp": 202,
-		"Match_Cancel_Hero_Req":  203,
-		"Match_Cancel_Hero_Resp": 204,
+		"Match_Cancel_Hero_Req":  202,
+		"Match_Select_Info_Push": 203,
 	}
 )
 
@@ -581,76 +578,21 @@ func (x *CancelMatchResp) GetSuc() bool {
 	return false
 }
 
-type SelectInfo struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	UserId int32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` //用户信息
-	HeroId int32 `protobuf:"varint,2,opt,name=hero_id,json=heroId,proto3" json:"hero_id,omitempty"` //英雄信息
-}
-
-func (x *SelectInfo) Reset() {
-	*x = SelectInfo{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_Protocol_client_client_proto_msgTypes[9]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SelectInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SelectInfo) ProtoMessage() {}
-
-func (x *SelectInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_Protocol_client_client_proto_msgTypes[9]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SelectInfo.ProtoReflect.Descriptor instead.
-func (*SelectInfo) Descriptor() ([]byte, []int) {
-	return file_Protocol_client_client_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *SelectInfo) GetUserId() int32 {
-	if x != nil {
-		return x.UserId
-	}
-	return 0
-}
-
-func (x *SelectInfo) GetHeroId() int32 {
-	if x != nil {
-		return x.HeroId
-	}
-	return 0
-}
-
 //匹配成功
 type MatchSuccess struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Mode  common.RoomMode `protobuf:"varint,1,opt,name=mode,proto3,enum=protocol.common.RoomMode" json:"mode,omitempty"` //模式
-	Heros []*common.Hero  `protobuf:"bytes,2,rep,name=heros,proto3" json:"heros,omitempty"`                              //英雄列表
-	Infos []*SelectInfo   `protobuf:"bytes,3,rep,name=infos,proto3" json:"infos,omitempty"`                              //选择信息
+	Mode  common.RoomMode      `protobuf:"varint,1,opt,name=mode,proto3,enum=protocol.common.RoomMode" json:"mode,omitempty"` //模式
+	Heros []*common.Hero       `protobuf:"bytes,2,rep,name=heros,proto3" json:"heros,omitempty"`                              //英雄列表
+	Infos []*common.SelectInfo `protobuf:"bytes,3,rep,name=infos,proto3" json:"infos,omitempty"`                              //选择信息
 }
 
 func (x *MatchSuccess) Reset() {
 	*x = MatchSuccess{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_Protocol_client_client_proto_msgTypes[10]
+		mi := &file_Protocol_client_client_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -663,7 +605,7 @@ func (x *MatchSuccess) String() string {
 func (*MatchSuccess) ProtoMessage() {}
 
 func (x *MatchSuccess) ProtoReflect() protoreflect.Message {
-	mi := &file_Protocol_client_client_proto_msgTypes[10]
+	mi := &file_Protocol_client_client_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -676,7 +618,7 @@ func (x *MatchSuccess) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MatchSuccess.ProtoReflect.Descriptor instead.
 func (*MatchSuccess) Descriptor() ([]byte, []int) {
-	return file_Protocol_client_client_proto_rawDescGZIP(), []int{10}
+	return file_Protocol_client_client_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *MatchSuccess) GetMode() common.RoomMode {
@@ -693,7 +635,7 @@ func (x *MatchSuccess) GetHeros() []*common.Hero {
 	return nil
 }
 
-func (x *MatchSuccess) GetInfos() []*SelectInfo {
+func (x *MatchSuccess) GetInfos() []*common.SelectInfo {
 	if x != nil {
 		return x.Infos
 	}
@@ -712,7 +654,7 @@ type MatchFailed struct {
 func (x *MatchFailed) Reset() {
 	*x = MatchFailed{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_Protocol_client_client_proto_msgTypes[11]
+		mi := &file_Protocol_client_client_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -725,7 +667,7 @@ func (x *MatchFailed) String() string {
 func (*MatchFailed) ProtoMessage() {}
 
 func (x *MatchFailed) ProtoReflect() protoreflect.Message {
-	mi := &file_Protocol_client_client_proto_msgTypes[11]
+	mi := &file_Protocol_client_client_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -738,7 +680,7 @@ func (x *MatchFailed) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MatchFailed.ProtoReflect.Descriptor instead.
 func (*MatchFailed) Descriptor() ([]byte, []int) {
-	return file_Protocol_client_client_proto_rawDescGZIP(), []int{11}
+	return file_Protocol_client_client_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *MatchFailed) GetReason() string {
@@ -760,7 +702,7 @@ type MatchSelectHeroReq struct {
 func (x *MatchSelectHeroReq) Reset() {
 	*x = MatchSelectHeroReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_Protocol_client_client_proto_msgTypes[12]
+		mi := &file_Protocol_client_client_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -773,7 +715,7 @@ func (x *MatchSelectHeroReq) String() string {
 func (*MatchSelectHeroReq) ProtoMessage() {}
 
 func (x *MatchSelectHeroReq) ProtoReflect() protoreflect.Message {
-	mi := &file_Protocol_client_client_proto_msgTypes[12]
+	mi := &file_Protocol_client_client_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -786,7 +728,7 @@ func (x *MatchSelectHeroReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MatchSelectHeroReq.ProtoReflect.Descriptor instead.
 func (*MatchSelectHeroReq) Descriptor() ([]byte, []int) {
-	return file_Protocol_client_client_proto_rawDescGZIP(), []int{12}
+	return file_Protocol_client_client_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *MatchSelectHeroReq) GetHeroId() int32 {
@@ -796,32 +738,33 @@ func (x *MatchSelectHeroReq) GetHeroId() int32 {
 	return 0
 }
 
-type MatchSelectHeroResp struct {
+//推送
+type MatchSelectInfoPush struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Infos []*SelectInfo  `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
-	Heros []*common.Hero `protobuf:"bytes,2,rep,name=heros,proto3" json:"heros,omitempty"` //英雄列表
+	Infos []*common.SelectInfo `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
+	Heros []*common.Hero       `protobuf:"bytes,2,rep,name=heros,proto3" json:"heros,omitempty"` //英雄列表
 }
 
-func (x *MatchSelectHeroResp) Reset() {
-	*x = MatchSelectHeroResp{}
+func (x *MatchSelectInfoPush) Reset() {
+	*x = MatchSelectInfoPush{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_Protocol_client_client_proto_msgTypes[13]
+		mi := &file_Protocol_client_client_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *MatchSelectHeroResp) String() string {
+func (x *MatchSelectInfoPush) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MatchSelectHeroResp) ProtoMessage() {}
+func (*MatchSelectInfoPush) ProtoMessage() {}
 
-func (x *MatchSelectHeroResp) ProtoReflect() protoreflect.Message {
-	mi := &file_Protocol_client_client_proto_msgTypes[13]
+func (x *MatchSelectInfoPush) ProtoReflect() protoreflect.Message {
+	mi := &file_Protocol_client_client_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -832,19 +775,19 @@ func (x *MatchSelectHeroResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MatchSelectHeroResp.ProtoReflect.Descriptor instead.
-func (*MatchSelectHeroResp) Descriptor() ([]byte, []int) {
-	return file_Protocol_client_client_proto_rawDescGZIP(), []int{13}
+// Deprecated: Use MatchSelectInfoPush.ProtoReflect.Descriptor instead.
+func (*MatchSelectInfoPush) Descriptor() ([]byte, []int) {
+	return file_Protocol_client_client_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *MatchSelectHeroResp) GetInfos() []*SelectInfo {
+func (x *MatchSelectInfoPush) GetInfos() []*common.SelectInfo {
 	if x != nil {
 		return x.Infos
 	}
 	return nil
 }
 
-func (x *MatchSelectHeroResp) GetHeros() []*common.Hero {
+func (x *MatchSelectInfoPush) GetHeros() []*common.Hero {
 	if x != nil {
 		return x.Heros
 	}
@@ -892,11 +835,7 @@ var file_Protocol_client_client_proto_rawDesc = []byte{
 	0x65, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74, 0x63, 0x68,
 	0x52, 0x65, 0x71, 0x22, 0x23, 0x0a, 0x0f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74,
 	0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x22, 0x3e, 0x0a, 0x0a, 0x53, 0x65, 0x6c, 0x65,
-	0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12,
-	0x17, 0x0a, 0x07, 0x68, 0x65, 0x72, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x06, 0x68, 0x65, 0x72, 0x6f, 0x49, 0x64, 0x22, 0x9d, 0x01, 0x0a, 0x0c, 0x4d, 0x61, 0x74,
+	0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x22, 0x9d, 0x01, 0x0a, 0x0c, 0x4d, 0x61, 0x74,
 	0x63, 0x68, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
 	0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f,
@@ -905,21 +844,21 @@ var file_Protocol_client_client_proto_rawDesc = []byte{
 	0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05,
 	0x68, 0x65, 0x72, 0x6f, 0x73, 0x12, 0x31, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x03,
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e,
-	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66,
 	0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0x25, 0x0a, 0x0b, 0x4d, 0x61, 0x74, 0x63,
 	0x68, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f,
 	0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22,
 	0x2d, 0x0a, 0x12, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65,
 	0x72, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x68, 0x65, 0x72, 0x6f, 0x5f, 0x69, 0x64,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x68, 0x65, 0x72, 0x6f, 0x49, 0x64, 0x22, 0x75,
-	0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72,
-	0x6f, 0x52, 0x65, 0x73, 0x70, 0x12, 0x31, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01,
+	0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66,
+	0x6f, 0x50, 0x75, 0x73, 0x68, 0x12, 0x31, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01,
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e,
-	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66,
 	0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x2b, 0x0a, 0x05, 0x68, 0x65, 0x72, 0x6f,
 	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
 	0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05,
-	0x68, 0x65, 0x72, 0x6f, 0x73, 0x2a, 0xae, 0x03, 0x0a, 0x02, 0x43, 0x50, 0x12, 0x0b, 0x0a, 0x07,
+	0x68, 0x65, 0x72, 0x6f, 0x73, 0x2a, 0x8c, 0x03, 0x0a, 0x02, 0x43, 0x50, 0x12, 0x0b, 0x0a, 0x07,
 	0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x10, 0x00, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x72, 0x72,
 	0x6f, 0x72, 0x5f, 0x43, 0x6f, 0x64, 0x65, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x01, 0x12, 0x11,
 	0x0a, 0x0d, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x4b, 0x65, 0x79, 0x5f, 0x52, 0x65, 0x71, 0x10,
@@ -932,23 +871,20 @@ var file_Protocol_client_client_proto_rawDesc = []byte{
 	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x67, 0x12, 0x11, 0x0a, 0x0d, 0x4a,
 	0x6f, 0x69, 0x6e, 0x5f, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x68, 0x12, 0x13,
 	0x0a, 0x0f, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65,
-	0x71, 0x10, 0x69, 0x12, 0x19, 0x0a, 0x15, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61, 0x74,
-	0x63, 0x68, 0x5f, 0x57, 0x61, 0x69, 0x74, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x6a, 0x12, 0x14,
-	0x0a, 0x10, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52,
-	0x65, 0x71, 0x10, 0x6b, 0x12, 0x15, 0x0a, 0x11, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d,
-	0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x6c, 0x12, 0x12, 0x0a, 0x0e, 0x4d,
-	0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x75, 0x63, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x6d, 0x12,
-	0x13, 0x0a, 0x0f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x46, 0x61, 0x69, 0x6c, 0x5f, 0x52, 0x65,
-	0x73, 0x70, 0x10, 0x6e, 0x12, 0x1a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65,
-	0x6c, 0x65, 0x63, 0x74, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xc9, 0x01,
-	0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74,
-	0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xca, 0x01, 0x12, 0x1a, 0x0a,
-	0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x48, 0x65,
-	0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xcb, 0x01, 0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74,
-	0x63, 0x68, 0x5f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52,
-	0x65, 0x73, 0x70, 0x10, 0xcc, 0x01, 0x42, 0x11, 0x5a, 0x0f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
-	0x6f, 0x6c, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x71, 0x10, 0x69, 0x12, 0x14, 0x0a, 0x10, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61, 0x74,
+	0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x6a, 0x12, 0x14, 0x0a, 0x10, 0x43, 0x61, 0x6e,
+	0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x6b, 0x12,
+	0x15, 0x0a, 0x11, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f,
+	0x52, 0x65, 0x73, 0x70, 0x10, 0x6c, 0x12, 0x12, 0x0a, 0x0e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f,
+	0x53, 0x75, 0x63, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x6d, 0x12, 0x13, 0x0a, 0x0f, 0x4d, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x46, 0x61, 0x69, 0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x6e, 0x12,
+	0x1a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f,
+	0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xc9, 0x01, 0x12, 0x1a, 0x0a, 0x15, 0x4d,
+	0x61, 0x74, 0x63, 0x68, 0x5f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x48, 0x65, 0x72, 0x6f,
+	0x5f, 0x52, 0x65, 0x71, 0x10, 0xca, 0x01, 0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74, 0x63, 0x68,
+	0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x49, 0x6e, 0x66, 0x6f, 0x5f, 0x50, 0x75, 0x73,
+	0x68, 0x10, 0xcb, 0x01, 0x42, 0x11, 0x5a, 0x0f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c,
+	0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -964,7 +900,7 @@ func file_Protocol_client_client_proto_rawDescGZIP() []byte {
 }
 
 var file_Protocol_client_client_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_Protocol_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_Protocol_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_Protocol_client_client_proto_goTypes = []interface{}{
 	(CP)(0),                     // 0: protocol.client.CP
 	(*ErrorCode)(nil),           // 1: protocol.client.ErrorCode
@@ -976,24 +912,24 @@ var file_Protocol_client_client_proto_goTypes = []interface{}{
 	(*MatchWait)(nil),           // 7: protocol.client.MatchWait
 	(*CancelMatchReq)(nil),      // 8: protocol.client.CancelMatchReq
 	(*CancelMatchResp)(nil),     // 9: protocol.client.CancelMatchResp
-	(*SelectInfo)(nil),          // 10: protocol.client.SelectInfo
-	(*MatchSuccess)(nil),        // 11: protocol.client.MatchSuccess
-	(*MatchFailed)(nil),         // 12: protocol.client.MatchFailed
-	(*MatchSelectHeroReq)(nil),  // 13: protocol.client.MatchSelectHeroReq
-	(*MatchSelectHeroResp)(nil), // 14: protocol.client.MatchSelectHeroResp
-	(errcode.Error)(0),          // 15: protocol.errcode.Error
-	(common.RoomMode)(0),        // 16: protocol.common.RoomMode
-	(*common.Hero)(nil),         // 17: protocol.common.Hero
+	(*MatchSuccess)(nil),        // 10: protocol.client.MatchSuccess
+	(*MatchFailed)(nil),         // 11: protocol.client.MatchFailed
+	(*MatchSelectHeroReq)(nil),  // 12: protocol.client.MatchSelectHeroReq
+	(*MatchSelectInfoPush)(nil), // 13: protocol.client.MatchSelectInfoPush
+	(errcode.Error)(0),          // 14: protocol.errcode.Error
+	(common.RoomMode)(0),        // 15: protocol.common.RoomMode
+	(*common.Hero)(nil),         // 16: protocol.common.Hero
+	(*common.SelectInfo)(nil),   // 17: protocol.common.SelectInfo
 }
 var file_Protocol_client_client_proto_depIdxs = []int32{
-	15, // 0: protocol.client.ErrorCode.code:type_name -> protocol.errcode.Error
-	16, // 1: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
-	16, // 2: protocol.client.MatchWait.mode:type_name -> protocol.common.RoomMode
-	16, // 3: protocol.client.MatchSuccess.mode:type_name -> protocol.common.RoomMode
-	17, // 4: protocol.client.MatchSuccess.heros:type_name -> protocol.common.Hero
-	10, // 5: protocol.client.MatchSuccess.infos:type_name -> protocol.client.SelectInfo
-	10, // 6: protocol.client.MatchSelectHeroResp.infos:type_name -> protocol.client.SelectInfo
-	17, // 7: protocol.client.MatchSelectHeroResp.heros:type_name -> protocol.common.Hero
+	14, // 0: protocol.client.ErrorCode.code:type_name -> protocol.errcode.Error
+	15, // 1: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
+	15, // 2: protocol.client.MatchWait.mode:type_name -> protocol.common.RoomMode
+	15, // 3: protocol.client.MatchSuccess.mode:type_name -> protocol.common.RoomMode
+	16, // 4: protocol.client.MatchSuccess.heros:type_name -> protocol.common.Hero
+	17, // 5: protocol.client.MatchSuccess.infos:type_name -> protocol.common.SelectInfo
+	17, // 6: protocol.client.MatchSelectInfoPush.infos:type_name -> protocol.common.SelectInfo
+	16, // 7: protocol.client.MatchSelectInfoPush.heros:type_name -> protocol.common.Hero
 	8,  // [8:8] is the sub-list for method output_type
 	8,  // [8:8] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
@@ -1116,18 +1052,6 @@ func file_Protocol_client_client_proto_init() {
 			}
 		}
 		file_Protocol_client_client_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SelectInfo); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_Protocol_client_client_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MatchSuccess); i {
 			case 0:
 				return &v.state
@@ -1139,7 +1063,7 @@ func file_Protocol_client_client_proto_init() {
 				return nil
 			}
 		}
-		file_Protocol_client_client_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_Protocol_client_client_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MatchFailed); i {
 			case 0:
 				return &v.state
@@ -1151,7 +1075,7 @@ func file_Protocol_client_client_proto_init() {
 				return nil
 			}
 		}
-		file_Protocol_client_client_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_Protocol_client_client_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MatchSelectHeroReq); i {
 			case 0:
 				return &v.state
@@ -1163,8 +1087,8 @@ func file_Protocol_client_client_proto_init() {
 				return nil
 			}
 		}
-		file_Protocol_client_client_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MatchSelectHeroResp); i {
+		file_Protocol_client_client_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MatchSelectInfoPush); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1182,7 +1106,7 @@ func file_Protocol_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_Protocol_client_client_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   14,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

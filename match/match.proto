@@ -9,6 +9,7 @@ option go_package = "protocol/match";
 service Match {
   rpc Match(MatchRequest) returns (MatchReply);
   rpc CancelMatch(CancelMatchRequest) returns (CancelMatchReply);
+  rpc SelectHero(SelectHeroRequest) returns (SelectHeroReply);
 }
 
 message MatchRequest {
@@ -27,4 +28,14 @@ message CancelMatchRequest {
 
 message CancelMatchReply {
   bool suc = 1;
+}
+
+message SelectHeroRequest {
+  int32 hero_id = 1;
+  int32 user_id = 2;
+}
+
+message SelectHeroReply {
+  repeated common.SelectInfo infos = 1;//选择信息
+  repeated common.Hero heros = 2;//英雄列表
 }

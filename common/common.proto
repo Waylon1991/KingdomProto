@@ -41,3 +41,9 @@ message Hero {
   int32 hero_id = 1;
   HeroMatchState state = 2;
 }
+
+// SelectInfo 选择的信息
+message SelectInfo{
+  int32 user_id = 1;//用户信息
+  int32 hero_id = 2;//英雄信息
+}

@@ -20,4 +20,7 @@ enum Error {
   Gate_Content_Too_Larger = 2004;//包体过大
   Gate_Gen_Encrypt_Key_Failed = 2005;//生成加密公钥失败
   Gate_Key_Valid_Failed = 2006;//通行证验证失败
+
+  Match_Hero_Is_Selected = 3001;//英雄已经被选了
+  Match_Has_Started = 3002;//游戏已经开始了
 }

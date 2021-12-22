@@ -23,17 +23,16 @@ enum CP{
   Create_Room_Resp = 103;
   Join_Room_Req = 104; //加入房间
   Enter_Match_Req = 105;//进入匹配 ✔
-  Enter_Match_Wait_Resp = 106;//进入匹配等待 ✔
+  Enter_Match_Resp = 106;//进入匹配返回 ✔
   Cancel_Match_Req = 107;//取消匹配 ✔
-  Cancel_Match_Resp = 108;//取消匹配结果 ✔
-  Match_Suc_Resp = 109;//匹配成功返回 ✔
-  Match_Fail_Resp = 110;//匹配失败返回 ✔
+  Cancel_Match_Resp = 108;//取消匹配返回 ✔
+  Match_Suc_Push = 109;//匹配成功推送 ✔
+  Match_Fail_Push = 110;//匹配失败推送 ✔
 
   //match 协议
-  Match_Select_Hero_Req = 201;//选择英雄 ✔
-  Match_Select_Hero_Resp = 202;// ✔
-  Match_Cancel_Hero_Req = 203;//取消选择 ✔
-  Match_Cancel_Hero_Resp = 204;// ✔
+  Match_Select_Hero_Req = 201;//选择英雄 选择或者取消失败走 error code
+  Match_Cancel_Hero_Req = 202;//取消选择
+  Match_Select_Info_Push = 203;//服务端推送
 }
 
 message ErrorCode{
@@ -81,16 +80,11 @@ message CancelMatchResp{
   bool suc = 1 ; //取消是否成功
 }
 
-message SelectInfo{
-  int32 user_id = 1;//用户信息
-  int32 hero_id = 2;//英雄信息
-}
-
 //匹配成功
 message MatchSuccess{
   common.RoomMode mode = 1;//模式
   repeated common.Hero heros = 2;//英雄列表
-  repeated SelectInfo infos = 3;//选择信息
+  repeated common.SelectInfo infos = 3;//选择信息
 }
 
 //匹配失败
@@ -103,7 +97,8 @@ message MatchSelectHeroReq{
   int32 hero_id = 1;
 }
 
-message MatchSelectHeroResp{
-  repeated SelectInfo infos = 1;
+//推送
+message MatchSelectInfoPush{
+  repeated common.SelectInfo infos = 1;
   repeated common.Hero heros = 2;//英雄列表
 }

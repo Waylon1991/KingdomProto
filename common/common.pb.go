@@ -321,6 +321,62 @@ func (x *Hero) GetState() HeroMatchState {
 	return HeroMatchState_free
 }
 
+// SelectInfo 选择的信息
+type SelectInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId int32 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` //用户信息
+	HeroId int32 `protobuf:"varint,2,opt,name=hero_id,json=heroId,proto3" json:"hero_id,omitempty"` //英雄信息
+}
+
+func (x *SelectInfo) Reset() {
+	*x = SelectInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_Protocol_common_common_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SelectInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SelectInfo) ProtoMessage() {}
+
+func (x *SelectInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_Protocol_common_common_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SelectInfo.ProtoReflect.Descriptor instead.
+func (*SelectInfo) Descriptor() ([]byte, []int) {
+	return file_Protocol_common_common_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SelectInfo) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *SelectInfo) GetHeroId() int32 {
+	if x != nil {
+		return x.HeroId
+	}
+	return 0
+}
+
 var File_Protocol_common_common_proto protoreflect.FileDescriptor
 
 var file_Protocol_common_common_proto_rawDesc = []byte{
@@ -334,7 +390,11 @@ var file_Protocol_common_common_proto_rawDesc = []byte{
 	0x64, 0x12, 0x35, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e,
 	0x32, 0x1f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
 	0x6f, 0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x74, 0x61, 0x74,
-	0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x2a, 0x23, 0x0a, 0x09, 0x4c, 0x6f, 0x67, 0x69,
+	0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x3e, 0x0a, 0x0a, 0x53, 0x65, 0x6c, 0x65,
+	0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12,
+	0x17, 0x0a, 0x07, 0x68, 0x65, 0x72, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x06, 0x68, 0x65, 0x72, 0x6f, 0x49, 0x64, 0x2a, 0x23, 0x0a, 0x09, 0x4c, 0x6f, 0x67, 0x69,
 	0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x09, 0x0a, 0x05, 0x67, 0x75, 0x65, 0x73, 0x74, 0x10, 0x00,
 	0x12, 0x0b, 0x0a, 0x07, 0x55, 0x73, 0x65, 0x72, 0x50, 0x77, 0x64, 0x10, 0x01, 0x2a, 0x1f, 0x0a,
 	0x0c, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x12, 0x06, 0x0a,
@@ -365,7 +425,7 @@ func file_Protocol_common_common_proto_rawDescGZIP() []byte {
 }
 
 var file_Protocol_common_common_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_Protocol_common_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_Protocol_common_common_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_Protocol_common_common_proto_goTypes = []interface{}{
 	(LoginType)(0),      // 0: protocol.common.LoginType
 	(ProtocolType)(0),   // 1: protocol.common.ProtocolType
@@ -373,6 +433,7 @@ var file_Protocol_common_common_proto_goTypes = []interface{}{
 	(HeroMatchState)(0), // 3: protocol.common.HeroMatchState
 	(*User)(nil),        // 4: protocol.common.User
 	(*Hero)(nil),        // 5: protocol.common.Hero
+	(*SelectInfo)(nil),  // 6: protocol.common.SelectInfo
 }
 var file_Protocol_common_common_proto_depIdxs = []int32{
 	3, // 0: protocol.common.Hero.state:type_name -> protocol.common.HeroMatchState
@@ -413,6 +474,18 @@ func file_Protocol_common_common_proto_init() {
 				return nil
 			}
 		}
+		file_Protocol_common_common_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SelectInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -420,7 +493,7 @@ func file_Protocol_common_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_Protocol_common_common_proto_rawDesc,
 			NumEnums:      4,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
