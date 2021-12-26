@@ -37,11 +37,12 @@ enum CP{
 
 message ErrorCode{
   errcode.Error code = 1;//错误码
+  CP protocol_id = 2; //协议号
 }
 
 message ValidKeyReq{
   int32 user_id = 1;//用户 id
-  bytes key = 2;//key
+  string key = 2;//key
 }
 
 message EnterLobbyResp{
