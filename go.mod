@@ -1,4 +1,4 @@
-module protocol
+module github.com/Waylon1991/KingdomProto
 
 go 1.16
 
