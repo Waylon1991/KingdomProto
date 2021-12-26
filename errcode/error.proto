@@ -6,7 +6,7 @@ option go_package = "protocol/errcode";
 option objc_class_prefix = "Errors";
 
 
-enum Error {
+enum ErrorType {
   Success = 0; //成功
   Un_Know = 1;//未知错误
   Server_Internal_Error = 2;//服务内部错误
