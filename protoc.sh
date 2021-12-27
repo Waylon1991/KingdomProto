@@ -22,12 +22,20 @@ for k in $(find . -name "Proto"); do
     protoc --proto_path=./Proto \
            --proto_path=./Proto/third_party \
            --go_out=paths=source_relative:./Proto $file \
-           --go-grpc_out=paths=source_relative:./Proto $file \
+           --go-grpc_out=paths=source_relative:./Proto $file
 
     if [ $file = ./Proto/login/login.proto ]; then
       protoc --proto_path=./Proto \
              --proto_path=./Proto/third_party \
              --go-http_out=paths=source_relative:./Proto $file \
+
+    fi
+
+    if [[ $file = *login* ]] || [[ $file = *gate* ]] || [[ $file = *match* ]]; then
+      protoc --proto_path=./Proto \
+             --proto_path=./Proto/third_party \
+             --go_out=paths=source_relative:./Proto $file \
+             --validate_out=paths=source_relative,lang=go:./Proto
 
     fi
 

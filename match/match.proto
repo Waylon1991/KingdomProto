@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "common/common.proto";
+import "validate/validate.proto";
 
 package protocol.match;
 
@@ -14,7 +15,7 @@ service Match {
 
 message MatchRequest {
   common.RoomMode mode = 1;//模式
-  int32 user_id = 2;//用户id
+  int32 user_id = 2 [(validate.rules).int32.gt = 0];//用户id
 }
 
 message MatchReply{
@@ -23,7 +24,7 @@ message MatchReply{
 }
 
 message CancelMatchRequest {
-  int32 user_id = 1;
+  int32 user_id = 1 [(validate.rules).int32.gt = 0];
 }
 
 message CancelMatchReply {
@@ -31,8 +32,8 @@ message CancelMatchReply {
 }
 
 message SelectHeroRequest {
-  int32 hero_id = 1;
-  int32 user_id = 2;
+  int32 hero_id = 1 [(validate.rules).int32.gt = 0];
+  int32 user_id = 2 [(validate.rules).int32.gt = 0];
 }
 
 message SelectHeroReply {
