@@ -169,5 +169,5 @@ var Match_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "Proto/match/match.proto",
+	Metadata: "match/match.proto",
 }

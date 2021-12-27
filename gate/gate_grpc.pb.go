@@ -133,5 +133,5 @@ var Gate_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "Proto/gate/gate.proto",
+	Metadata: "gate/gate.proto",
 }
