@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-import "Protocol/common/common.proto";
-import "Protocol/client/client.proto";
+import "common/common.proto";
+import "client/client.proto";
 
 package protocol.gate;
 
-option go_package = "protocol/gate";
+option go_package = "github.com/Waylon1991/KingdomProto/gate;gate";
 
 service Gate {
   rpc GateInfo(GateInfoRequest) returns (GateInfoReply);

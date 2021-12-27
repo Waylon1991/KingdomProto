@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package protocol.client;
 
-import "Protocol/errcode/error.proto";
-import "Protocol/common/common.proto";
+import "errcode/error.proto";
+import "common/common.proto";
 
-option go_package = "protocol/client";
+option go_package = "github.com/Waylon1991/KingdomProto/client;client";
 
 //登录走的http ✔
 enum CP{

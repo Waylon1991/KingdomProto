@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-import "Protocol/common/common.proto";
+import "common/common.proto";
 
 package protocol.match;
 
-option go_package = "protocol/match";
+option go_package = "github.com/Waylon1991/KingdomProto/match;match";
 
 service Match {
   rpc Match(MatchRequest) returns (MatchReply);

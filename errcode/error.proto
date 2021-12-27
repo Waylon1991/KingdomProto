@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package protocol.errcode;
 
-option go_package = "protocol/errcode";
+option go_package = "github.com/Waylon1991/KingdomProto/errcode;errcode";
 option objc_class_prefix = "Errors";
 
 

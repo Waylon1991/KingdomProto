@@ -1,12 +1,12 @@
 syntax = "proto3";
 
 import "google/api/annotations.proto";
-import "Protocol/errcode/error.proto";
-import "Protocol/common/common.proto";
+import "errcode/error.proto";
+import "common/common.proto";
 
 package protocol.login;
 
-option go_package = "protocol/login";
+option go_package = "github.com/Waylon1991/KingdomProto/login;login";
 
 // The greeting service definition.
 service Login {

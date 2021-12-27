@@ -97,5 +97,5 @@ var Login_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "Protocol/login/login.proto",
+	Metadata: "Proto/login/login.proto",
 }

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package protocol.common;
 
-option go_package = "protocol/common";
+option go_package = "github.com/Waylon1991/KingdomProto/common;common";
 
 // LoginType 登录类型
 enum LoginType {
