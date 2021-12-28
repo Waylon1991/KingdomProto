@@ -30,9 +30,11 @@ enum CP{
   Match_Fail_Push = 110;//匹配失败推送 ✔
 
   //match 协议
-  Match_Select_Hero_Req = 201;//选择英雄 选择或者取消失败走 error code
-  Match_Cancel_Hero_Req = 202;//取消选择
-  Match_Select_Info_Push = 203;//服务端推送
+  Match_Select_Hero_Req = 201;//选择英雄 ✔
+  Match_Select_Hero_Resp = 202;
+  Match_Cancel_Hero_Req = 203;//取消选择
+  Match_Cancel_Hero_Resp = 204;
+  Match_Select_Info_Push = 205;//推送 其他模式可能需要
 }
 
 message ErrorCode{
@@ -96,6 +98,12 @@ message MatchFailed{
 //选择英雄
 message MatchSelectHeroReq{
   int32 hero_id = 1;
+}
+
+//选择英雄
+message MatchSelectHeroResp{
+  bool suc = 1; //是否成功
+  string fail_reason = 2; //失败的原因
 }
 
 //推送
