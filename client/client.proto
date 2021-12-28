@@ -14,6 +14,7 @@ enum CP{
   // gate 协议
   Error_Code_Resp = 1; //统一的错误码返回 ✔
   Valid_Key_Req = 2; //验证 key ✔
+  Kick_Out_Push = 3; //顶号推送
   Heart_Ping_Req = 10; //心跳请求 空协议体 ✔
   Heart_Ping_Resp = 11; //心跳返回 空协议体 ✔
 
