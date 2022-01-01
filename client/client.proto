@@ -93,7 +93,6 @@ message CancelMatchResp{
 message MatchSuccess{
   common.RoomMode mode = 1;//模式
   repeated common.Hero heros = 2;//英雄列表
-  repeated common.SelectInfo infos = 3;//选择信息
 }
 
 //匹配失败
