@@ -14,7 +14,7 @@ enum CP{
   // gate 协议
   Error_Code_Resp = 1; //统一的错误码返回 ✔
   Valid_Key_Req = 2; //验证 key ✔
-  Kick_Out_Push = 3; //顶号推送
+  Kick_Out_Push = 3; //顶号推送 空协议体 ✔
   Heart_Ping_Req = 10; //心跳请求 空协议体 ✔
   Heart_Ping_Resp = 11; //心跳返回 空协议体 ✔
 
@@ -36,8 +36,12 @@ enum CP{
   Match_Cancel_Hero_Req = 203;//取消选择
   Match_Cancel_Hero_Resp = 204;
   Match_Select_Info_Push = 205;//推送 其他模式可能需要
+
+  //room 协议
+  Room_Enter_Table = 301 ;//进入桌子
 }
 
+// -------------------------------- gate 结构体-----------------------------------------//
 message ErrorCode{
   errcode.ErrorType code = 1;//错误码
   CP protocol_id = 2; //协议号
@@ -48,6 +52,7 @@ message ValidKeyReq{
   string key = 2;//key
 }
 
+// -------------------------------- lobby 结构体-----------------------------------------//
 message EnterLobbyResp{
   int32 user_id = 1;//用户 id
 }
@@ -88,13 +93,14 @@ message CancelMatchResp{
 message MatchSuccess{
   common.RoomMode mode = 1;//模式
   repeated common.Hero heros = 2;//英雄列表
-  repeated common.SelectInfo infos = 3;//选择信息
 }
 
 //匹配失败
 message MatchFailed{
   string reason = 1;
 }
+
+// -------------------------------- match 结构体-----------------------------------------//
 
 //选择英雄
 message MatchSelectHeroReq{
@@ -109,6 +115,8 @@ message MatchSelectHeroResp{
 
 //推送
 message MatchSelectInfoPush{
-  repeated common.SelectInfo infos = 1;
+  map<int32 , int32> infos = 1;//用户选择信息
   repeated common.Hero heros = 2;//英雄列表
 }
+
+// -------------------------------- room 结构体-----------------------------------------//
