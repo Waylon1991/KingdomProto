@@ -35,10 +35,10 @@ enum CP{
   Match_Select_Hero_Resp = 202;
   Match_Cancel_Hero_Req = 203;//取消选择
   Match_Cancel_Hero_Resp = 204;
-  Match_Select_Info_Push = 205;//推送 其他模式可能需要
+  Match_Select_Info_Push = 205;//推送 其他模式可能需要 ✔
 
   //room 协议
-  Room_Enter_Table = 301 ;//进入桌子
+  Room_Enter_Table_Push = 301 ;//进入桌子
 }
 
 // -------------------------------- gate 结构体-----------------------------------------//
@@ -93,6 +93,7 @@ message CancelMatchResp{
 message MatchSuccess{
   common.RoomMode mode = 1;//模式
   repeated common.Hero heros = 2;//英雄列表
+  int32 over_time = 3 ; //超时秒数
 }
 
 //匹配失败
@@ -120,3 +121,8 @@ message MatchSelectInfoPush{
 }
 
 // -------------------------------- room 结构体-----------------------------------------//
+//推送
+message RoomEnterTablePush{
+  int32 roomId = 1;//房间号
+  map<int32 , int32> infos = 2;//用户选择信息
+}
