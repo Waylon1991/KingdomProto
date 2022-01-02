@@ -19,7 +19,7 @@ message MatchRequest {
 }
 
 message MatchReply{
-  int32 total  = 1 ;// 匹配人数
+  int32 total = 1 ;// 匹配人数
   int32 pre_time = 2 ; //预计时间
 }
 
@@ -37,6 +37,6 @@ message SelectHeroRequest {
 }
 
 message SelectHeroReply {
-  repeated common.SelectInfo infos = 1;//选择信息
+  map<int32, int32> infos = 1;//用户选择信息
   repeated common.Hero heros = 2;//英雄列表
 }

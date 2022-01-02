@@ -610,39 +610,7 @@ func (m *SelectHeroReply) validate(all bool) error {
 
 	var errors []error
 
-	for idx, item := range m.GetInfos() {
-		_, _ = idx, item
-
-		if all {
-			switch v := interface{}(item).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, SelectHeroReplyValidationError{
-						field:  fmt.Sprintf("Infos[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, SelectHeroReplyValidationError{
-						field:  fmt.Sprintf("Infos[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return SelectHeroReplyValidationError{
-					field:  fmt.Sprintf("Infos[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
+	// no validation rules for Infos
 
 	for idx, item := range m.GetHeros() {
 		_, _ = idx, item
