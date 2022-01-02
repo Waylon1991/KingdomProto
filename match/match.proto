@@ -11,6 +11,7 @@ service Match {
   rpc Match(MatchRequest) returns (MatchReply);
   rpc CancelMatch(CancelMatchRequest) returns (CancelMatchReply);
   rpc SelectHero(SelectHeroRequest) returns (SelectHeroReply);
+  rpc UnSelectHero(UnSelectHeroRequest) returns (UnSelectHeroReply);
 }
 
 message MatchRequest {
@@ -37,6 +38,15 @@ message SelectHeroRequest {
 }
 
 message SelectHeroReply {
+  map<int32, int32> infos = 1;//用户选择信息
+  repeated common.Hero heros = 2;//英雄列表
+}
+
+message UnSelectHeroRequest {
+  int32 user_id = 1 [(validate.rules).int32.gt = 0];
+}
+
+message UnSelectHeroReply {
   map<int32, int32> infos = 1;//用户选择信息
   repeated common.Hero heros = 2;//英雄列表
 }
