@@ -8,131 +8,179 @@ import "common/common.proto";
 option go_package = "github.com/Waylon1991/KingdomProto/client;client";
 
 //登录走的http ✔
-enum CP{
-  Default = 0;
+enum CP {
+    Default = 0;
 
-  // gate 协议
-  Error_Code_Resp = 1; //统一的错误码返回 ✔
-  Valid_Key_Req = 2; //验证 key ✔
-  Kick_Out_Push = 3; //顶号推送 空协议体 ✔
-  Heart_Ping_Req = 10; //心跳请求 空协议体 ✔
-  Heart_Ping_Resp = 11; //心跳返回 空协议体 ✔
+    // gate 协议
+    Error_Code_Resp = 1;   //统一的错误码返回 ✔
+    Valid_Key_Req   = 2;   //验证 key ✔
+    Kick_Out_Push   = 3;   //顶号推送 空协议体 ✔
+    Heart_Ping_Req  = 10;  //心跳请求 空协议体 ✔
+    Heart_Ping_Resp = 11;  //心跳返回 空协议体 ✔
 
-  // lobby 协议
-  Enter_Lobby_Resp = 101; //进入大厅返回 ✔
-  Create_Room_Req = 102; //创建房间
-  Create_Room_Resp = 103;
-  Join_Room_Req = 104; //加入房间
-  Enter_Match_Req = 105;//进入匹配 ✔
-  Enter_Match_Resp = 106;//进入匹配返回 ✔
-  Cancel_Match_Req = 107;//取消匹配 ✔
-  Cancel_Match_Resp = 108;//取消匹配返回 ✔
-  Match_Suc_Push = 109;//匹配成功推送 ✔
-  Match_Fail_Push = 110;//匹配失败推送 ✔
+    // lobby 协议
+    Enter_Lobby_Resp  = 101;  //进入大厅返回 ✔
+    Create_Room_Req   = 102;  //创建房间
+    Create_Room_Resp  = 103;
+    Join_Room_Req     = 104;  //加入房间
+    Enter_Match_Req   = 105;  //进入匹配 ✔
+    Enter_Match_Resp  = 106;  //进入匹配返回 ✔
+    Cancel_Match_Req  = 107;  //取消匹配 ✔
+    Cancel_Match_Resp = 108;  //取消匹配返回 ✔
+    Match_Suc_Push    = 109;  //匹配成功推送 ✔
+    Match_Fail_Push   = 110;  //匹配失败推送 ✔
 
-  //match 协议
-  Match_Select_Hero_Req = 201;//选择英雄 ✔
-  Match_Select_Hero_Resp = 202;
-  Match_Cancel_Hero_Req = 203;//取消选择
-  Match_Cancel_Hero_Resp = 204;
-  Match_Select_Info_Push = 205;//推送 其他模式可能需要 ✔
+    // match 协议
+    Match_Select_Hero_Req  = 201;  //选择英雄 ✔
+    Match_Select_Hero_Resp = 202;
+    Match_Cancel_Hero_Req  = 203;  //取消选择
+    Match_Cancel_Hero_Resp = 204;
+    Match_Select_Info_Push = 205;  //推送 其他模式可能需要 ✔
 
-  //room 协议
-  Room_Enter_Table_Push = 301 ;//进入桌子
+    // room 协议
+    Room_Enter_Table_Push      = 301;  //推送游戏信息（进入桌子）
+    Room_Start_Game_Push       = 302;  //推送游戏开始
+    Room_System_Send_Card_Push = 303;  //推送系统发牌
+    Room_Operate_Info_Push     = 304;  //推送轮到谁操作
+
+    Room_Use_Buff_Req     = 310;  //请求使用buff
+    Room_Use_Buff_Resp    = 311;  //返回使用buff(客户端是否需要？)
+    Room_Lose_Buff_Push   = 312;  //推送失去buff
+    Room_Obtain_Buff_Push = 313;  //推送获得buff
+
+    Room_Out_Card_Req     = 320;  //请求打出卡牌
+    Room_Out_Card_Resp    = 321;  //返回打出卡牌(客户端是否需要？)
+    Room_Out_Card_Push    = 322;  //推送打出卡牌
+    Room_Lose_Card_Push   = 323;  //推送失去卡牌
+    Room_Obtain_Card_Push = 324;  //推送获得卡牌
+    Room_Sell_Card_Req    = 325;  //请求出售卡牌
+    Room_Sell_Card_Resp   = 326;  //返回出售卡牌结果
+    Room_Left_Card_Push   = 327;  //推送牌堆剩余牌数
+
+    Room_Use_Skill_Req      = 330;  //请求使用技能
+    Room_Use_Skill_Resp     = 331;  //返回使用技能(客户端是否需要？)
+    Room_Use_Skill_Push     = 332;  //推送使用技能
+    Room_Upgrade_Skill_Push = 333;  //推送升级技能
+    Room_Active_Skill_Push  = 334;  //推送激活升级
+
+    Room_Roll_Dice_Req     = 340;  //请求掷骰子
+    Room_Roll_Dice_Resp    = 341;  //返回掷骰子(客户端是否需要？)
+    Room_Roll_Dice_Push    = 342;  //推送掷骰子
+    Room_Give_Up_Dice_Req  = 343;  //请求放弃掷骰子
+    Room_Give_Up_Dice_Resp = 344;  //返回放弃掷骰子
+    Room_Give_Up_Dice_Push = 345;  //推送放弃掷骰子
+
+    Room_Obtain_Blood_Push = 350;  //推送获得血量
+    Room_Lose_Blood_Push   = 351;  //推送失去血量
+    Room_Obtain_CP_Push    = 352;  //推送获得战斗点数
+    Room_Lose_CP_Push      = 353;  //推送失去战斗点数
+
+    Room_Use_Tool_Req     = 360;  //请求使用道具
+    Room_Use_Tool_Resp    = 361;  //返回使用道具(客户端是否需要？)
+    Room_Use_Tool_Push    = 362;  //推送使用道具
+    Room_Active_Tool_Push = 363;  //推送可用道具
+
+    Room_Skip_Stage_Req  = 370;  //请求进入下一阶段
+    Room_Skip_Stage_Resp = 371;  //返回进入下一阶段
+    Room_Skip_Stage_Push = 372;  //推送进入下一阶段
+
+    Room_Reward_Ball_Push = 380;  //推送占卜球的进度
+
+    Room_Game_Over_Push = 390;  //推送游戏结束
 }
 
 // -------------------------------- gate 结构体-----------------------------------------//
-message ErrorCode{
-  errcode.ErrorType code = 1;//错误码
-  CP protocol_id = 2; //协议号
+message ErrorCode {
+    errcode.ErrorType code = 1;  //错误码
+    CP protocol_id         = 2;  //协议号
 }
 
-message ValidKeyReq{
-  int32 user_id = 1;//用户 id
-  string key = 2;//key
+message ValidKeyReq {
+    int32 user_id = 1;  //用户 id
+    string key    = 2;  // key
 }
 
 // -------------------------------- lobby 结构体-----------------------------------------//
-message EnterLobbyResp{
-  int32 user_id = 1;//用户 id
+message EnterLobbyResp {
+    int32 user_id = 1;  //用户 id
 }
 
-message CreateRoomReq{
-  int32 user_id = 1;//用户 id
-  int32 mode = 2;//模式
+message CreateRoomReq {
+    int32 user_id = 1;  //用户 id
+    int32 mode    = 2;  //模式
 }
 
-message JoinRoomReq{
-  int32 room_id = 1;//用户 id
-  int32 mode = 2;//模式
+message JoinRoomReq {
+    int32 room_id = 1;  //用户 id
+    int32 mode    = 2;  //模式
 }
 
 //请求匹配
-message EnterMatchReq{
-  common.RoomMode mode = 1;//模式
+message EnterMatchReq {
+    common.RoomMode mode = 1;  //模式
 }
 
 //等待匹配中
-message MatchWait{
-  common.RoomMode mode = 1;//模式
-  int32 total = 2 ;// 匹配人数
-  int32 pre_time = 3 ; //预计时间
+message MatchWait {
+    common.RoomMode mode = 1;  //模式
+    int32 total          = 2;  // 匹配人数
+    int32 pre_time       = 3;  //预计时间
 }
 
 //取消匹配
-message CancelMatchReq{
-
+message CancelMatchReq {
 }
 
 //取消匹配返回 有可能取消失败
-message CancelMatchResp{
-  bool suc = 1 ; //取消是否成功
+message CancelMatchResp {
+    bool suc = 1;  //取消是否成功
 }
 
 //匹配成功
-message MatchSuccess{
-  common.RoomMode mode = 1;//模式
-  repeated common.Hero heros = 2;//英雄列表
-  int32 over_time = 3 ; //超时秒数
+message MatchSuccess {
+    common.RoomMode mode       = 1;  //模式
+    repeated common.Hero heros = 2;  //英雄列表
+    int32 over_time            = 3;  //超时秒数
 }
 
 //匹配失败
-message MatchFailed{
-  string reason = 1;
+message MatchFailed {
+    string reason = 1;
 }
 
 // -------------------------------- match 结构体-----------------------------------------//
 
 //选择英雄
-message MatchSelectHeroReq{
-  int32 hero_id = 1;
+message MatchSelectHeroReq {
+    int32 hero_id = 1;
 }
 
 //选择英雄
-message MatchSelectHeroResp{
-  bool suc = 1; //是否成功
-  string fail_reason = 2; //失败的原因
+message MatchSelectHeroResp {
+    bool suc           = 1;  //是否成功
+    string fail_reason = 2;  //失败的原因
 }
 
 //取消选择英雄
-message MatchUnSelectHeroReq{
+message MatchUnSelectHeroReq {
 }
 
 //选择英雄
-message MatchUnSelectHeroResp{
-  bool suc = 1; //是否成功
-  string fail_reason = 2; //失败的原因
+message MatchUnSelectHeroResp {
+    bool suc           = 1;  //是否成功
+    string fail_reason = 2;  //失败的原因
 }
 
 //推送
-message MatchSelectInfoPush{
-  map<int32 , int32> infos = 1;//用户选择信息
-  repeated common.Hero heros = 2;//英雄列表
+message MatchSelectInfoPush {
+    map<int32, int32> infos    = 1;  //用户选择信息
+    repeated common.Hero heros = 2;  //英雄列表
 }
 
 // -------------------------------- room 结构体-----------------------------------------//
+
 //推送
-message RoomEnterTablePush{
-  int32 roomId = 1;//房间号
-  map<int32 , int32> infos = 2;//用户选择信息
+message RoomEnterTablePush {
+    int32 roomId            = 1;  //房间号
+    map<int32, int32> infos = 2;  //用户选择信息
 }

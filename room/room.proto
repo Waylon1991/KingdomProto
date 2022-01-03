@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+import "common/common.proto";
+import "validate/validate.proto";
+
+package protocol.room;
+
+option go_package = "github.com/Waylon1991/KingdomProto/room;room";
+
+service Room {
+  rpc NewRoom(NewRoomRequest) returns (NewRoomReply);
+  rpc RoomInfo(RoomInfoRequest) returns (RoomInfoReply);
+}
+
+//新建房间
+message NewRoomRequest {
+  common.RoomMode mode = 1;//模式
+  map<int32, int32> Infos = 2;//用户选择的英雄信息
+}
+
+//房间基本信息
+message NewRoomReply {
+  int32 room_id = 1;//房间id
+  common.RoomMode mode = 2;//房间模式
+}
+
+//请求房间信息
+message RoomInfoRequest{
+  int32 room_id = 1[(validate.rules).int32.gt = 0];//房间id
+  common.RoomMode mode = 2;//房间模式
+}
+
+//房间信息
+message RoomInfoReply{
+  int32 room_id = 1 ;//房间id
+  common.RoomMode mode = 2;//房间模式
+  map<int32, common.RoomPlayerInfo> players = 3 ; //玩家信息
+  common.OperateInfo operate_info = 4;//操作信息
+}
