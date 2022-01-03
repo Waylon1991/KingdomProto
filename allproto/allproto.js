@@ -4,7 +4,7 @@
 var fs = require('fs');
 var path = require('path');
 //需要合并的proto文件
-var allfilenames = ["client.proto", "common.proto", "error.proto", "match.proto"]
+var allfilenames = ["client.proto", "common.proto", "error.proto"]
 //需要替换的文本
 var replacekey = ["common.", "errcode.", "\\[\\(validate.rules\\)"]
 var replacevalue = ["", "", ";/////[(validate.rules)"]
