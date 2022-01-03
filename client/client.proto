@@ -114,6 +114,16 @@ message MatchSelectHeroResp{
   string fail_reason = 2; //失败的原因
 }
 
+//取消选择英雄
+message MatchUnSelectHeroReq{
+}
+
+//选择英雄
+message MatchUnSelectHeroResp{
+  bool suc = 1; //是否成功
+  string fail_reason = 2; //失败的原因
+}
+
 //推送
 message MatchSelectInfoPush{
   map<int32 , int32> infos = 1;//用户选择信息

@@ -722,3 +722,252 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SelectHeroReplyValidationError{}
+
+// Validate checks the field values on UnSelectHeroRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UnSelectHeroRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UnSelectHeroRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UnSelectHeroRequestMultiError, or nil if none found.
+func (m *UnSelectHeroRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UnSelectHeroRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetUserId() <= 0 {
+		err := UnSelectHeroRequestValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return UnSelectHeroRequestMultiError(errors)
+	}
+	return nil
+}
+
+// UnSelectHeroRequestMultiError is an error wrapping multiple validation
+// errors returned by UnSelectHeroRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UnSelectHeroRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UnSelectHeroRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UnSelectHeroRequestMultiError) AllErrors() []error { return m }
+
+// UnSelectHeroRequestValidationError is the validation error returned by
+// UnSelectHeroRequest.Validate if the designated constraints aren't met.
+type UnSelectHeroRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UnSelectHeroRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UnSelectHeroRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UnSelectHeroRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UnSelectHeroRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UnSelectHeroRequestValidationError) ErrorName() string {
+	return "UnSelectHeroRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UnSelectHeroRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUnSelectHeroRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UnSelectHeroRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UnSelectHeroRequestValidationError{}
+
+// Validate checks the field values on UnSelectHeroReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *UnSelectHeroReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UnSelectHeroReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UnSelectHeroReplyMultiError, or nil if none found.
+func (m *UnSelectHeroReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UnSelectHeroReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Infos
+
+	for idx, item := range m.GetHeros() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, UnSelectHeroReplyValidationError{
+						field:  fmt.Sprintf("Heros[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, UnSelectHeroReplyValidationError{
+						field:  fmt.Sprintf("Heros[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UnSelectHeroReplyValidationError{
+					field:  fmt.Sprintf("Heros[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return UnSelectHeroReplyMultiError(errors)
+	}
+	return nil
+}
+
+// UnSelectHeroReplyMultiError is an error wrapping multiple validation errors
+// returned by UnSelectHeroReply.ValidateAll() if the designated constraints
+// aren't met.
+type UnSelectHeroReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UnSelectHeroReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UnSelectHeroReplyMultiError) AllErrors() []error { return m }
+
+// UnSelectHeroReplyValidationError is the validation error returned by
+// UnSelectHeroReply.Validate if the designated constraints aren't met.
+type UnSelectHeroReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UnSelectHeroReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UnSelectHeroReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UnSelectHeroReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UnSelectHeroReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UnSelectHeroReplyValidationError) ErrorName() string {
+	return "UnSelectHeroReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UnSelectHeroReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUnSelectHeroReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UnSelectHeroReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UnSelectHeroReplyValidationError{}

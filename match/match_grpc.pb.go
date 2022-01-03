@@ -21,6 +21,7 @@ type MatchClient interface {
 	Match(ctx context.Context, in *MatchRequest, opts ...grpc.CallOption) (*MatchReply, error)
 	CancelMatch(ctx context.Context, in *CancelMatchRequest, opts ...grpc.CallOption) (*CancelMatchReply, error)
 	SelectHero(ctx context.Context, in *SelectHeroRequest, opts ...grpc.CallOption) (*SelectHeroReply, error)
+	UnSelectHero(ctx context.Context, in *UnSelectHeroRequest, opts ...grpc.CallOption) (*UnSelectHeroReply, error)
 }
 
 type matchClient struct {
@@ -58,6 +59,15 @@ func (c *matchClient) SelectHero(ctx context.Context, in *SelectHeroRequest, opt
 	return out, nil
 }
 
+func (c *matchClient) UnSelectHero(ctx context.Context, in *UnSelectHeroRequest, opts ...grpc.CallOption) (*UnSelectHeroReply, error) {
+	out := new(UnSelectHeroReply)
+	err := c.cc.Invoke(ctx, "/protocol.match.Match/UnSelectHero", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MatchServer is the server API for Match service.
 // All implementations must embed UnimplementedMatchServer
 // for forward compatibility
@@ -65,6 +75,7 @@ type MatchServer interface {
 	Match(context.Context, *MatchRequest) (*MatchReply, error)
 	CancelMatch(context.Context, *CancelMatchRequest) (*CancelMatchReply, error)
 	SelectHero(context.Context, *SelectHeroRequest) (*SelectHeroReply, error)
+	UnSelectHero(context.Context, *UnSelectHeroRequest) (*UnSelectHeroReply, error)
 	mustEmbedUnimplementedMatchServer()
 }
 
@@ -80,6 +91,9 @@ func (UnimplementedMatchServer) CancelMatch(context.Context, *CancelMatchRequest
 }
 func (UnimplementedMatchServer) SelectHero(context.Context, *SelectHeroRequest) (*SelectHeroReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectHero not implemented")
+}
+func (UnimplementedMatchServer) UnSelectHero(context.Context, *UnSelectHeroRequest) (*UnSelectHeroReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnSelectHero not implemented")
 }
 func (UnimplementedMatchServer) mustEmbedUnimplementedMatchServer() {}
 
@@ -148,6 +162,24 @@ func _Match_SelectHero_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Match_UnSelectHero_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnSelectHeroRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MatchServer).UnSelectHero(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.match.Match/UnSelectHero",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MatchServer).UnSelectHero(ctx, req.(*UnSelectHeroRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Match_ServiceDesc is the grpc.ServiceDesc for Match service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,6 +198,10 @@ var Match_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SelectHero",
 			Handler:    _Match_SelectHero_Handler,
+		},
+		{
+			MethodName: "UnSelectHero",
+			Handler:    _Match_UnSelectHero_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
