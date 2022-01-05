@@ -4,19 +4,20 @@
 var fs = require('fs');
 var path = require('path');
 //需要合并的proto文件
-var allfilenames = ["client.proto", "common.proto", "error.proto", "match.proto"]
+var allfilenames = ["client.proto", "common.proto", "error.proto"]
 //需要替换的文本
 var replacekey = ["common.", "errcode.", "\\[\\(validate.rules\\)"]
 var replacevalue = ["", "", ";/////[(validate.rules)"]
 //导出文件的路径
-var topath = "../../DiceGame/DiceCC/protobuf/"
+var topath = "../DiceCC/protobuf/"
 var allprotocode = "";
 
 var root;
+
 function main() {
     allprotocode = 'syntax = "proto3";\n//package \n'
     root = __dirname.substring(0, __dirname.indexOf("allproto"));
-    if (topath.indexOf("..")==0){
+    if (topath.indexOf("..") == 0) {
         topath = path.join(root, topath);
         console.log(topath);
     }
@@ -55,6 +56,7 @@ function readFile(dir) {
         readDir(dir); //递归，如果是文件夹，就继续遍历该文件夹下面的文件
     }
 }
+
 function isproto(dir) {
     if (dir.indexOf(".proto" != -1)) {
         for (var i = 0; i < allfilenames.length; i++) {
@@ -65,8 +67,9 @@ function isproto(dir) {
     }
     return false;
 }
+
 function readProto(fPath) {
-   let filename = fPath.replace(root, "");
+    let filename = fPath.replace(root, "");
     console.log(filename);
     codeStr = fs.readFileSync(fPath, 'utf8');
     let starindex = codeStr.indexOf("option go_package");
