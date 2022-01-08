@@ -34,75 +34,195 @@ const (
 	CP_Heart_Ping_Req  CP = 10 //心跳请求 空协议体 ✔
 	CP_Heart_Ping_Resp CP = 11 //心跳返回 空协议体 ✔
 	// lobby 协议
-	CP_Enter_Lobby_Resp  CP = 101 //进入大厅返回 ✔
-	CP_Create_Room_Req   CP = 102 //创建房间
-	CP_Create_Room_Resp  CP = 103
-	CP_Join_Room_Req     CP = 104 //加入房间
-	CP_Enter_Match_Req   CP = 105 //进入匹配 ✔
-	CP_Enter_Match_Resp  CP = 106 //进入匹配返回 ✔
-	CP_Cancel_Match_Req  CP = 107 //取消匹配 ✔
-	CP_Cancel_Match_Resp CP = 108 //取消匹配返回 ✔
-	CP_Match_Suc_Push    CP = 109 //匹配成功推送 ✔
-	CP_Match_Fail_Push   CP = 110 //匹配失败推送 ✔
-	//match 协议
-	CP_Match_Select_Hero_Req  CP = 201 //选择英雄 ✔
-	CP_Match_Select_Hero_Resp CP = 202
-	CP_Match_Cancel_Hero_Req  CP = 203 //取消选择
-	CP_Match_Cancel_Hero_Resp CP = 204
-	CP_Match_Select_Info_Push CP = 205 //推送 其他模式可能需要 ✔
-	//room 协议
-	CP_Room_Enter_Table_Push CP = 301 //进入桌子
+	CP_Enter_Lobby_Resp  CP = 1001 //进入大厅返回 ✔
+	CP_Create_Room_Req   CP = 1002 //创建房间
+	CP_Create_Room_Resp  CP = 1003
+	CP_Join_Room_Req     CP = 1004 //加入房间
+	CP_Enter_Match_Req   CP = 1005 //进入匹配 ✔
+	CP_Enter_Match_Resp  CP = 1006 //进入匹配返回 ✔
+	CP_Cancel_Match_Req  CP = 1007 //取消匹配 ✔
+	CP_Cancel_Match_Resp CP = 1008 //取消匹配返回 ✔
+	CP_Match_Suc_Push    CP = 1009 //匹配成功推送 ✔
+	CP_Match_Fail_Push   CP = 1100 //匹配失败推送 ✔
+	// match 协议
+	CP_Match_Select_Hero_Req    CP = 2001 //选择英雄 ✔
+	CP_Match_Select_Hero_Resp   CP = 2002
+	CP_Match_UnSelect_Hero_Req  CP = 2003 //取消选择
+	CP_Match_UnSelect_Hero_Resp CP = 2004
+	CP_Match_Select_Info_Push   CP = 2005 //推送 其他模式可能需要 ✔
+	// room 协议
+	CP_Room_Enter_Table_Push      CP = 3001 //推送游戏信息（进入桌子）
+	CP_Room_Start_Game_Push       CP = 3002 //推送游戏开始
+	CP_Room_System_Send_Card_Push CP = 3003 //推送系统发牌
+	CP_Room_Operate_Info_Push     CP = 3004 //推送轮到谁操作
+	CP_Room_Use_Buff_Req          CP = 3100 //请求使用buff
+	CP_Room_Use_Buff_Resp         CP = 3101 //返回使用buff(客户端是否需要？)
+	CP_Room_Lose_Buff_Push        CP = 3102 //推送失去buff
+	CP_Room_Obtain_Buff_Push      CP = 3103 //推送获得buff
+	CP_Room_Out_Card_Req          CP = 3200 //请求打出卡牌
+	CP_Room_Out_Card_Resp         CP = 3201 //返回打出卡牌(客户端是否需要？)
+	CP_Room_Out_Card_Push         CP = 3202 //推送打出卡牌
+	CP_Room_Lose_Card_Push        CP = 3203 //推送失去卡牌
+	CP_Room_Obtain_Card_Push      CP = 3204 //推送获得卡牌
+	CP_Room_Sell_Card_Req         CP = 3205 //请求出售卡牌
+	CP_Room_Sell_Card_Resp        CP = 3206 //返回出售卡牌结果
+	CP_Room_Left_Card_Push        CP = 3207 //推送牌堆剩余牌数
+	CP_Room_Use_Skill_Req         CP = 3300 //请求使用技能
+	CP_Room_Use_Skill_Resp        CP = 3301 //返回使用技能(客户端是否需要？)
+	CP_Room_Use_Skill_Push        CP = 3302 //推送使用技能
+	CP_Room_Upgrade_Skill_Push    CP = 3303 //推送升级技能
+	CP_Room_Active_Skill_Push     CP = 3304 //推送激活升级
+	CP_Room_Roll_Dice_Req         CP = 3400 //请求掷骰子
+	CP_Room_Roll_Dice_Resp        CP = 3401 //返回掷骰子(客户端是否需要？)
+	CP_Room_Roll_Dice_Push        CP = 3402 //推送掷骰子
+	CP_Room_Give_Up_Dice_Req      CP = 3403 //请求放弃掷骰子
+	CP_Room_Give_Up_Dice_Resp     CP = 3404 //返回放弃掷骰子
+	CP_Room_Give_Up_Dice_Push     CP = 3405 //推送放弃掷骰子
+	CP_Room_Obtain_Blood_Push     CP = 3500 //推送获得血量
+	CP_Room_Lose_Blood_Push       CP = 3501 //推送失去血量
+	CP_Room_Obtain_CP_Push        CP = 3502 //推送获得战斗点数
+	CP_Room_Lose_CP_Push          CP = 3503 //推送失去战斗点数
+	CP_Room_Use_Tool_Req          CP = 3600 //请求使用道具
+	CP_Room_Use_Tool_Resp         CP = 3601 //返回使用道具(客户端是否需要？)
+	CP_Room_Use_Tool_Push         CP = 3602 //推送使用道具
+	CP_Room_Active_Tool_Push      CP = 3603 //推送可用道具
+	CP_Room_Skip_Stage_Req        CP = 3700 //请求进入下一阶段
+	CP_Room_Skip_Stage_Resp       CP = 3701 //返回进入下一阶段
+	CP_Room_Skip_Stage_Push       CP = 3702 //推送进入下一阶段
+	CP_Room_Reward_Ball_Push      CP = 3800 //推送占卜球的进度
+	CP_Room_Operate_Record_Push   CP = 3801 //推送操作记录
+	CP_Room_Game_Over_Push        CP = 3900 //推送游戏结束
 )
 
 // Enum value maps for CP.
 var (
 	CP_name = map[int32]string{
-		0:   "Default",
-		1:   "Error_Code_Resp",
-		2:   "Valid_Key_Req",
-		3:   "Kick_Out_Push",
-		10:  "Heart_Ping_Req",
-		11:  "Heart_Ping_Resp",
-		101: "Enter_Lobby_Resp",
-		102: "Create_Room_Req",
-		103: "Create_Room_Resp",
-		104: "Join_Room_Req",
-		105: "Enter_Match_Req",
-		106: "Enter_Match_Resp",
-		107: "Cancel_Match_Req",
-		108: "Cancel_Match_Resp",
-		109: "Match_Suc_Push",
-		110: "Match_Fail_Push",
-		201: "Match_Select_Hero_Req",
-		202: "Match_Select_Hero_Resp",
-		203: "Match_Cancel_Hero_Req",
-		204: "Match_Cancel_Hero_Resp",
-		205: "Match_Select_Info_Push",
-		301: "Room_Enter_Table_Push",
+		0:    "Default",
+		1:    "Error_Code_Resp",
+		2:    "Valid_Key_Req",
+		3:    "Kick_Out_Push",
+		10:   "Heart_Ping_Req",
+		11:   "Heart_Ping_Resp",
+		1001: "Enter_Lobby_Resp",
+		1002: "Create_Room_Req",
+		1003: "Create_Room_Resp",
+		1004: "Join_Room_Req",
+		1005: "Enter_Match_Req",
+		1006: "Enter_Match_Resp",
+		1007: "Cancel_Match_Req",
+		1008: "Cancel_Match_Resp",
+		1009: "Match_Suc_Push",
+		1100: "Match_Fail_Push",
+		2001: "Match_Select_Hero_Req",
+		2002: "Match_Select_Hero_Resp",
+		2003: "Match_UnSelect_Hero_Req",
+		2004: "Match_UnSelect_Hero_Resp",
+		2005: "Match_Select_Info_Push",
+		3001: "Room_Enter_Table_Push",
+		3002: "Room_Start_Game_Push",
+		3003: "Room_System_Send_Card_Push",
+		3004: "Room_Operate_Info_Push",
+		3100: "Room_Use_Buff_Req",
+		3101: "Room_Use_Buff_Resp",
+		3102: "Room_Lose_Buff_Push",
+		3103: "Room_Obtain_Buff_Push",
+		3200: "Room_Out_Card_Req",
+		3201: "Room_Out_Card_Resp",
+		3202: "Room_Out_Card_Push",
+		3203: "Room_Lose_Card_Push",
+		3204: "Room_Obtain_Card_Push",
+		3205: "Room_Sell_Card_Req",
+		3206: "Room_Sell_Card_Resp",
+		3207: "Room_Left_Card_Push",
+		3300: "Room_Use_Skill_Req",
+		3301: "Room_Use_Skill_Resp",
+		3302: "Room_Use_Skill_Push",
+		3303: "Room_Upgrade_Skill_Push",
+		3304: "Room_Active_Skill_Push",
+		3400: "Room_Roll_Dice_Req",
+		3401: "Room_Roll_Dice_Resp",
+		3402: "Room_Roll_Dice_Push",
+		3403: "Room_Give_Up_Dice_Req",
+		3404: "Room_Give_Up_Dice_Resp",
+		3405: "Room_Give_Up_Dice_Push",
+		3500: "Room_Obtain_Blood_Push",
+		3501: "Room_Lose_Blood_Push",
+		3502: "Room_Obtain_CP_Push",
+		3503: "Room_Lose_CP_Push",
+		3600: "Room_Use_Tool_Req",
+		3601: "Room_Use_Tool_Resp",
+		3602: "Room_Use_Tool_Push",
+		3603: "Room_Active_Tool_Push",
+		3700: "Room_Skip_Stage_Req",
+		3701: "Room_Skip_Stage_Resp",
+		3702: "Room_Skip_Stage_Push",
+		3800: "Room_Reward_Ball_Push",
+		3801: "Room_Operate_Record_Push",
+		3900: "Room_Game_Over_Push",
 	}
 	CP_value = map[string]int32{
-		"Default":                0,
-		"Error_Code_Resp":        1,
-		"Valid_Key_Req":          2,
-		"Kick_Out_Push":          3,
-		"Heart_Ping_Req":         10,
-		"Heart_Ping_Resp":        11,
-		"Enter_Lobby_Resp":       101,
-		"Create_Room_Req":        102,
-		"Create_Room_Resp":       103,
-		"Join_Room_Req":          104,
-		"Enter_Match_Req":        105,
-		"Enter_Match_Resp":       106,
-		"Cancel_Match_Req":       107,
-		"Cancel_Match_Resp":      108,
-		"Match_Suc_Push":         109,
-		"Match_Fail_Push":        110,
-		"Match_Select_Hero_Req":  201,
-		"Match_Select_Hero_Resp": 202,
-		"Match_Cancel_Hero_Req":  203,
-		"Match_Cancel_Hero_Resp": 204,
-		"Match_Select_Info_Push": 205,
-		"Room_Enter_Table_Push":  301,
+		"Default":                    0,
+		"Error_Code_Resp":            1,
+		"Valid_Key_Req":              2,
+		"Kick_Out_Push":              3,
+		"Heart_Ping_Req":             10,
+		"Heart_Ping_Resp":            11,
+		"Enter_Lobby_Resp":           1001,
+		"Create_Room_Req":            1002,
+		"Create_Room_Resp":           1003,
+		"Join_Room_Req":              1004,
+		"Enter_Match_Req":            1005,
+		"Enter_Match_Resp":           1006,
+		"Cancel_Match_Req":           1007,
+		"Cancel_Match_Resp":          1008,
+		"Match_Suc_Push":             1009,
+		"Match_Fail_Push":            1100,
+		"Match_Select_Hero_Req":      2001,
+		"Match_Select_Hero_Resp":     2002,
+		"Match_UnSelect_Hero_Req":    2003,
+		"Match_UnSelect_Hero_Resp":   2004,
+		"Match_Select_Info_Push":     2005,
+		"Room_Enter_Table_Push":      3001,
+		"Room_Start_Game_Push":       3002,
+		"Room_System_Send_Card_Push": 3003,
+		"Room_Operate_Info_Push":     3004,
+		"Room_Use_Buff_Req":          3100,
+		"Room_Use_Buff_Resp":         3101,
+		"Room_Lose_Buff_Push":        3102,
+		"Room_Obtain_Buff_Push":      3103,
+		"Room_Out_Card_Req":          3200,
+		"Room_Out_Card_Resp":         3201,
+		"Room_Out_Card_Push":         3202,
+		"Room_Lose_Card_Push":        3203,
+		"Room_Obtain_Card_Push":      3204,
+		"Room_Sell_Card_Req":         3205,
+		"Room_Sell_Card_Resp":        3206,
+		"Room_Left_Card_Push":        3207,
+		"Room_Use_Skill_Req":         3300,
+		"Room_Use_Skill_Resp":        3301,
+		"Room_Use_Skill_Push":        3302,
+		"Room_Upgrade_Skill_Push":    3303,
+		"Room_Active_Skill_Push":     3304,
+		"Room_Roll_Dice_Req":         3400,
+		"Room_Roll_Dice_Resp":        3401,
+		"Room_Roll_Dice_Push":        3402,
+		"Room_Give_Up_Dice_Req":      3403,
+		"Room_Give_Up_Dice_Resp":     3404,
+		"Room_Give_Up_Dice_Push":     3405,
+		"Room_Obtain_Blood_Push":     3500,
+		"Room_Lose_Blood_Push":       3501,
+		"Room_Obtain_CP_Push":        3502,
+		"Room_Lose_CP_Push":          3503,
+		"Room_Use_Tool_Req":          3600,
+		"Room_Use_Tool_Resp":         3601,
+		"Room_Use_Tool_Push":         3602,
+		"Room_Active_Tool_Push":      3603,
+		"Room_Skip_Stage_Req":        3700,
+		"Room_Skip_Stage_Resp":       3701,
+		"Room_Skip_Stage_Push":       3702,
+		"Room_Reward_Ball_Push":      3800,
+		"Room_Operate_Record_Push":   3801,
+		"Room_Game_Over_Push":        3900,
 	}
 )
 
@@ -134,7 +254,7 @@ func (CP) EnumDescriptor() ([]byte, []int) {
 }
 
 // -------------------------------- gate 结构体-----------------------------------------//
-type ErrorCode struct {
+type ErrorCodeResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -143,8 +263,8 @@ type ErrorCode struct {
 	ProtocolId CP                `protobuf:"varint,2,opt,name=protocol_id,json=protocolId,proto3,enum=protocol.client.CP" json:"protocol_id,omitempty"` //协议号
 }
 
-func (x *ErrorCode) Reset() {
-	*x = ErrorCode{}
+func (x *ErrorCodeResp) Reset() {
+	*x = ErrorCodeResp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_client_client_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -152,13 +272,13 @@ func (x *ErrorCode) Reset() {
 	}
 }
 
-func (x *ErrorCode) String() string {
+func (x *ErrorCodeResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ErrorCode) ProtoMessage() {}
+func (*ErrorCodeResp) ProtoMessage() {}
 
-func (x *ErrorCode) ProtoReflect() protoreflect.Message {
+func (x *ErrorCodeResp) ProtoReflect() protoreflect.Message {
 	mi := &file_client_client_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -170,19 +290,19 @@ func (x *ErrorCode) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ErrorCode.ProtoReflect.Descriptor instead.
-func (*ErrorCode) Descriptor() ([]byte, []int) {
+// Deprecated: Use ErrorCodeResp.ProtoReflect.Descriptor instead.
+func (*ErrorCodeResp) Descriptor() ([]byte, []int) {
 	return file_client_client_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ErrorCode) GetCode() errcode.ErrorType {
+func (x *ErrorCodeResp) GetCode() errcode.ErrorType {
 	if x != nil {
 		return x.Code
 	}
 	return errcode.ErrorType(0)
 }
 
-func (x *ErrorCode) GetProtocolId() CP {
+func (x *ErrorCodeResp) GetProtocolId() CP {
 	if x != nil {
 		return x.ProtocolId
 	}
@@ -195,7 +315,7 @@ type ValidKeyReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	UserId int32  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` //用户 id
-	Key    string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`                      //key
+	Key    string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`                      // key
 }
 
 func (x *ValidKeyReq) Reset() {
@@ -451,7 +571,7 @@ func (x *EnterMatchReq) GetMode() common.RoomMode {
 }
 
 //等待匹配中
-type MatchWait struct {
+type EnterMatchResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -461,8 +581,8 @@ type MatchWait struct {
 	PreTime int32           `protobuf:"varint,3,opt,name=pre_time,json=preTime,proto3" json:"pre_time,omitempty"`          //预计时间
 }
 
-func (x *MatchWait) Reset() {
-	*x = MatchWait{}
+func (x *EnterMatchResp) Reset() {
+	*x = EnterMatchResp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_client_client_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -470,13 +590,13 @@ func (x *MatchWait) Reset() {
 	}
 }
 
-func (x *MatchWait) String() string {
+func (x *EnterMatchResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MatchWait) ProtoMessage() {}
+func (*EnterMatchResp) ProtoMessage() {}
 
-func (x *MatchWait) ProtoReflect() protoreflect.Message {
+func (x *EnterMatchResp) ProtoReflect() protoreflect.Message {
 	mi := &file_client_client_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -488,26 +608,26 @@ func (x *MatchWait) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MatchWait.ProtoReflect.Descriptor instead.
-func (*MatchWait) Descriptor() ([]byte, []int) {
+// Deprecated: Use EnterMatchResp.ProtoReflect.Descriptor instead.
+func (*EnterMatchResp) Descriptor() ([]byte, []int) {
 	return file_client_client_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *MatchWait) GetMode() common.RoomMode {
+func (x *EnterMatchResp) GetMode() common.RoomMode {
 	if x != nil {
 		return x.Mode
 	}
 	return common.RoomMode(0)
 }
 
-func (x *MatchWait) GetTotal() int32 {
+func (x *EnterMatchResp) GetTotal() int32 {
 	if x != nil {
 		return x.Total
 	}
 	return 0
 }
 
-func (x *MatchWait) GetPreTime() int32 {
+func (x *EnterMatchResp) GetPreTime() int32 {
 	if x != nil {
 		return x.PreTime
 	}
@@ -602,7 +722,7 @@ func (x *CancelMatchResp) GetSuc() bool {
 }
 
 //匹配成功
-type MatchSuccess struct {
+type MatchSucPush struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -612,8 +732,8 @@ type MatchSuccess struct {
 	OverTime int32           `protobuf:"varint,3,opt,name=over_time,json=overTime,proto3" json:"over_time,omitempty"`       //超时秒数
 }
 
-func (x *MatchSuccess) Reset() {
-	*x = MatchSuccess{}
+func (x *MatchSucPush) Reset() {
+	*x = MatchSucPush{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_client_client_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -621,13 +741,13 @@ func (x *MatchSuccess) Reset() {
 	}
 }
 
-func (x *MatchSuccess) String() string {
+func (x *MatchSucPush) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MatchSuccess) ProtoMessage() {}
+func (*MatchSucPush) ProtoMessage() {}
 
-func (x *MatchSuccess) ProtoReflect() protoreflect.Message {
+func (x *MatchSucPush) ProtoReflect() protoreflect.Message {
 	mi := &file_client_client_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -639,26 +759,26 @@ func (x *MatchSuccess) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MatchSuccess.ProtoReflect.Descriptor instead.
-func (*MatchSuccess) Descriptor() ([]byte, []int) {
+// Deprecated: Use MatchSucPush.ProtoReflect.Descriptor instead.
+func (*MatchSucPush) Descriptor() ([]byte, []int) {
 	return file_client_client_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *MatchSuccess) GetMode() common.RoomMode {
+func (x *MatchSucPush) GetMode() common.RoomMode {
 	if x != nil {
 		return x.Mode
 	}
 	return common.RoomMode(0)
 }
 
-func (x *MatchSuccess) GetHeros() []*common.Hero {
+func (x *MatchSucPush) GetHeros() []*common.Hero {
 	if x != nil {
 		return x.Heros
 	}
 	return nil
 }
 
-func (x *MatchSuccess) GetOverTime() int32 {
+func (x *MatchSucPush) GetOverTime() int32 {
 	if x != nil {
 		return x.OverTime
 	}
@@ -666,7 +786,7 @@ func (x *MatchSuccess) GetOverTime() int32 {
 }
 
 //匹配失败
-type MatchFailed struct {
+type MatchFailPush struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -674,8 +794,8 @@ type MatchFailed struct {
 	Reason string `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
 }
 
-func (x *MatchFailed) Reset() {
-	*x = MatchFailed{}
+func (x *MatchFailPush) Reset() {
+	*x = MatchFailPush{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_client_client_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -683,13 +803,13 @@ func (x *MatchFailed) Reset() {
 	}
 }
 
-func (x *MatchFailed) String() string {
+func (x *MatchFailPush) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MatchFailed) ProtoMessage() {}
+func (*MatchFailPush) ProtoMessage() {}
 
-func (x *MatchFailed) ProtoReflect() protoreflect.Message {
+func (x *MatchFailPush) ProtoReflect() protoreflect.Message {
 	mi := &file_client_client_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -701,18 +821,19 @@ func (x *MatchFailed) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MatchFailed.ProtoReflect.Descriptor instead.
-func (*MatchFailed) Descriptor() ([]byte, []int) {
+// Deprecated: Use MatchFailPush.ProtoReflect.Descriptor instead.
+func (*MatchFailPush) Descriptor() ([]byte, []int) {
 	return file_client_client_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *MatchFailed) GetReason() string {
+func (x *MatchFailPush) GetReason() string {
 	if x != nil {
 		return x.Reason
 	}
 	return ""
 }
 
+// -------------------------------- match 结构体-----------------------------------------//
 //选择英雄
 type MatchSelectHeroReq struct {
 	state         protoimpl.MessageState
@@ -968,7 +1089,6 @@ func (x *MatchSelectInfoPush) GetHeros() []*common.Hero {
 	return nil
 }
 
-// -------------------------------- room 结构体-----------------------------------------//
 //推送
 type RoomEnterTablePush struct {
 	state         protoimpl.MessageState
@@ -1025,6 +1145,1683 @@ func (x *RoomEnterTablePush) GetInfos() map[int32]int32 {
 	return nil
 }
 
+//顶号推送
+type KickOutPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *KickOutPush) Reset() {
+	*x = KickOutPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *KickOutPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*KickOutPush) ProtoMessage() {}
+
+func (x *KickOutPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use KickOutPush.ProtoReflect.Descriptor instead.
+func (*KickOutPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{17}
+}
+
+//心跳请求
+type HeartPingReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *HeartPingReq) Reset() {
+	*x = HeartPingReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HeartPingReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HeartPingReq) ProtoMessage() {}
+
+func (x *HeartPingReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HeartPingReq.ProtoReflect.Descriptor instead.
+func (*HeartPingReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{18}
+}
+
+//心跳返回
+type HeartPingResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *HeartPingResp) Reset() {
+	*x = HeartPingResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HeartPingResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HeartPingResp) ProtoMessage() {}
+
+func (x *HeartPingResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HeartPingResp.ProtoReflect.Descriptor instead.
+func (*HeartPingResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{19}
+}
+
+//推送游戏开始
+type RoomStartGamePush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomStartGamePush) Reset() {
+	*x = RoomStartGamePush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomStartGamePush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomStartGamePush) ProtoMessage() {}
+
+func (x *RoomStartGamePush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomStartGamePush.ProtoReflect.Descriptor instead.
+func (*RoomStartGamePush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{20}
+}
+
+//推送系统发牌
+type RoomSystemSendCardPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSystemSendCardPush) Reset() {
+	*x = RoomSystemSendCardPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSystemSendCardPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSystemSendCardPush) ProtoMessage() {}
+
+func (x *RoomSystemSendCardPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSystemSendCardPush.ProtoReflect.Descriptor instead.
+func (*RoomSystemSendCardPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{21}
+}
+
+//推送轮到谁操作
+type RoomOperateInfoPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomOperateInfoPush) Reset() {
+	*x = RoomOperateInfoPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomOperateInfoPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomOperateInfoPush) ProtoMessage() {}
+
+func (x *RoomOperateInfoPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomOperateInfoPush.ProtoReflect.Descriptor instead.
+func (*RoomOperateInfoPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{22}
+}
+
+//请求使用buff
+type RoomUseBuffReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseBuffReq) Reset() {
+	*x = RoomUseBuffReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseBuffReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseBuffReq) ProtoMessage() {}
+
+func (x *RoomUseBuffReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseBuffReq.ProtoReflect.Descriptor instead.
+func (*RoomUseBuffReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{23}
+}
+
+//返回使用buff(客户端是否需要？)
+type RoomUseBuffResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseBuffResp) Reset() {
+	*x = RoomUseBuffResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseBuffResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseBuffResp) ProtoMessage() {}
+
+func (x *RoomUseBuffResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseBuffResp.ProtoReflect.Descriptor instead.
+func (*RoomUseBuffResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{24}
+}
+
+//推送失去buff
+type RoomLoseBuffPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomLoseBuffPush) Reset() {
+	*x = RoomLoseBuffPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomLoseBuffPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomLoseBuffPush) ProtoMessage() {}
+
+func (x *RoomLoseBuffPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomLoseBuffPush.ProtoReflect.Descriptor instead.
+func (*RoomLoseBuffPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{25}
+}
+
+//推送获得buff
+type RoomObtainBuffPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomObtainBuffPush) Reset() {
+	*x = RoomObtainBuffPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomObtainBuffPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomObtainBuffPush) ProtoMessage() {}
+
+func (x *RoomObtainBuffPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomObtainBuffPush.ProtoReflect.Descriptor instead.
+func (*RoomObtainBuffPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{26}
+}
+
+//请求打出卡牌
+type RoomOutCardReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomOutCardReq) Reset() {
+	*x = RoomOutCardReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomOutCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomOutCardReq) ProtoMessage() {}
+
+func (x *RoomOutCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomOutCardReq.ProtoReflect.Descriptor instead.
+func (*RoomOutCardReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{27}
+}
+
+//返回打出卡牌(客户端是否需要？)
+type RoomOutCardResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomOutCardResp) Reset() {
+	*x = RoomOutCardResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomOutCardResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomOutCardResp) ProtoMessage() {}
+
+func (x *RoomOutCardResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomOutCardResp.ProtoReflect.Descriptor instead.
+func (*RoomOutCardResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{28}
+}
+
+//推送打出卡牌
+type RoomOutCardPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomOutCardPush) Reset() {
+	*x = RoomOutCardPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomOutCardPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomOutCardPush) ProtoMessage() {}
+
+func (x *RoomOutCardPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomOutCardPush.ProtoReflect.Descriptor instead.
+func (*RoomOutCardPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{29}
+}
+
+//推送失去卡牌
+type RoomLoseCardPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomLoseCardPush) Reset() {
+	*x = RoomLoseCardPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomLoseCardPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomLoseCardPush) ProtoMessage() {}
+
+func (x *RoomLoseCardPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomLoseCardPush.ProtoReflect.Descriptor instead.
+func (*RoomLoseCardPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{30}
+}
+
+//推送获得卡牌
+type RoomObtainCardPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomObtainCardPush) Reset() {
+	*x = RoomObtainCardPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomObtainCardPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomObtainCardPush) ProtoMessage() {}
+
+func (x *RoomObtainCardPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomObtainCardPush.ProtoReflect.Descriptor instead.
+func (*RoomObtainCardPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{31}
+}
+
+//请求出售卡牌
+type RoomSellCardReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSellCardReq) Reset() {
+	*x = RoomSellCardReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSellCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSellCardReq) ProtoMessage() {}
+
+func (x *RoomSellCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSellCardReq.ProtoReflect.Descriptor instead.
+func (*RoomSellCardReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{32}
+}
+
+//返回出售卡牌结果
+type RoomSellCardResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSellCardResp) Reset() {
+	*x = RoomSellCardResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSellCardResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSellCardResp) ProtoMessage() {}
+
+func (x *RoomSellCardResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSellCardResp.ProtoReflect.Descriptor instead.
+func (*RoomSellCardResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{33}
+}
+
+//推送牌堆剩余牌数
+type RoomLeftCardPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomLeftCardPush) Reset() {
+	*x = RoomLeftCardPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomLeftCardPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomLeftCardPush) ProtoMessage() {}
+
+func (x *RoomLeftCardPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomLeftCardPush.ProtoReflect.Descriptor instead.
+func (*RoomLeftCardPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{34}
+}
+
+//请求使用技能
+type RoomUseSkillReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseSkillReq) Reset() {
+	*x = RoomUseSkillReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseSkillReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseSkillReq) ProtoMessage() {}
+
+func (x *RoomUseSkillReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseSkillReq.ProtoReflect.Descriptor instead.
+func (*RoomUseSkillReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{35}
+}
+
+//返回使用技能(客户端是否需要？)
+type RoomUseSkillResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseSkillResp) Reset() {
+	*x = RoomUseSkillResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseSkillResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseSkillResp) ProtoMessage() {}
+
+func (x *RoomUseSkillResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseSkillResp.ProtoReflect.Descriptor instead.
+func (*RoomUseSkillResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{36}
+}
+
+//推送使用技能
+type RoomUseSkillPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseSkillPush) Reset() {
+	*x = RoomUseSkillPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseSkillPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseSkillPush) ProtoMessage() {}
+
+func (x *RoomUseSkillPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseSkillPush.ProtoReflect.Descriptor instead.
+func (*RoomUseSkillPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{37}
+}
+
+//推送升级技能
+type RoomUpgradeSkillPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUpgradeSkillPush) Reset() {
+	*x = RoomUpgradeSkillPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUpgradeSkillPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUpgradeSkillPush) ProtoMessage() {}
+
+func (x *RoomUpgradeSkillPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUpgradeSkillPush.ProtoReflect.Descriptor instead.
+func (*RoomUpgradeSkillPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{38}
+}
+
+//推送激活升级
+type RoomActiveSkillPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomActiveSkillPush) Reset() {
+	*x = RoomActiveSkillPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[39]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomActiveSkillPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomActiveSkillPush) ProtoMessage() {}
+
+func (x *RoomActiveSkillPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[39]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomActiveSkillPush.ProtoReflect.Descriptor instead.
+func (*RoomActiveSkillPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{39}
+}
+
+//请求掷骰子
+type RoomRollDiceReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomRollDiceReq) Reset() {
+	*x = RoomRollDiceReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[40]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomRollDiceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomRollDiceReq) ProtoMessage() {}
+
+func (x *RoomRollDiceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[40]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomRollDiceReq.ProtoReflect.Descriptor instead.
+func (*RoomRollDiceReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{40}
+}
+
+//返回掷骰子(客户端是否需要？)
+type RoomRollDiceResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomRollDiceResp) Reset() {
+	*x = RoomRollDiceResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[41]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomRollDiceResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomRollDiceResp) ProtoMessage() {}
+
+func (x *RoomRollDiceResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[41]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomRollDiceResp.ProtoReflect.Descriptor instead.
+func (*RoomRollDiceResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{41}
+}
+
+//推送掷骰子
+type RoomRollDicePush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomRollDicePush) Reset() {
+	*x = RoomRollDicePush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomRollDicePush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomRollDicePush) ProtoMessage() {}
+
+func (x *RoomRollDicePush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomRollDicePush.ProtoReflect.Descriptor instead.
+func (*RoomRollDicePush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{42}
+}
+
+//请求放弃掷骰子
+type RoomGiveUpDiceReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomGiveUpDiceReq) Reset() {
+	*x = RoomGiveUpDiceReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomGiveUpDiceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomGiveUpDiceReq) ProtoMessage() {}
+
+func (x *RoomGiveUpDiceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomGiveUpDiceReq.ProtoReflect.Descriptor instead.
+func (*RoomGiveUpDiceReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{43}
+}
+
+//返回放弃掷骰子
+type RoomGiveUpDiceResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomGiveUpDiceResp) Reset() {
+	*x = RoomGiveUpDiceResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomGiveUpDiceResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomGiveUpDiceResp) ProtoMessage() {}
+
+func (x *RoomGiveUpDiceResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomGiveUpDiceResp.ProtoReflect.Descriptor instead.
+func (*RoomGiveUpDiceResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{44}
+}
+
+//推送放弃掷骰子
+type RoomGiveUpDicePush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomGiveUpDicePush) Reset() {
+	*x = RoomGiveUpDicePush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomGiveUpDicePush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomGiveUpDicePush) ProtoMessage() {}
+
+func (x *RoomGiveUpDicePush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomGiveUpDicePush.ProtoReflect.Descriptor instead.
+func (*RoomGiveUpDicePush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{45}
+}
+
+//推送获得血量
+type RoomObtainBloodPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomObtainBloodPush) Reset() {
+	*x = RoomObtainBloodPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomObtainBloodPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomObtainBloodPush) ProtoMessage() {}
+
+func (x *RoomObtainBloodPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomObtainBloodPush.ProtoReflect.Descriptor instead.
+func (*RoomObtainBloodPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{46}
+}
+
+//推送失去血量
+type RoomLoseBloodPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomLoseBloodPush) Reset() {
+	*x = RoomLoseBloodPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomLoseBloodPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomLoseBloodPush) ProtoMessage() {}
+
+func (x *RoomLoseBloodPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomLoseBloodPush.ProtoReflect.Descriptor instead.
+func (*RoomLoseBloodPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{47}
+}
+
+//推送获得战斗点数
+type RoomObtainCPPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomObtainCPPush) Reset() {
+	*x = RoomObtainCPPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomObtainCPPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomObtainCPPush) ProtoMessage() {}
+
+func (x *RoomObtainCPPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomObtainCPPush.ProtoReflect.Descriptor instead.
+func (*RoomObtainCPPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{48}
+}
+
+//推送失去战斗点数
+type RoomLoseCPPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomLoseCPPush) Reset() {
+	*x = RoomLoseCPPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[49]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomLoseCPPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomLoseCPPush) ProtoMessage() {}
+
+func (x *RoomLoseCPPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[49]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomLoseCPPush.ProtoReflect.Descriptor instead.
+func (*RoomLoseCPPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{49}
+}
+
+//请求使用道具
+type RoomUseToolReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseToolReq) Reset() {
+	*x = RoomUseToolReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[50]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseToolReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseToolReq) ProtoMessage() {}
+
+func (x *RoomUseToolReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[50]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseToolReq.ProtoReflect.Descriptor instead.
+func (*RoomUseToolReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{50}
+}
+
+//返回使用道具(客户端是否需要？)
+type RoomUseToolResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseToolResp) Reset() {
+	*x = RoomUseToolResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseToolResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseToolResp) ProtoMessage() {}
+
+func (x *RoomUseToolResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseToolResp.ProtoReflect.Descriptor instead.
+func (*RoomUseToolResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{51}
+}
+
+//推送使用道具
+type RoomUseToolPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomUseToolPush) Reset() {
+	*x = RoomUseToolPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[52]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomUseToolPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomUseToolPush) ProtoMessage() {}
+
+func (x *RoomUseToolPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[52]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomUseToolPush.ProtoReflect.Descriptor instead.
+func (*RoomUseToolPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{52}
+}
+
+//推送可用道具
+type RoomActiveToolPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomActiveToolPush) Reset() {
+	*x = RoomActiveToolPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[53]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomActiveToolPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomActiveToolPush) ProtoMessage() {}
+
+func (x *RoomActiveToolPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[53]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomActiveToolPush.ProtoReflect.Descriptor instead.
+func (*RoomActiveToolPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{53}
+}
+
+//请求进入下一阶段
+type RoomSkipStageReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSkipStageReq) Reset() {
+	*x = RoomSkipStageReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[54]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSkipStageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSkipStageReq) ProtoMessage() {}
+
+func (x *RoomSkipStageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[54]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSkipStageReq.ProtoReflect.Descriptor instead.
+func (*RoomSkipStageReq) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{54}
+}
+
+//返回进入下一阶段
+type RoomSkipStageResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSkipStageResp) Reset() {
+	*x = RoomSkipStageResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSkipStageResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSkipStageResp) ProtoMessage() {}
+
+func (x *RoomSkipStageResp) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSkipStageResp.ProtoReflect.Descriptor instead.
+func (*RoomSkipStageResp) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{55}
+}
+
+//推送进入下一阶段
+type RoomSkipStagePush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomSkipStagePush) Reset() {
+	*x = RoomSkipStagePush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[56]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomSkipStagePush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomSkipStagePush) ProtoMessage() {}
+
+func (x *RoomSkipStagePush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[56]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomSkipStagePush.ProtoReflect.Descriptor instead.
+func (*RoomSkipStagePush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{56}
+}
+
+//推送占卜球的进度
+type RoomRewardBallPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomRewardBallPush) Reset() {
+	*x = RoomRewardBallPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[57]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomRewardBallPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomRewardBallPush) ProtoMessage() {}
+
+func (x *RoomRewardBallPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[57]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomRewardBallPush.ProtoReflect.Descriptor instead.
+func (*RoomRewardBallPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{57}
+}
+
+//推送操作记录
+type RoomOperateRecordPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomOperateRecordPush) Reset() {
+	*x = RoomOperateRecordPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomOperateRecordPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomOperateRecordPush) ProtoMessage() {}
+
+func (x *RoomOperateRecordPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomOperateRecordPush.ProtoReflect.Descriptor instead.
+func (*RoomOperateRecordPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{58}
+}
+
+//推送游戏结束
+type RoomGameOverPush struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RoomGameOverPush) Reset() {
+	*x = RoomGameOverPush{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RoomGameOverPush) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomGameOverPush) ProtoMessage() {}
+
+func (x *RoomGameOverPush) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomGameOverPush.ProtoReflect.Descriptor instead.
+func (*RoomGameOverPush) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{59}
+}
+
 var File_client_client_proto protoreflect.FileDescriptor
 
 var file_client_client_proto_rawDesc = []byte{
@@ -1033,125 +2830,248 @@ var file_client_client_proto_rawDesc = []byte{
 	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x1a, 0x13, 0x65, 0x72, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x2f,
 	0x65, 0x72, 0x72, 0x6f, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x13, 0x63, 0x6f, 0x6d,
 	0x6d, 0x6f, 0x6e, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x22, 0x72, 0x0a, 0x09, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x2f, 0x0a,
-	0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1b, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x65, 0x72, 0x72, 0x63, 0x6f, 0x64, 0x65, 0x2e, 0x45,
-	0x72, 0x72, 0x6f, 0x72, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x34,
-	0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0e, 0x32, 0x13, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63,
-	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x43, 0x50, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
-	0x6f, 0x6c, 0x49, 0x64, 0x22, 0x38, 0x0a, 0x0b, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x4b, 0x65, 0x79,
-	0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x10, 0x0a, 0x03,
-	0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x29,
-	0x0a, 0x0e, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x4c, 0x6f, 0x62, 0x62, 0x79, 0x52, 0x65, 0x73, 0x70,
-	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x3c, 0x0a, 0x0d, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73,
-	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65,
-	0x72, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x22, 0x3a, 0x0a, 0x0b, 0x4a, 0x6f, 0x69, 0x6e, 0x52,
-	0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x72, 0x6f, 0x6f, 0x6d, 0x5f, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72, 0x6f, 0x6f, 0x6d, 0x49, 0x64, 0x12,
-	0x12, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x6d,
-	0x6f, 0x64, 0x65, 0x22, 0x3e, 0x0a, 0x0d, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x52, 0x65, 0x71, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0e, 0x32, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f, 0x64, 0x65, 0x52, 0x04, 0x6d,
-	0x6f, 0x64, 0x65, 0x22, 0x6b, 0x0a, 0x09, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x57, 0x61, 0x69, 0x74,
-	0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x19,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f, 0x64, 0x65, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x12,
-	0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05,
-	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x72, 0x65, 0x5f, 0x74, 0x69, 0x6d,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x70, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65,
-	0x22, 0x10, 0x0a, 0x0e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52,
-	0x65, 0x71, 0x22, 0x23, 0x0a, 0x0f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x22, 0x87, 0x01, 0x0a, 0x0c, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65,
+	0x22, 0x76, 0x0a, 0x0d, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x12, 0x2f, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x65, 0x72, 0x72, 0x63, 0x6f,
+	0x64, 0x65, 0x2e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x63, 0x6f,
+	0x64, 0x65, 0x12, 0x34, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x13, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
+	0x6f, 0x6c, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x43, 0x50, 0x52, 0x0a, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x49, 0x64, 0x22, 0x38, 0x0a, 0x0b, 0x56, 0x61, 0x6c, 0x69,
+	0x64, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
+	0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b,
+	0x65, 0x79, 0x22, 0x29, 0x0a, 0x0e, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x4c, 0x6f, 0x62, 0x62, 0x79,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x3c, 0x0a,
+	0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x17,
+	0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x22, 0x3a, 0x0a, 0x0b, 0x4a,
+	0x6f, 0x69, 0x6e, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x72, 0x6f,
+	0x6f, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72, 0x6f, 0x6f,
+	0x6d, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x22, 0x3e, 0x0a, 0x0d, 0x45, 0x6e, 0x74, 0x65, 0x72,
+	0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f,
 	0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f, 0x64,
-	0x65, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x12, 0x2b, 0x0a, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73,
-	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f,
-	0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05, 0x68,
-	0x65, 0x72, 0x6f, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x76, 0x65, 0x72, 0x5f, 0x74, 0x69, 0x6d,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x6f, 0x76, 0x65, 0x72, 0x54, 0x69, 0x6d,
-	0x65, 0x22, 0x25, 0x0a, 0x0b, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64,
-	0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0x2d, 0x0a, 0x12, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x17,
-	0x0a, 0x07, 0x68, 0x65, 0x72, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x06, 0x68, 0x65, 0x72, 0x6f, 0x49, 0x64, 0x22, 0x48, 0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68,
-	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10,
+	0x65, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x22, 0x70, 0x0a, 0x0e, 0x45, 0x6e, 0x74, 0x65, 0x72,
+	0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
+	0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f,
+	0x64, 0x65, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x19,
+	0x0a, 0x08, 0x70, 0x72, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x07, 0x70, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x61, 0x6e,
+	0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x22, 0x23, 0x0a, 0x0f, 0x43,
+	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10,
 	0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63,
-	0x12, 0x1f, 0x0a, 0x0b, 0x66, 0x61, 0x69, 0x6c, 0x5f, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x66, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x61, 0x73, 0x6f,
-	0x6e, 0x22, 0x16, 0x0a, 0x14, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x55, 0x6e, 0x53, 0x65, 0x6c, 0x65,
-	0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x71, 0x22, 0x4a, 0x0a, 0x15, 0x4d, 0x61, 0x74,
-	0x63, 0x68, 0x55, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65,
-	0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x03, 0x73, 0x75, 0x63, 0x12, 0x1f, 0x0a, 0x0b, 0x66, 0x61, 0x69, 0x6c, 0x5f, 0x72, 0x65, 0x61,
-	0x73, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x66, 0x61, 0x69, 0x6c, 0x52,
-	0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0xc3, 0x01, 0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53,
-	0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75, 0x73, 0x68, 0x12, 0x45, 0x0a,
-	0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x4d,
-	0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75,
-	0x73, 0x68, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x69,
-	0x6e, 0x66, 0x6f, 0x73, 0x12, 0x2b, 0x0a, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73, 0x18, 0x02, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05, 0x68, 0x65, 0x72, 0x6f,
-	0x73, 0x1a, 0x38, 0x0a, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12,
-	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65,
-	0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xac, 0x01, 0x0a, 0x12,
-	0x52, 0x6f, 0x6f, 0x6d, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x75,
-	0x73, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x6f, 0x6f, 0x6d, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x05, 0x52, 0x06, 0x72, 0x6f, 0x6f, 0x6d, 0x49, 0x64, 0x12, 0x44, 0x0a, 0x05, 0x69, 0x6e,
-	0x66, 0x6f, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x52, 0x6f, 0x6f, 0x6d,
-	0x45, 0x6e, 0x74, 0x65, 0x72, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x75, 0x73, 0x68, 0x2e, 0x49,
-	0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73,
-	0x1a, 0x38, 0x0a, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10,
-	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79,
-	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x2a, 0xf5, 0x03, 0x0a, 0x02, 0x43,
-	0x50, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x10, 0x00, 0x12, 0x13,
-	0x0a, 0x0f, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x5f, 0x43, 0x6f, 0x64, 0x65, 0x5f, 0x52, 0x65, 0x73,
-	0x70, 0x10, 0x01, 0x12, 0x11, 0x0a, 0x0d, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x4b, 0x65, 0x79,
-	0x5f, 0x52, 0x65, 0x71, 0x10, 0x02, 0x12, 0x11, 0x0a, 0x0d, 0x4b, 0x69, 0x63, 0x6b, 0x5f, 0x4f,
-	0x75, 0x74, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x03, 0x12, 0x12, 0x0a, 0x0e, 0x48, 0x65, 0x61,
-	0x72, 0x74, 0x5f, 0x50, 0x69, 0x6e, 0x67, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x0a, 0x12, 0x13, 0x0a,
-	0x0f, 0x48, 0x65, 0x61, 0x72, 0x74, 0x5f, 0x50, 0x69, 0x6e, 0x67, 0x5f, 0x52, 0x65, 0x73, 0x70,
-	0x10, 0x0b, 0x12, 0x14, 0x0a, 0x10, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4c, 0x6f, 0x62, 0x62,
-	0x79, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x65, 0x12, 0x13, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x5f, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x66, 0x12, 0x14, 0x0a,
-	0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x73,
-	0x70, 0x10, 0x67, 0x12, 0x11, 0x0a, 0x0d, 0x4a, 0x6f, 0x69, 0x6e, 0x5f, 0x52, 0x6f, 0x6f, 0x6d,
-	0x5f, 0x52, 0x65, 0x71, 0x10, 0x68, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f,
-	0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x69, 0x12, 0x14, 0x0a, 0x10, 0x45,
-	0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10,
-	0x6a, 0x12, 0x14, 0x0a, 0x10, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x6b, 0x12, 0x15, 0x0a, 0x11, 0x43, 0x61, 0x6e, 0x63, 0x65,
-	0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x6c, 0x12, 0x12,
-	0x0a, 0x0e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x75, 0x63, 0x5f, 0x50, 0x75, 0x73, 0x68,
-	0x10, 0x6d, 0x12, 0x13, 0x0a, 0x0f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x46, 0x61, 0x69, 0x6c,
-	0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x6e, 0x12, 0x1a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68,
-	0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71,
-	0x10, 0xc9, 0x01, 0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c,
-	0x65, 0x63, 0x74, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xca, 0x01,
-	0x12, 0x1a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c,
-	0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xcb, 0x01, 0x12, 0x1b, 0x0a, 0x16,
-	0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x48, 0x65, 0x72,
-	0x6f, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xcc, 0x01, 0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74,
-	0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x49, 0x6e, 0x66, 0x6f, 0x5f, 0x50,
-	0x75, 0x73, 0x68, 0x10, 0xcd, 0x01, 0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x45,
-	0x6e, 0x74, 0x65, 0x72, 0x5f, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10,
-	0xad, 0x02, 0x42, 0x32, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x57, 0x61, 0x79, 0x6c, 0x6f, 0x6e, 0x31, 0x39, 0x39, 0x31, 0x2f, 0x4b, 0x69, 0x6e, 0x67,
-	0x64, 0x6f, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x3b,
-	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x87, 0x01, 0x0a, 0x0c, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x75, 0x63, 0x50, 0x75, 0x73,
+	0x68, 0x12, 0x2d, 0x0a, 0x04, 0x6d, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x4d, 0x6f, 0x64, 0x65, 0x52, 0x04, 0x6d, 0x6f, 0x64, 0x65,
+	0x12, 0x2b, 0x0a, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x15, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73, 0x12, 0x1b, 0x0a,
+	0x09, 0x6f, 0x76, 0x65, 0x72, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x08, 0x6f, 0x76, 0x65, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x27, 0x0a, 0x0d, 0x4d, 0x61,
+	0x74, 0x63, 0x68, 0x46, 0x61, 0x69, 0x6c, 0x50, 0x75, 0x73, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x72,
+	0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61,
+	0x73, 0x6f, 0x6e, 0x22, 0x2d, 0x0a, 0x12, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65,
+	0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x68, 0x65, 0x72,
+	0x6f, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x68, 0x65, 0x72, 0x6f,
+	0x49, 0x64, 0x22, 0x48, 0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63,
+	0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x12, 0x1f, 0x0a, 0x0b, 0x66,
+	0x61, 0x69, 0x6c, 0x5f, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x66, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0x16, 0x0a, 0x14,
+	0x4d, 0x61, 0x74, 0x63, 0x68, 0x55, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72,
+	0x6f, 0x52, 0x65, 0x71, 0x22, 0x4a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x55, 0x6e, 0x53,
+	0x65, 0x6c, 0x65, 0x63, 0x74, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a,
+	0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x12,
+	0x1f, 0x0a, 0x0b, 0x66, 0x61, 0x69, 0x6c, 0x5f, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x66, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e,
+	0x22, 0xc3, 0x01, 0x0a, 0x13, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75, 0x73, 0x68, 0x12, 0x45, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
+	0x6f, 0x6c, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53,
+	0x65, 0x6c, 0x65, 0x63, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75, 0x73, 0x68, 0x2e, 0x49, 0x6e,
+	0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x12,
+	0x2b, 0x0a, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x2e, 0x48, 0x65, 0x72, 0x6f, 0x52, 0x05, 0x68, 0x65, 0x72, 0x6f, 0x73, 0x1a, 0x38, 0x0a, 0x0a,
+	0x49, 0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65,
+	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xac, 0x01, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x45,
+	0x6e, 0x74, 0x65, 0x72, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x75, 0x73, 0x68, 0x12, 0x16, 0x0a,
+	0x06, 0x72, 0x6f, 0x6f, 0x6d, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72,
+	0x6f, 0x6f, 0x6d, 0x49, 0x64, 0x12, 0x44, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x02,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x45, 0x6e, 0x74, 0x65, 0x72,
+	0x54, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x75, 0x73, 0x68, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x45,
+	0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x1a, 0x38, 0x0a, 0x0a, 0x49,
+	0x6e, 0x66, 0x6f, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x0d, 0x0a, 0x0b, 0x4b, 0x69, 0x63, 0x6b, 0x4f, 0x75, 0x74,
+	0x50, 0x75, 0x73, 0x68, 0x22, 0x0e, 0x0a, 0x0c, 0x48, 0x65, 0x61, 0x72, 0x74, 0x50, 0x69, 0x6e,
+	0x67, 0x52, 0x65, 0x71, 0x22, 0x0f, 0x0a, 0x0d, 0x48, 0x65, 0x61, 0x72, 0x74, 0x50, 0x69, 0x6e,
+	0x67, 0x52, 0x65, 0x73, 0x70, 0x22, 0x13, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x47, 0x61, 0x6d, 0x65, 0x50, 0x75, 0x73, 0x68, 0x22, 0x18, 0x0a, 0x16, 0x52, 0x6f,
+	0x6f, 0x6d, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x53, 0x65, 0x6e, 0x64, 0x43, 0x61, 0x72, 0x64,
+	0x50, 0x75, 0x73, 0x68, 0x22, 0x15, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75, 0x73, 0x68, 0x22, 0x10, 0x0a, 0x0e, 0x52,
+	0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x42, 0x75, 0x66, 0x66, 0x52, 0x65, 0x71, 0x22, 0x11, 0x0a,
+	0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x42, 0x75, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70,
+	0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x4c, 0x6f, 0x73, 0x65, 0x42, 0x75, 0x66, 0x66,
+	0x50, 0x75, 0x73, 0x68, 0x22, 0x14, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x62, 0x74, 0x61,
+	0x69, 0x6e, 0x42, 0x75, 0x66, 0x66, 0x50, 0x75, 0x73, 0x68, 0x22, 0x10, 0x0a, 0x0e, 0x52, 0x6f,
+	0x6f, 0x6d, 0x4f, 0x75, 0x74, 0x43, 0x61, 0x72, 0x64, 0x52, 0x65, 0x71, 0x22, 0x11, 0x0a, 0x0f,
+	0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x75, 0x74, 0x43, 0x61, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x22,
+	0x11, 0x0a, 0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x75, 0x74, 0x43, 0x61, 0x72, 0x64, 0x50, 0x75,
+	0x73, 0x68, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x4c, 0x6f, 0x73, 0x65, 0x43, 0x61,
+	0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x22, 0x14, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x62,
+	0x74, 0x61, 0x69, 0x6e, 0x43, 0x61, 0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x22, 0x11, 0x0a, 0x0f,
+	0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x65, 0x6c, 0x6c, 0x43, 0x61, 0x72, 0x64, 0x52, 0x65, 0x71, 0x22,
+	0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x65, 0x6c, 0x6c, 0x43, 0x61, 0x72, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x4c, 0x65, 0x66, 0x74, 0x43,
+	0x61, 0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x22, 0x11, 0x0a, 0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x55,
+	0x73, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x52, 0x65, 0x71, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f,
+	0x6f, 0x6d, 0x55, 0x73, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x12,
+	0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x75,
+	0x73, 0x68, 0x22, 0x16, 0x0a, 0x14, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x70, 0x67, 0x72, 0x61, 0x64,
+	0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x75, 0x73, 0x68, 0x22, 0x15, 0x0a, 0x13, 0x52, 0x6f,
+	0x6f, 0x6d, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x75, 0x73,
+	0x68, 0x22, 0x11, 0x0a, 0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x6f, 0x6c, 0x6c, 0x44, 0x69, 0x63,
+	0x65, 0x52, 0x65, 0x71, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x6f, 0x6c, 0x6c,
+	0x44, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f, 0x6d,
+	0x52, 0x6f, 0x6c, 0x6c, 0x44, 0x69, 0x63, 0x65, 0x50, 0x75, 0x73, 0x68, 0x22, 0x13, 0x0a, 0x11,
+	0x52, 0x6f, 0x6f, 0x6d, 0x47, 0x69, 0x76, 0x65, 0x55, 0x70, 0x44, 0x69, 0x63, 0x65, 0x52, 0x65,
+	0x71, 0x22, 0x14, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x47, 0x69, 0x76, 0x65, 0x55, 0x70, 0x44,
+	0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x14, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x47,
+	0x69, 0x76, 0x65, 0x55, 0x70, 0x44, 0x69, 0x63, 0x65, 0x50, 0x75, 0x73, 0x68, 0x22, 0x15, 0x0a,
+	0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x62, 0x74, 0x61, 0x69, 0x6e, 0x42, 0x6c, 0x6f, 0x6f, 0x64,
+	0x50, 0x75, 0x73, 0x68, 0x22, 0x13, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x4c, 0x6f, 0x73, 0x65,
+	0x42, 0x6c, 0x6f, 0x6f, 0x64, 0x50, 0x75, 0x73, 0x68, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f, 0x6f,
+	0x6d, 0x4f, 0x62, 0x74, 0x61, 0x69, 0x6e, 0x43, 0x50, 0x50, 0x75, 0x73, 0x68, 0x22, 0x10, 0x0a,
+	0x0e, 0x52, 0x6f, 0x6f, 0x6d, 0x4c, 0x6f, 0x73, 0x65, 0x43, 0x50, 0x50, 0x75, 0x73, 0x68, 0x22,
+	0x10, 0x0a, 0x0e, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x54, 0x6f, 0x6f, 0x6c, 0x52, 0x65,
+	0x71, 0x22, 0x11, 0x0a, 0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x54, 0x6f, 0x6f, 0x6c,
+	0x52, 0x65, 0x73, 0x70, 0x22, 0x11, 0x0a, 0x0f, 0x52, 0x6f, 0x6f, 0x6d, 0x55, 0x73, 0x65, 0x54,
+	0x6f, 0x6f, 0x6c, 0x50, 0x75, 0x73, 0x68, 0x22, 0x14, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x41,
+	0x63, 0x74, 0x69, 0x76, 0x65, 0x54, 0x6f, 0x6f, 0x6c, 0x50, 0x75, 0x73, 0x68, 0x22, 0x12, 0x0a,
+	0x10, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x6b, 0x69, 0x70, 0x53, 0x74, 0x61, 0x67, 0x65, 0x52, 0x65,
+	0x71, 0x22, 0x13, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x6b, 0x69, 0x70, 0x53, 0x74, 0x61,
+	0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x13, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x6b,
+	0x69, 0x70, 0x53, 0x74, 0x61, 0x67, 0x65, 0x50, 0x75, 0x73, 0x68, 0x22, 0x14, 0x0a, 0x12, 0x52,
+	0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x42, 0x61, 0x6c, 0x6c, 0x50, 0x75, 0x73,
+	0x68, 0x22, 0x17, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x6f,
+	0x6f, 0x6d, 0x47, 0x61, 0x6d, 0x65, 0x4f, 0x76, 0x65, 0x72, 0x50, 0x75, 0x73, 0x68, 0x2a, 0xb0,
+	0x0c, 0x0a, 0x02, 0x43, 0x50, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74,
+	0x10, 0x00, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x5f, 0x43, 0x6f, 0x64, 0x65,
+	0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x01, 0x12, 0x11, 0x0a, 0x0d, 0x56, 0x61, 0x6c, 0x69, 0x64,
+	0x5f, 0x4b, 0x65, 0x79, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x02, 0x12, 0x11, 0x0a, 0x0d, 0x4b, 0x69,
+	0x63, 0x6b, 0x5f, 0x4f, 0x75, 0x74, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x03, 0x12, 0x12, 0x0a,
+	0x0e, 0x48, 0x65, 0x61, 0x72, 0x74, 0x5f, 0x50, 0x69, 0x6e, 0x67, 0x5f, 0x52, 0x65, 0x71, 0x10,
+	0x0a, 0x12, 0x13, 0x0a, 0x0f, 0x48, 0x65, 0x61, 0x72, 0x74, 0x5f, 0x50, 0x69, 0x6e, 0x67, 0x5f,
+	0x52, 0x65, 0x73, 0x70, 0x10, 0x0b, 0x12, 0x15, 0x0a, 0x10, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f,
+	0x4c, 0x6f, 0x62, 0x62, 0x79, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xe9, 0x07, 0x12, 0x14, 0x0a,
+	0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x71,
+	0x10, 0xea, 0x07, 0x12, 0x15, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f, 0x52, 0x6f,
+	0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xeb, 0x07, 0x12, 0x12, 0x0a, 0x0d, 0x4a, 0x6f,
+	0x69, 0x6e, 0x5f, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xec, 0x07, 0x12, 0x14,
+	0x0a, 0x0f, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65,
+	0x71, 0x10, 0xed, 0x07, 0x12, 0x15, 0x0a, 0x10, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x4d, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xee, 0x07, 0x12, 0x15, 0x0a, 0x10, 0x43,
+	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x52, 0x65, 0x71, 0x10,
+	0xef, 0x07, 0x12, 0x16, 0x0a, 0x11, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f, 0x4d, 0x61, 0x74,
+	0x63, 0x68, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xf0, 0x07, 0x12, 0x13, 0x0a, 0x0e, 0x4d, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x53, 0x75, 0x63, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xf1, 0x07, 0x12,
+	0x14, 0x0a, 0x0f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x46, 0x61, 0x69, 0x6c, 0x5f, 0x50, 0x75,
+	0x73, 0x68, 0x10, 0xcc, 0x08, 0x12, 0x1a, 0x0a, 0x15, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53,
+	0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xd1,
+	0x0f, 0x12, 0x1b, 0x0a, 0x16, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63,
+	0x74, 0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xd2, 0x0f, 0x12, 0x1c,
+	0x0a, 0x17, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x55, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74,
+	0x5f, 0x48, 0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xd3, 0x0f, 0x12, 0x1d, 0x0a, 0x18,
+	0x4d, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x55, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x48,
+	0x65, 0x72, 0x6f, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xd4, 0x0f, 0x12, 0x1b, 0x0a, 0x16, 0x4d,
+	0x61, 0x74, 0x63, 0x68, 0x5f, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x5f, 0x49, 0x6e, 0x66, 0x6f,
+	0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xd5, 0x0f, 0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d,
+	0x5f, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x5f, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x50, 0x75, 0x73,
+	0x68, 0x10, 0xb9, 0x17, 0x12, 0x19, 0x0a, 0x14, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x5f, 0x47, 0x61, 0x6d, 0x65, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xba, 0x17, 0x12,
+	0x1f, 0x0a, 0x1a, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x5f, 0x53,
+	0x65, 0x6e, 0x64, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xbb, 0x17,
+	0x12, 0x1b, 0x0a, 0x16, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x65,
+	0x5f, 0x49, 0x6e, 0x66, 0x6f, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xbc, 0x17, 0x12, 0x16, 0x0a,
+	0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x73, 0x65, 0x5f, 0x42, 0x75, 0x66, 0x66, 0x5f, 0x52,
+	0x65, 0x71, 0x10, 0x9c, 0x18, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x73,
+	0x65, 0x5f, 0x42, 0x75, 0x66, 0x66, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0x9d, 0x18, 0x12, 0x18,
+	0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4c, 0x6f, 0x73, 0x65, 0x5f, 0x42, 0x75, 0x66, 0x66,
+	0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x9e, 0x18, 0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d,
+	0x5f, 0x4f, 0x62, 0x74, 0x61, 0x69, 0x6e, 0x5f, 0x42, 0x75, 0x66, 0x66, 0x5f, 0x50, 0x75, 0x73,
+	0x68, 0x10, 0x9f, 0x18, 0x12, 0x16, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x75, 0x74,
+	0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x80, 0x19, 0x12, 0x17, 0x0a, 0x12,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x75, 0x74, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x52, 0x65,
+	0x73, 0x70, 0x10, 0x81, 0x19, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x75,
+	0x74, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x82, 0x19, 0x12, 0x18,
+	0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4c, 0x6f, 0x73, 0x65, 0x5f, 0x43, 0x61, 0x72, 0x64,
+	0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x83, 0x19, 0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d,
+	0x5f, 0x4f, 0x62, 0x74, 0x61, 0x69, 0x6e, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x50, 0x75, 0x73,
+	0x68, 0x10, 0x84, 0x19, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x65, 0x6c,
+	0x6c, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x85, 0x19, 0x12, 0x18, 0x0a,
+	0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x65, 0x6c, 0x6c, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f,
+	0x52, 0x65, 0x73, 0x70, 0x10, 0x86, 0x19, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f,
+	0x4c, 0x65, 0x66, 0x74, 0x5f, 0x43, 0x61, 0x72, 0x64, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x87,
+	0x19, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x73, 0x65, 0x5f, 0x53, 0x6b,
+	0x69, 0x6c, 0x6c, 0x5f, 0x52, 0x65, 0x71, 0x10, 0xe4, 0x19, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f,
+	0x6f, 0x6d, 0x5f, 0x55, 0x73, 0x65, 0x5f, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x52, 0x65, 0x73,
+	0x70, 0x10, 0xe5, 0x19, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x73, 0x65,
+	0x5f, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xe6, 0x19, 0x12, 0x1c,
+	0x0a, 0x17, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x70, 0x67, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x53,
+	0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xe7, 0x19, 0x12, 0x1b, 0x0a, 0x16,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x5f, 0x53, 0x6b, 0x69, 0x6c,
+	0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xe8, 0x19, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f,
+	0x6d, 0x5f, 0x52, 0x6f, 0x6c, 0x6c, 0x5f, 0x44, 0x69, 0x63, 0x65, 0x5f, 0x52, 0x65, 0x71, 0x10,
+	0xc8, 0x1a, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x6f, 0x6c, 0x6c, 0x5f,
+	0x44, 0x69, 0x63, 0x65, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xc9, 0x1a, 0x12, 0x18, 0x0a, 0x13,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x6f, 0x6c, 0x6c, 0x5f, 0x44, 0x69, 0x63, 0x65, 0x5f, 0x50,
+	0x75, 0x73, 0x68, 0x10, 0xca, 0x1a, 0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x47,
+	0x69, 0x76, 0x65, 0x5f, 0x55, 0x70, 0x5f, 0x44, 0x69, 0x63, 0x65, 0x5f, 0x52, 0x65, 0x71, 0x10,
+	0xcb, 0x1a, 0x12, 0x1b, 0x0a, 0x16, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x47, 0x69, 0x76, 0x65, 0x5f,
+	0x55, 0x70, 0x5f, 0x44, 0x69, 0x63, 0x65, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xcc, 0x1a, 0x12,
+	0x1b, 0x0a, 0x16, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x47, 0x69, 0x76, 0x65, 0x5f, 0x55, 0x70, 0x5f,
+	0x44, 0x69, 0x63, 0x65, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xcd, 0x1a, 0x12, 0x1b, 0x0a, 0x16,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x62, 0x74, 0x61, 0x69, 0x6e, 0x5f, 0x42, 0x6c, 0x6f, 0x6f,
+	0x64, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xac, 0x1b, 0x12, 0x19, 0x0a, 0x14, 0x52, 0x6f, 0x6f,
+	0x6d, 0x5f, 0x4c, 0x6f, 0x73, 0x65, 0x5f, 0x42, 0x6c, 0x6f, 0x6f, 0x64, 0x5f, 0x50, 0x75, 0x73,
+	0x68, 0x10, 0xad, 0x1b, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4f, 0x62, 0x74,
+	0x61, 0x69, 0x6e, 0x5f, 0x43, 0x50, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xae, 0x1b, 0x12, 0x16,
+	0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x4c, 0x6f, 0x73, 0x65, 0x5f, 0x43, 0x50, 0x5f, 0x50,
+	0x75, 0x73, 0x68, 0x10, 0xaf, 0x1b, 0x12, 0x16, 0x0a, 0x11, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55,
+	0x73, 0x65, 0x5f, 0x54, 0x6f, 0x6f, 0x6c, 0x5f, 0x52, 0x65, 0x71, 0x10, 0x90, 0x1c, 0x12, 0x17,
+	0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x55, 0x73, 0x65, 0x5f, 0x54, 0x6f, 0x6f, 0x6c, 0x5f,
+	0x52, 0x65, 0x73, 0x70, 0x10, 0x91, 0x1c, 0x12, 0x17, 0x0a, 0x12, 0x52, 0x6f, 0x6f, 0x6d, 0x5f,
+	0x55, 0x73, 0x65, 0x5f, 0x54, 0x6f, 0x6f, 0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x92, 0x1c,
+	0x12, 0x1a, 0x0a, 0x15, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x5f,
+	0x54, 0x6f, 0x6f, 0x6c, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0x93, 0x1c, 0x12, 0x18, 0x0a, 0x13,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x6b, 0x69, 0x70, 0x5f, 0x53, 0x74, 0x61, 0x67, 0x65, 0x5f,
+	0x52, 0x65, 0x71, 0x10, 0xf4, 0x1c, 0x12, 0x19, 0x0a, 0x14, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53,
+	0x6b, 0x69, 0x70, 0x5f, 0x53, 0x74, 0x61, 0x67, 0x65, 0x5f, 0x52, 0x65, 0x73, 0x70, 0x10, 0xf5,
+	0x1c, 0x12, 0x19, 0x0a, 0x14, 0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x53, 0x6b, 0x69, 0x70, 0x5f, 0x53,
+	0x74, 0x61, 0x67, 0x65, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xf6, 0x1c, 0x12, 0x1a, 0x0a, 0x15,
+	0x52, 0x6f, 0x6f, 0x6d, 0x5f, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x5f, 0x42, 0x61, 0x6c, 0x6c,
+	0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xd8, 0x1d, 0x12, 0x1d, 0x0a, 0x18, 0x52, 0x6f, 0x6f, 0x6d,
+	0x5f, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x5f,
+	0x50, 0x75, 0x73, 0x68, 0x10, 0xd9, 0x1d, 0x12, 0x18, 0x0a, 0x13, 0x52, 0x6f, 0x6f, 0x6d, 0x5f,
+	0x47, 0x61, 0x6d, 0x65, 0x5f, 0x4f, 0x76, 0x65, 0x72, 0x5f, 0x50, 0x75, 0x73, 0x68, 0x10, 0xbc,
+	0x1e, 0x42, 0x32, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x57, 0x61, 0x79, 0x6c, 0x6f, 0x6e, 0x31, 0x39, 0x39, 0x31, 0x2f, 0x4b, 0x69, 0x6e, 0x67, 0x64,
+	0x6f, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x3b, 0x63,
+	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1167,42 +3087,85 @@ func file_client_client_proto_rawDescGZIP() []byte {
 }
 
 var file_client_client_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 62)
 var file_client_client_proto_goTypes = []interface{}{
-	(CP)(0),                       // 0: protocol.client.CP
-	(*ErrorCode)(nil),             // 1: protocol.client.ErrorCode
-	(*ValidKeyReq)(nil),           // 2: protocol.client.ValidKeyReq
-	(*EnterLobbyResp)(nil),        // 3: protocol.client.EnterLobbyResp
-	(*CreateRoomReq)(nil),         // 4: protocol.client.CreateRoomReq
-	(*JoinRoomReq)(nil),           // 5: protocol.client.JoinRoomReq
-	(*EnterMatchReq)(nil),         // 6: protocol.client.EnterMatchReq
-	(*MatchWait)(nil),             // 7: protocol.client.MatchWait
-	(*CancelMatchReq)(nil),        // 8: protocol.client.CancelMatchReq
-	(*CancelMatchResp)(nil),       // 9: protocol.client.CancelMatchResp
-	(*MatchSuccess)(nil),          // 10: protocol.client.MatchSuccess
-	(*MatchFailed)(nil),           // 11: protocol.client.MatchFailed
-	(*MatchSelectHeroReq)(nil),    // 12: protocol.client.MatchSelectHeroReq
-	(*MatchSelectHeroResp)(nil),   // 13: protocol.client.MatchSelectHeroResp
-	(*MatchUnSelectHeroReq)(nil),  // 14: protocol.client.MatchUnSelectHeroReq
-	(*MatchUnSelectHeroResp)(nil), // 15: protocol.client.MatchUnSelectHeroResp
-	(*MatchSelectInfoPush)(nil),   // 16: protocol.client.MatchSelectInfoPush
-	(*RoomEnterTablePush)(nil),    // 17: protocol.client.RoomEnterTablePush
-	nil,                           // 18: protocol.client.MatchSelectInfoPush.InfosEntry
-	nil,                           // 19: protocol.client.RoomEnterTablePush.InfosEntry
-	(errcode.ErrorType)(0),        // 20: protocol.errcode.ErrorType
-	(common.RoomMode)(0),          // 21: protocol.common.RoomMode
-	(*common.Hero)(nil),           // 22: protocol.common.Hero
+	(CP)(0),                        // 0: protocol.client.CP
+	(*ErrorCodeResp)(nil),          // 1: protocol.client.ErrorCodeResp
+	(*ValidKeyReq)(nil),            // 2: protocol.client.ValidKeyReq
+	(*EnterLobbyResp)(nil),         // 3: protocol.client.EnterLobbyResp
+	(*CreateRoomReq)(nil),          // 4: protocol.client.CreateRoomReq
+	(*JoinRoomReq)(nil),            // 5: protocol.client.JoinRoomReq
+	(*EnterMatchReq)(nil),          // 6: protocol.client.EnterMatchReq
+	(*EnterMatchResp)(nil),         // 7: protocol.client.EnterMatchResp
+	(*CancelMatchReq)(nil),         // 8: protocol.client.CancelMatchReq
+	(*CancelMatchResp)(nil),        // 9: protocol.client.CancelMatchResp
+	(*MatchSucPush)(nil),           // 10: protocol.client.MatchSucPush
+	(*MatchFailPush)(nil),          // 11: protocol.client.MatchFailPush
+	(*MatchSelectHeroReq)(nil),     // 12: protocol.client.MatchSelectHeroReq
+	(*MatchSelectHeroResp)(nil),    // 13: protocol.client.MatchSelectHeroResp
+	(*MatchUnSelectHeroReq)(nil),   // 14: protocol.client.MatchUnSelectHeroReq
+	(*MatchUnSelectHeroResp)(nil),  // 15: protocol.client.MatchUnSelectHeroResp
+	(*MatchSelectInfoPush)(nil),    // 16: protocol.client.MatchSelectInfoPush
+	(*RoomEnterTablePush)(nil),     // 17: protocol.client.RoomEnterTablePush
+	(*KickOutPush)(nil),            // 18: protocol.client.KickOutPush
+	(*HeartPingReq)(nil),           // 19: protocol.client.HeartPingReq
+	(*HeartPingResp)(nil),          // 20: protocol.client.HeartPingResp
+	(*RoomStartGamePush)(nil),      // 21: protocol.client.RoomStartGamePush
+	(*RoomSystemSendCardPush)(nil), // 22: protocol.client.RoomSystemSendCardPush
+	(*RoomOperateInfoPush)(nil),    // 23: protocol.client.RoomOperateInfoPush
+	(*RoomUseBuffReq)(nil),         // 24: protocol.client.RoomUseBuffReq
+	(*RoomUseBuffResp)(nil),        // 25: protocol.client.RoomUseBuffResp
+	(*RoomLoseBuffPush)(nil),       // 26: protocol.client.RoomLoseBuffPush
+	(*RoomObtainBuffPush)(nil),     // 27: protocol.client.RoomObtainBuffPush
+	(*RoomOutCardReq)(nil),         // 28: protocol.client.RoomOutCardReq
+	(*RoomOutCardResp)(nil),        // 29: protocol.client.RoomOutCardResp
+	(*RoomOutCardPush)(nil),        // 30: protocol.client.RoomOutCardPush
+	(*RoomLoseCardPush)(nil),       // 31: protocol.client.RoomLoseCardPush
+	(*RoomObtainCardPush)(nil),     // 32: protocol.client.RoomObtainCardPush
+	(*RoomSellCardReq)(nil),        // 33: protocol.client.RoomSellCardReq
+	(*RoomSellCardResp)(nil),       // 34: protocol.client.RoomSellCardResp
+	(*RoomLeftCardPush)(nil),       // 35: protocol.client.RoomLeftCardPush
+	(*RoomUseSkillReq)(nil),        // 36: protocol.client.RoomUseSkillReq
+	(*RoomUseSkillResp)(nil),       // 37: protocol.client.RoomUseSkillResp
+	(*RoomUseSkillPush)(nil),       // 38: protocol.client.RoomUseSkillPush
+	(*RoomUpgradeSkillPush)(nil),   // 39: protocol.client.RoomUpgradeSkillPush
+	(*RoomActiveSkillPush)(nil),    // 40: protocol.client.RoomActiveSkillPush
+	(*RoomRollDiceReq)(nil),        // 41: protocol.client.RoomRollDiceReq
+	(*RoomRollDiceResp)(nil),       // 42: protocol.client.RoomRollDiceResp
+	(*RoomRollDicePush)(nil),       // 43: protocol.client.RoomRollDicePush
+	(*RoomGiveUpDiceReq)(nil),      // 44: protocol.client.RoomGiveUpDiceReq
+	(*RoomGiveUpDiceResp)(nil),     // 45: protocol.client.RoomGiveUpDiceResp
+	(*RoomGiveUpDicePush)(nil),     // 46: protocol.client.RoomGiveUpDicePush
+	(*RoomObtainBloodPush)(nil),    // 47: protocol.client.RoomObtainBloodPush
+	(*RoomLoseBloodPush)(nil),      // 48: protocol.client.RoomLoseBloodPush
+	(*RoomObtainCPPush)(nil),       // 49: protocol.client.RoomObtainCPPush
+	(*RoomLoseCPPush)(nil),         // 50: protocol.client.RoomLoseCPPush
+	(*RoomUseToolReq)(nil),         // 51: protocol.client.RoomUseToolReq
+	(*RoomUseToolResp)(nil),        // 52: protocol.client.RoomUseToolResp
+	(*RoomUseToolPush)(nil),        // 53: protocol.client.RoomUseToolPush
+	(*RoomActiveToolPush)(nil),     // 54: protocol.client.RoomActiveToolPush
+	(*RoomSkipStageReq)(nil),       // 55: protocol.client.RoomSkipStageReq
+	(*RoomSkipStageResp)(nil),      // 56: protocol.client.RoomSkipStageResp
+	(*RoomSkipStagePush)(nil),      // 57: protocol.client.RoomSkipStagePush
+	(*RoomRewardBallPush)(nil),     // 58: protocol.client.RoomRewardBallPush
+	(*RoomOperateRecordPush)(nil),  // 59: protocol.client.RoomOperateRecordPush
+	(*RoomGameOverPush)(nil),       // 60: protocol.client.RoomGameOverPush
+	nil,                            // 61: protocol.client.MatchSelectInfoPush.InfosEntry
+	nil,                            // 62: protocol.client.RoomEnterTablePush.InfosEntry
+	(errcode.ErrorType)(0),         // 63: protocol.errcode.ErrorType
+	(common.RoomMode)(0),           // 64: protocol.common.RoomMode
+	(*common.Hero)(nil),            // 65: protocol.common.Hero
 }
 var file_client_client_proto_depIdxs = []int32{
-	20, // 0: protocol.client.ErrorCode.code:type_name -> protocol.errcode.ErrorType
-	0,  // 1: protocol.client.ErrorCode.protocol_id:type_name -> protocol.client.CP
-	21, // 2: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
-	21, // 3: protocol.client.MatchWait.mode:type_name -> protocol.common.RoomMode
-	21, // 4: protocol.client.MatchSuccess.mode:type_name -> protocol.common.RoomMode
-	22, // 5: protocol.client.MatchSuccess.heros:type_name -> protocol.common.Hero
-	18, // 6: protocol.client.MatchSelectInfoPush.infos:type_name -> protocol.client.MatchSelectInfoPush.InfosEntry
-	22, // 7: protocol.client.MatchSelectInfoPush.heros:type_name -> protocol.common.Hero
-	19, // 8: protocol.client.RoomEnterTablePush.infos:type_name -> protocol.client.RoomEnterTablePush.InfosEntry
+	63, // 0: protocol.client.ErrorCodeResp.code:type_name -> protocol.errcode.ErrorType
+	0,  // 1: protocol.client.ErrorCodeResp.protocol_id:type_name -> protocol.client.CP
+	64, // 2: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
+	64, // 3: protocol.client.EnterMatchResp.mode:type_name -> protocol.common.RoomMode
+	64, // 4: protocol.client.MatchSucPush.mode:type_name -> protocol.common.RoomMode
+	65, // 5: protocol.client.MatchSucPush.heros:type_name -> protocol.common.Hero
+	61, // 6: protocol.client.MatchSelectInfoPush.infos:type_name -> protocol.client.MatchSelectInfoPush.InfosEntry
+	65, // 7: protocol.client.MatchSelectInfoPush.heros:type_name -> protocol.common.Hero
+	62, // 8: protocol.client.RoomEnterTablePush.infos:type_name -> protocol.client.RoomEnterTablePush.InfosEntry
 	9,  // [9:9] is the sub-list for method output_type
 	9,  // [9:9] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
@@ -1217,7 +3180,7 @@ func file_client_client_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_client_client_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ErrorCode); i {
+			switch v := v.(*ErrorCodeResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1289,7 +3252,7 @@ func file_client_client_proto_init() {
 			}
 		}
 		file_client_client_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MatchWait); i {
+			switch v := v.(*EnterMatchResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1325,7 +3288,7 @@ func file_client_client_proto_init() {
 			}
 		}
 		file_client_client_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MatchSuccess); i {
+			switch v := v.(*MatchSucPush); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1337,7 +3300,7 @@ func file_client_client_proto_init() {
 			}
 		}
 		file_client_client_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MatchFailed); i {
+			switch v := v.(*MatchFailPush); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1420,6 +3383,522 @@ func file_client_client_proto_init() {
 				return nil
 			}
 		}
+		file_client_client_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*KickOutPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*HeartPingReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*HeartPingResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomStartGamePush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSystemSendCardPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomOperateInfoPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseBuffReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseBuffResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomLoseBuffPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomObtainBuffPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomOutCardReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomOutCardResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomOutCardPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomLoseCardPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomObtainCardPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSellCardReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSellCardResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomLeftCardPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseSkillReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseSkillResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseSkillPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUpgradeSkillPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomActiveSkillPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomRollDiceReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomRollDiceResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomRollDicePush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomGiveUpDiceReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomGiveUpDiceResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomGiveUpDicePush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomObtainBloodPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomLoseBloodPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomObtainCPPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomLoseCPPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseToolReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseToolResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomUseToolPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomActiveToolPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSkipStageReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSkipStageResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomSkipStagePush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomRewardBallPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomOperateRecordPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RoomGameOverPush); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1427,7 +3906,7 @@ func file_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_client_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   19,
+			NumMessages:   62,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

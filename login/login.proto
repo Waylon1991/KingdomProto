@@ -10,23 +10,23 @@ option go_package = "github.com/Waylon1991/KingdomProto/login;login";
 
 // The greeting service definition.
 service Login {
-  rpc Login(LoginRequest) returns (LoginReply) {
-    option (google.api.http) = {
-      get: "/login/"
-    };
-  }
+    rpc Login(LoginRequest) returns (LoginReply) {
+        option (google.api.http) = {
+            get: "/login/"
+        };
+    }
 }
 
 message LoginRequest {
-  string login = 1;  //登录类型
-  string name = 2;  //用户名
-  string pwd = 3;  //用户密码
-  string protocol = 4;//协议类型
+    string login    = 1;  //登录类型
+    string name     = 2;  //用户名
+    string pwd      = 3;  //用户密码
+    string protocol = 4;  //协议类型
 }
 
 message LoginReply {
-  errcode.ErrorType error_code = 1; //错误码
-  string key = 2;  //加密字符串
-  string location = 3;  //要连接的地址，ip:port
-  common.User user = 4;  //用户
+    errcode.ErrorType error_code = 1;  //错误码
+    string key                   = 2;  //加密字符串
+    string location              = 3;  //要连接的地址，ip:port
+    common.User user             = 4;  //用户
 }
