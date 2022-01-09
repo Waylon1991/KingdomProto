@@ -8,32 +8,125 @@ package protocol.room;
 option go_package = "github.com/Waylon1991/KingdomProto/room;room";
 
 service Room {
-  rpc NewRoom(NewRoomRequest) returns (NewRoomReply);
-  rpc RoomInfo(RoomInfoRequest) returns (RoomInfoReply);
+    rpc NewRoom(NewRoomRequest) returns (NewRoomReply);     //创建新房
+    rpc RoomInfo(RoomInfoRequest) returns (RoomInfoReply);  //请求房间信息
+
+    rpc UseBuff(UseBuffRequest) returns (UseBuffReply);           //使用buff
+    rpc OutCard(OutCardRequest) returns (OutCardReply);           //出牌
+    rpc SellCard(SellCardRequest) returns (SellCardReply);        //售牌
+    rpc UseSkill(UseSkillRequest) returns (UseSkillReply);        //技能
+    rpc RollDice(RollDiceRequest) returns (RollDiceReply);        //骰子
+    rpc GiveUpDice(GiveUpDiceRequest) returns (GiveUpDiceReply);  //放弃扔骰子
+    rpc UseTool(UseToolRequest) returns (UseToolReply);           //使用道具
+    rpc SkipStage(SkipStageRequest) returns (SkipStageReply);     //跳过阶段
+}
+
+//玩家信息
+message RoomPlayerChange {
+    int32 user_id                           = 1;   //玩家id
+    int32 seat                              = 2;   //玩家座位号
+    int32 blood                             = 3;   //变化的血量数
+    int32 cp                                = 4;   //变化的战斗点数
+    repeated common.RoomCard obtain_cards   = 5;   //获得的手牌列表
+    repeated common.RoomCard lose_cards     = 6;   //失去的手牌列表
+    repeated common.RoomBuf obtain_buffs    = 7;   //获得的buff列表
+    repeated common.RoomBuf lose_buffs      = 8;   //失去的buff列表
+    repeated common.RoomSkill obtain_skills = 9;   //获得的技能列表
+    repeated common.RoomSkill lose_skills   = 10;  //失去的技能列表
+    int32 left_card                         = 11;  //剩余牌数
+}
+
+//房间信息变化
+message RoomInfoChange {
+    RoomPlayerChange players    = 1;  //玩家信息变化
+    common.RewardBall ball      = 2;  //占卜球信息
+    common.OperateRecord record = 3;  //操作记录信息
 }
 
 //新建房间
 message NewRoomRequest {
-  common.RoomMode mode = 1;//模式
-  map<int32, int32> Infos = 2;//用户选择的英雄信息
-}
-
-//房间基本信息
-message NewRoomReply {
-  int32 room_id = 1;//房间id
-  common.RoomMode mode = 2;//房间模式
-}
-
-//请求房间信息
-message RoomInfoRequest{
-  int32 room_id = 1[(validate.rules).int32.gt = 0];//房间id
-  common.RoomMode mode = 2;//房间模式
+    common.RoomMode mode    = 1;  //模式
+    map<int32, int32> Infos = 2;  //用户选择的英雄信息
 }
 
 //房间信息
-message RoomInfoReply{
-  int32 room_id = 1 ;//房间id
-  common.RoomMode mode = 2;//房间模式
-  map<int32, common.RoomPlayerInfo> players = 3 ; //玩家信息
-  common.OperateInfo operate_info = 4;//操作信息
+message NewRoomReply {
+    common.RoomInfo room_info = 1;  //房间信息
+}
+
+//请求房间信息
+message RoomInfoRequest {
+    int32 room_id = 1 [(validate.rules).int32.gt = 0];  //房间id
+}
+
+//房间信息
+message RoomInfoReply {
+    common.RoomInfo room_info = 1;  //房间信息
+}
+
+//请求使用buff
+message UseBuffRequest {
+    int32 buff_id            = 1;  // buff id
+    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
+    int32 user_id            = 3;  //玩家id
+}
+
+//返回使用buff(客户端是否需要？)
+message UseBuffReply {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
+}
+
+//请求出牌
+message OutCardRequest {
+    int32 buff_id            = 1;  // buff id
+    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
+    int32 user_id            = 3;  //玩家id
+}
+
+//返回打出卡牌(客户端是否需要？)
+message OutCardReply {
+    bool suc = 1;  //是否成功
+}
+
+//请求出售卡牌
+message SellCardRequest {
+    repeated int32 card_ids = 1;  //出售卡牌列表
+    int32 user_id           = 2;  //玩家id
+}
+
+//返回出售卡牌结果
+message SellCardReply {
+    bool suc = 1;  //是否成功
+}
+
+//使用技能
+message UseSkillRequest {
+}
+
+message UseSkillReply {
+}
+
+message RollDiceRequest {
+}
+
+message RollDiceReply {
+}
+
+message GiveUpDiceRequest {
+}
+
+message GiveUpDiceReply {
+}
+
+message UseToolRequest {
+}
+
+message UseToolReply {
+}
+
+message SkipStageRequest {
+}
+
+message SkipStageReply {
 }

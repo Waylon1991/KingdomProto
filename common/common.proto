@@ -48,73 +48,44 @@ message SelectInfo {
     int32 hero_id = 2;  //英雄信息
 }
 
-//-------------------------------room--------------------------------//
-
-// RoomCard 卡牌
-message RoomCard {
-    int32 id        = 1;  //卡牌id
-    CardState state = 2;  //卡牌状态
+//-------------------------------room enum--------------------------------//
+// ActorRace 角色种族
+enum ActorRace {
+    race_qt = 0;  //其他
+    race_rZ = 1;  //人族
+    race_sr = 2;  //兽人
+    race_jl = 3;  //精灵
+    race_sz = 4;  //神族
 }
 
-// CardState 卡牌状态
-enum CardState {
-    card_enabled  = 0;  //可用
-    card_disabled = 1;  //不可用
+// ActorSex 角色性别
+enum ActorSex {
+    sex_woman = 0;  //女性
+    sex_man   = 1;  //男性
 }
 
-// RoomBuf buf
-message RoomBuf {
-    int32 id       = 1;  // buf id
-    int32 num      = 2;  // buf 个数
-    BufState state = 3;  // buf 状态
+// ActorPro 角色职业
+enum ActorPro {
+    pro_other = 0;  //其他
+    pro_sc    = 1;  //输出
+    pro_fs    = 2;  //法师
+    pro_zs    = 3;  //战士
+    pro_tk    = 4;  //坦克
+    pro_ck    = 5;  //刺客
 }
 
-// BufState buf状态
-enum BufState {
-    buf_enabled  = 0;  //可用
-    buf_disabled = 1;  //不可用
+// EffectWay 生效方式
+enum EffectWay {
+    active  = 0;  //主动
+    passive = 1;  //被动
 }
 
-// skill
-message RoomSkill {
-    int32 id         = 1;  //技能 id
-    SkillState state = 2;  //技能状态
-}
-
-// SkillState buf状态
-enum SkillState {
-    skill_enabled  = 0;  //可用
-    skill_disabled = 1;  //不可用
-}
-
-// DiceFaceNumber 筛子数字
-enum DiceFaceNumber {
-    dfn_dice_null = 0;  //非法面值
-    dfn_dice_1    = 1;
-    dfn_dice_2    = 2;
-    dfn_dice_3    = 3;
-    dfn_dice_4    = 4;
-    dfn_dice_5    = 5;
-    dfn_dice_6    = 6;
-}
-
-// DiceFacePic 筛子图案
-enum DiceFacePic {
-    dfn_pic_null = 0;  //非法面值
-    dfn_pic_A    = 1;
-    dfn_pic_B    = 2;
-    dfn_pic_C    = 3;
-}
-
-// DiceFace 筛子面
-message DiceFace {
-    DiceFaceNumber num = 1;
-    DiceFacePic pic    = 2;
-}
-
-// RoomDice 筛子
-message RoomDice {
-    repeated DiceFace df = 1;  //筛子结果
+// HurtKind 伤害类型
+enum HurtKind {
+    hurt_normal = 0;  //普通伤害
+    hurt_real   = 1;  //真实伤害
+    hurt_attach = 2;  //附属伤害
+    hurt_final  = 3;  //终极伤害
 }
 
 // GameStage 游戏阶段
@@ -128,6 +99,135 @@ enum GameStage {
     gs_finish    = 6;  //收尾阶段
 }
 
+// CardKind 卡牌类型
+enum CardKind {
+    card_function = 0;  //功能牌
+    card_upgrade  = 1;  //升级牌
+    card_action   = 2;  //行动牌
+}
+
+// CardLevel 卡牌等级
+enum CardLevel {
+    card_common   = 0;  //普通
+    card_uncommon = 1;  //稀有
+    card_epic     = 2;  //史诗
+    card_legend   = 3;  //传说
+    card_deep     = 4;  //深渊
+}
+
+// CardState 卡牌状态
+enum CardState {
+    card_enabled  = 0;  //可用
+    card_disabled = 1;  //不可用
+}
+
+// CardObject 卡牌对象
+enum CardObject {
+    card_self  = 0;  //自己
+    card_enemy = 1;  //敌人
+    card_all   = 2;  //所有人
+}
+
+// BuffKind buff类型
+enum BuffKind {
+    buff_positive = 0;  //正面
+    buff_negative = 1;  //负面
+}
+
+// BuffState buff状态
+enum BuffState {
+    buff_enabled  = 0;  //可用
+    buff_disabled = 1;  //不可用
+}
+
+// BuffEffect buff效果
+enum BuffEffect {
+    buff_add_control   = 0;   //控制
+    buff_sub_control   = 1;   //解控
+    buff_avoid_control = 2;   //免控
+    buff_add_hurt      = 3;   //增伤
+    buff_sub_hurt      = 4;   //减伤
+    buff_avoid_effect  = 5;   //免伤
+    buff_add_effect    = 6;   //增效
+    buff_sub_effect    = 7;   //减效
+    buff_revive        = 8;   //复活
+    buff_add_defense   = 9;   //增防
+    buff_sub_defense   = 10;  //减防
+}
+
+// BuffLife buff生命周期
+enum BuffLife {
+    buff_single  = 0;  //一次性
+    buff_forever = 1;  //永久
+}
+
+// SkillState 技能状态
+enum SkillState {
+    skill_enabled  = 0;  //可用
+    skill_disabled = 1;  //不可用
+}
+
+// DiceFaceNumber 筛子数字
+enum DiceFaceNumber {
+    dice_number_null = 0;  //非法面值
+    dice_number_1    = 1;
+    dice_number_2    = 2;
+    dice_number_3    = 3;
+    dice_number_4    = 4;
+    dice_number_5    = 5;
+    dice_number_6    = 6;
+}
+
+// DiceFacePic 筛子图案
+enum DiceFacePic {
+    dice_pic_null = 0;  //非法面值
+    dice_pic_A    = 1;
+    dice_pic_B    = 2;
+    dice_pic_C    = 3;
+}
+
+// OperateKind 操作种类
+enum OperateKind {
+    ok_null         = 0;  //空操作
+    ok_skip         = 1;  //跳过该阶段
+    ok_out_card     = 2;  //打出卡牌
+    ok_sell_card    = 3;  //出售卡牌
+    ok_roll_dice    = 4;  //掷骰子
+    ok_send_skill   = 5;  //发动技能
+    ok_trigger_buff = 6;  //触发buff
+}
+
+//-------------------------------room struct--------------------------------//
+// RoomCard 卡牌
+message RoomCard {
+    int32 id        = 1;  //卡牌id
+    CardState state = 2;  //卡牌状态
+}
+
+// RoomBuf buff
+message RoomBuf {
+    int32 id        = 1;  // buff id
+    int32 num       = 2;  // buff 个数
+    BuffState state = 3;  // buff 状态
+}
+
+// skill
+message RoomSkill {
+    int32 id         = 1;  //技能 id
+    SkillState state = 2;  //技能状态
+}
+
+// DiceFace 筛子面
+message DiceFace {
+    DiceFaceNumber num = 1;
+    DiceFacePic pic    = 2;
+}
+
+// RoomDice 筛子
+message RoomDice {
+    repeated DiceFace df = 1;  //筛子结果
+}
+
 //玩家信息
 message RoomPlayerInfo {
     int32 user_id              = 1;   //玩家id
@@ -137,7 +237,7 @@ message RoomPlayerInfo {
     int32 cp                   = 5;   //战斗点数
     repeated RoomCard cards    = 6;   //手牌列表
     repeated RoomCard discards = 7;   //出牌列表
-    repeated RoomBuf bufs      = 8;   // buf列表
+    repeated RoomBuf buffs     = 8;   // buff列表
     repeated RoomSkill skills  = 9;   //技能列表
     repeated RoomDice dices    = 10;  //骰子列表
     int32 left_card            = 11;  //剩余牌数
@@ -157,17 +257,6 @@ message OperateInfo {
     repeated int32 enemy_seats = 2;  //被攻击的玩家座位号
 }
 
-// OperateKind 操作种类
-enum OperateKind {
-    ok_null        = 0;  //空操作
-    ok_skip        = 1;  //跳过该阶段
-    ok_out_card    = 2;  //打出卡牌
-    ok_sell_card   = 3;  //出售卡牌
-    ok_roll_dice   = 4;  //掷骰子
-    ok_send_skill  = 5;  //发动技能
-    ok_trigger_buf = 6;  //触发buf
-}
-
 // OperateRecord 操作记录
 message OperateRecord {
     int32 index      = 1;  //操作序号
@@ -175,7 +264,7 @@ message OperateRecord {
     OperateKind kind = 3;  //操作种类
     RoomCard card    = 4;  //出的牌
     RoomSkill skill  = 5;  //技能
-    RoomBuf buf      = 6;  // buf
+    RoomBuf buff     = 6;  // buff
     RoomDice dice    = 7;  //骰子
 }
 
@@ -183,4 +272,13 @@ message OperateRecord {
 message RewardBall {
     int32 cur_round   = 1;  //当前回合数
     int32 total_round = 2;  //满回合数
+}
+
+//房间基本信息
+message RoomInfo {
+    int32 room_id                   = 1;  //房间id
+    RoomMode mode                   = 2;  //房间模式
+    repeated RoomPlayerInfo players = 3;  //房间玩家信息
+    OperateRecord record            = 4;  //操作记录信息
+    RewardBall ball                 = 5;  //占卜球信息
 }

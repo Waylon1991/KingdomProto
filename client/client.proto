@@ -193,10 +193,7 @@ message MatchSelectInfoPush {
 
 //推送
 message RoomEnterTablePush {
-    int32 roomId                           = 1;  //房间号
-    repeated common.RoomPlayerInfo players = 2;  //房间玩家信息
-    common.RewardBall ball                 = 3;  //占卜球信息
-    common.OperateRecord record            = 4;  //操作记录信息
+    common.RoomInfo info = 1;
 }
 
 //推送游戏开始
@@ -215,7 +212,7 @@ message RoomOperateInfoPush {
 
 //请求使用buff
 message RoomUseBuffReq {
-    int32 buf_id             = 1;  // buf id
+    int32 buff_id            = 1;  // buff id
     repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
 
@@ -227,14 +224,14 @@ message RoomUseBuffResp {
 
 //推送失去 buff
 message RoomLoseBuffPush {
-    int32 seat             = 1;  //失去的 buf 的玩家
-    repeated int32 buf_ids = 2;  //失去的 buf id 列表
+    int32 seat              = 1;  //失去的 buff 的玩家
+    repeated int32 buff_ids = 2;  //失去的 buff id 列表
 }
 
 //推送获得 buff
 message RoomObtainBuffPush {
-    int32 seat             = 1;  //获得的 buf的玩家
-    repeated int32 buf_ids = 2;  //获得的 buf id 列表
+    int32 seat              = 1;  //获得的 buf的玩家
+    repeated int32 buff_ids = 2;  //获得的 buff id 列表
 }
 
 //请求打出卡牌

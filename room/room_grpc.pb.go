@@ -20,6 +20,14 @@ const _ = grpc.SupportPackageIsVersion7
 type RoomClient interface {
 	NewRoom(ctx context.Context, in *NewRoomRequest, opts ...grpc.CallOption) (*NewRoomReply, error)
 	RoomInfo(ctx context.Context, in *RoomInfoRequest, opts ...grpc.CallOption) (*RoomInfoReply, error)
+	UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error)
+	OutCard(ctx context.Context, in *OutCardRequest, opts ...grpc.CallOption) (*OutCardReply, error)
+	SellCard(ctx context.Context, in *SellCardRequest, opts ...grpc.CallOption) (*SellCardReply, error)
+	UseSkill(ctx context.Context, in *UseSkillRequest, opts ...grpc.CallOption) (*UseSkillReply, error)
+	RollDice(ctx context.Context, in *RollDiceRequest, opts ...grpc.CallOption) (*RollDiceReply, error)
+	GiveUpDice(ctx context.Context, in *GiveUpDiceRequest, opts ...grpc.CallOption) (*GiveUpDiceReply, error)
+	UseTool(ctx context.Context, in *UseToolRequest, opts ...grpc.CallOption) (*UseToolReply, error)
+	SkipStage(ctx context.Context, in *SkipStageRequest, opts ...grpc.CallOption) (*SkipStageReply, error)
 }
 
 type roomClient struct {
@@ -48,12 +56,92 @@ func (c *roomClient) RoomInfo(ctx context.Context, in *RoomInfoRequest, opts ...
 	return out, nil
 }
 
+func (c *roomClient) UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error) {
+	out := new(UseBuffReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/UseBuff", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) OutCard(ctx context.Context, in *OutCardRequest, opts ...grpc.CallOption) (*OutCardReply, error) {
+	out := new(OutCardReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/OutCard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) SellCard(ctx context.Context, in *SellCardRequest, opts ...grpc.CallOption) (*SellCardReply, error) {
+	out := new(SellCardReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/SellCard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) UseSkill(ctx context.Context, in *UseSkillRequest, opts ...grpc.CallOption) (*UseSkillReply, error) {
+	out := new(UseSkillReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/UseSkill", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) RollDice(ctx context.Context, in *RollDiceRequest, opts ...grpc.CallOption) (*RollDiceReply, error) {
+	out := new(RollDiceReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/RollDice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) GiveUpDice(ctx context.Context, in *GiveUpDiceRequest, opts ...grpc.CallOption) (*GiveUpDiceReply, error) {
+	out := new(GiveUpDiceReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/GiveUpDice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) UseTool(ctx context.Context, in *UseToolRequest, opts ...grpc.CallOption) (*UseToolReply, error) {
+	out := new(UseToolReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/UseTool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) SkipStage(ctx context.Context, in *SkipStageRequest, opts ...grpc.CallOption) (*SkipStageReply, error) {
+	out := new(SkipStageReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/SkipStage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RoomServer is the server API for Room service.
 // All implementations must embed UnimplementedRoomServer
 // for forward compatibility
 type RoomServer interface {
 	NewRoom(context.Context, *NewRoomRequest) (*NewRoomReply, error)
 	RoomInfo(context.Context, *RoomInfoRequest) (*RoomInfoReply, error)
+	UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error)
+	OutCard(context.Context, *OutCardRequest) (*OutCardReply, error)
+	SellCard(context.Context, *SellCardRequest) (*SellCardReply, error)
+	UseSkill(context.Context, *UseSkillRequest) (*UseSkillReply, error)
+	RollDice(context.Context, *RollDiceRequest) (*RollDiceReply, error)
+	GiveUpDice(context.Context, *GiveUpDiceRequest) (*GiveUpDiceReply, error)
+	UseTool(context.Context, *UseToolRequest) (*UseToolReply, error)
+	SkipStage(context.Context, *SkipStageRequest) (*SkipStageReply, error)
 	mustEmbedUnimplementedRoomServer()
 }
 
@@ -66,6 +154,30 @@ func (UnimplementedRoomServer) NewRoom(context.Context, *NewRoomRequest) (*NewRo
 }
 func (UnimplementedRoomServer) RoomInfo(context.Context, *RoomInfoRequest) (*RoomInfoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoomInfo not implemented")
+}
+func (UnimplementedRoomServer) UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UseBuff not implemented")
+}
+func (UnimplementedRoomServer) OutCard(context.Context, *OutCardRequest) (*OutCardReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OutCard not implemented")
+}
+func (UnimplementedRoomServer) SellCard(context.Context, *SellCardRequest) (*SellCardReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SellCard not implemented")
+}
+func (UnimplementedRoomServer) UseSkill(context.Context, *UseSkillRequest) (*UseSkillReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UseSkill not implemented")
+}
+func (UnimplementedRoomServer) RollDice(context.Context, *RollDiceRequest) (*RollDiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RollDice not implemented")
+}
+func (UnimplementedRoomServer) GiveUpDice(context.Context, *GiveUpDiceRequest) (*GiveUpDiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GiveUpDice not implemented")
+}
+func (UnimplementedRoomServer) UseTool(context.Context, *UseToolRequest) (*UseToolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UseTool not implemented")
+}
+func (UnimplementedRoomServer) SkipStage(context.Context, *SkipStageRequest) (*SkipStageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SkipStage not implemented")
 }
 func (UnimplementedRoomServer) mustEmbedUnimplementedRoomServer() {}
 
@@ -116,6 +228,150 @@ func _Room_RoomInfo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Room_UseBuff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UseBuffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).UseBuff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/UseBuff",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).UseBuff(ctx, req.(*UseBuffRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_OutCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OutCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).OutCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/OutCard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).OutCard(ctx, req.(*OutCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_SellCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SellCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).SellCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/SellCard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).SellCard(ctx, req.(*SellCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_UseSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UseSkillRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).UseSkill(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/UseSkill",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).UseSkill(ctx, req.(*UseSkillRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_RollDice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RollDiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).RollDice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/RollDice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).RollDice(ctx, req.(*RollDiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_GiveUpDice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GiveUpDiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).GiveUpDice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/GiveUpDice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).GiveUpDice(ctx, req.(*GiveUpDiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_UseTool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UseToolRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).UseTool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/UseTool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).UseTool(ctx, req.(*UseToolRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_SkipStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SkipStageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).SkipStage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/SkipStage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).SkipStage(ctx, req.(*SkipStageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Room_ServiceDesc is the grpc.ServiceDesc for Room service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -130,6 +386,38 @@ var Room_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RoomInfo",
 			Handler:    _Room_RoomInfo_Handler,
+		},
+		{
+			MethodName: "UseBuff",
+			Handler:    _Room_UseBuff_Handler,
+		},
+		{
+			MethodName: "OutCard",
+			Handler:    _Room_OutCard_Handler,
+		},
+		{
+			MethodName: "SellCard",
+			Handler:    _Room_SellCard_Handler,
+		},
+		{
+			MethodName: "UseSkill",
+			Handler:    _Room_UseSkill_Handler,
+		},
+		{
+			MethodName: "RollDice",
+			Handler:    _Room_RollDice_Handler,
+		},
+		{
+			MethodName: "GiveUpDice",
+			Handler:    _Room_GiveUpDice_Handler,
+		},
+		{
+			MethodName: "UseTool",
+			Handler:    _Room_UseTool_Handler,
+		},
+		{
+			MethodName: "SkipStage",
+			Handler:    _Room_SkipStage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
