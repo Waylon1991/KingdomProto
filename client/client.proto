@@ -61,7 +61,7 @@ enum CP {
     Room_Use_Skill_Resp     = 3301;  //返回使用技能(客户端是否需要？)
     Room_Use_Skill_Push     = 3302;  //推送使用技能
     Room_Upgrade_Skill_Push = 3303;  //推送升级技能
-    Room_Active_Skill_Push  = 3304;  //推送激活升级
+    Room_Active_Skill_Push  = 3304;  //推送激活技能
 
     Room_Roll_Dice_Req     = 3400;  //请求掷骰子
     Room_Roll_Dice_Resp    = 3401;  //返回掷骰子(客户端是否需要？)
@@ -99,6 +99,18 @@ message ErrorCodeResp {
 message ValidKeyReq {
     int32 user_id = 1;  //用户 id
     string key    = 2;  // key
+}
+
+//顶号推送
+message KickOutPush {
+}
+
+//心跳请求
+message HeartPingReq {
+}
+
+//心跳返回
+message HeartPingResp {
 }
 
 // -------------------------------- lobby 结构体-----------------------------------------//
@@ -181,179 +193,224 @@ message MatchSelectInfoPush {
 
 //推送
 message RoomEnterTablePush {
-    int32 roomId            = 1;  //房间号
-    map<int32, int32> infos = 2;  //用户选择信息
+    int32 roomId                           = 1;  //房间号
+    repeated common.RoomPlayerInfo players = 2;  //房间玩家信息
+    common.RewardBall ball                 = 3;  //占卜球信息
+    common.OperateRecord record            = 4;  //操作记录信息
 }
 
-//顶号推送
-message KickOutPush {
-}
-    
-//心跳请求
-message HeartPingReq {
-}
-    
-//心跳返回
-message HeartPingResp {
-}
-    
 //推送游戏开始
 message RoomStartGamePush {
 }
-    
+
 //推送系统发牌
 message RoomSystemSendCardPush {
+    repeated common.RoomCard cards = 1;  //抓到的牌
 }
-    
+
 //推送轮到谁操作
 message RoomOperateInfoPush {
+    common.OperateSeatInfo seat_info = 1;
 }
-    
+
 //请求使用buff
 message RoomUseBuffReq {
+    int32 buf_id             = 1;  // buf id
+    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
-    
+
 //返回使用buff(客户端是否需要？)
 message RoomUseBuffResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
-//推送失去buff
+
+//推送失去 buff
 message RoomLoseBuffPush {
+    int32 seat             = 1;  //失去的 buf 的玩家
+    repeated int32 buf_ids = 2;  //失去的 buf id 列表
 }
-    
-//推送获得buff
+
+//推送获得 buff
 message RoomObtainBuffPush {
+    int32 seat             = 1;  //获得的 buf的玩家
+    repeated int32 buf_ids = 2;  //获得的 buf id 列表
 }
-    
+
 //请求打出卡牌
 message RoomOutCardReq {
+    int32 card_id            = 1;  //打出的卡牌 id
+    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
-    
+
 //返回打出卡牌(客户端是否需要？)
 message RoomOutCardResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送打出卡牌
 message RoomOutCardPush {
+    int32 seat    = 1;  //打出的卡牌的玩家
+    int32 card_id = 2;  //打出的卡牌 id
 }
-    
+
 //推送失去卡牌
 message RoomLoseCardPush {
+    int32 seat              = 1;  //失去的卡牌的玩家
+    repeated int32 card_ids = 2;  //失去的卡牌 id
 }
-    
+
 //推送获得卡牌
 message RoomObtainCardPush {
+    int32 seat              = 1;  //获得的卡牌的玩家
+    repeated int32 card_ids = 2;  //获得的卡牌 id
 }
-    
+
 //请求出售卡牌
 message RoomSellCardReq {
+    repeated int32 card_ids = 1;  //出售卡牌列表
 }
-    
+
 //返回出售卡牌结果
 message RoomSellCardResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送牌堆剩余牌数
 message RoomLeftCardPush {
+    int32 seat          = 1;  //卡牌玩家座位
+    int32 left_card_num = 2;  //剩余牌数量
 }
-    
+
 //请求使用技能
 message RoomUseSkillReq {
+    int32 skill_id           = 1;  //使用的技能 id
+    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
-    
+
 //返回使用技能(客户端是否需要？)
 message RoomUseSkillResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送使用技能
 message RoomUseSkillPush {
+    int32 seat               = 1;  //使用技能的玩家
+    int32 skill_id           = 2;  //使用的技能id
+    repeated int32 obj_seats = 3;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
-    
+
 //推送升级技能
 message RoomUpgradeSkillPush {
+    int32 seat     = 1;  //升级技能的玩家
+    int32 skill_id = 2;  //升级的技能id
 }
-    
-//推送激活升级
+
+//推送激活技能
 message RoomActiveSkillPush {
+    int32 seat               = 1;  //激活技能的玩家
+    repeated int32 skill_ids = 2;  //激活的技能ids
 }
-    
+
 //请求掷骰子
 message RoomRollDiceReq {
+    int32 dice_num = 1;  //骰子的个数，默认使用特定阶段的骰子数量，如若没有使用客户端上传的。
 }
-    
+
 //返回掷骰子(客户端是否需要？)
 message RoomRollDiceResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送掷骰子
 message RoomRollDicePush {
+    repeated common.DiceFace df = 1;  //筛子结果
 }
-    
+
 //请求放弃掷骰子
 message RoomGiveUpDiceReq {
 }
-    
+
 //返回放弃掷骰子
 message RoomGiveUpDiceResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送放弃掷骰子
 message RoomGiveUpDicePush {
+    int32 seat_id = 1;  //放弃掷骰子的玩家
 }
-    
+
 //推送获得血量
 message RoomObtainBloodPush {
+    int32 seat_id   = 1;  //座位号
+    int32 blood_num = 2;  //血量
 }
-    
+
 //推送失去血量
 message RoomLoseBloodPush {
+    int32 seat_id   = 1;  //座位号
+    int32 blood_num = 2;  //血量
 }
-    
+
 //推送获得战斗点数
 message RoomObtainCPPush {
+    int32 seat_id = 1;  //座位号
+    int32 cp_num  = 2;  // cp点数
 }
-    
+
 //推送失去战斗点数
 message RoomLoseCPPush {
+    int32 seat_id = 1;  //座位号
+    int32 cp_num  = 2;  // cp点数
 }
-    
+
 //请求使用道具
 message RoomUseToolReq {
 }
-    
+
 //返回使用道具(客户端是否需要？)
 message RoomUseToolResp {
 }
-    
+
 //推送使用道具
 message RoomUseToolPush {
 }
-    
+
 //推送可用道具
 message RoomActiveToolPush {
 }
-    
+
 //请求进入下一阶段
 message RoomSkipStageReq {
 }
-    
+
 //返回进入下一阶段
 message RoomSkipStageResp {
+    bool suc      = 1;  //是否成功
+    string reason = 2;  //原因
 }
-    
+
 //推送进入下一阶段
 message RoomSkipStagePush {
+    common.GameStage stage = 1;  //当前阶段
 }
-    
+
 //推送占卜球的进度
 message RoomRewardBallPush {
+    common.RewardBall ball = 1;
 }
-    
+
 //推送操作记录
 message RoomOperateRecordPush {
+    common.OperateRecord record = 1;
 }
-    
+
 //推送游戏结束
 message RoomGameOverPush {
 }
-    
