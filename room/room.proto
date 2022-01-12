@@ -66,48 +66,49 @@ message RoomInfoReply {
 
 //请求使用buff
 message UseBuffRequest {
-    int32 buff_id            = 1;  // buff id
-    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
-    int32 user_id            = 3;  //玩家id
+    int32 buff_id            = 1 [(validate.rules).int32.gt = 0];  // buff id
+    repeated int32 obj_seats = 2;                                  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
+    int32 user_id            = 3 [(validate.rules).int32.gt = 0];  //使用者的玩家id
 }
 
 //返回使用buff(客户端是否需要？)
 message UseBuffReply {
-    bool suc      = 1;  //是否成功
-    string reason = 2;  //原因
 }
 
 //请求出牌
 message OutCardRequest {
-    int32 buff_id            = 1;  // buff id
-    repeated int32 obj_seats = 2;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
-    int32 user_id            = 3;  //玩家id
+    int32 user_id            = 1;  //使用者的玩家id
+    int32 card_id            = 2;  // buff id
+    repeated int32 obj_seats = 3;  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
 
 //返回打出卡牌(客户端是否需要？)
 message OutCardReply {
-    bool suc = 1;  //是否成功
 }
 
 //请求出售卡牌
 message SellCardRequest {
-    repeated int32 card_ids = 1;  //出售卡牌列表
-    int32 user_id           = 2;  //玩家id
+    int32 user_id           = 1;  //玩家id
+    repeated int32 card_ids = 2;  //出售卡牌列表
 }
 
 //返回出售卡牌结果
 message SellCardReply {
-    bool suc = 1;  //是否成功
 }
 
 //使用技能
 message UseSkillRequest {
+    int32 user_id            = 1 [(validate.rules).int32.gt = 0];  //使用者的玩家id
+    int32 skill_id           = 2 [(validate.rules).int32.gt = 0];  // skill_id
+    repeated int32 obj_seats = 3;                                  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
 }
 
 message UseSkillReply {
 }
 
 message RollDiceRequest {
+    int32 user_id  = 1;  //使用者的玩家id
+    int32 dice_num = 2;  //掷骰子的个数
 }
 
 message RollDiceReply {

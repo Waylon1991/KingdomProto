@@ -223,25 +223,25 @@ message DiceFace {
     DiceFacePic pic    = 2;
 }
 
-// RoomDice 筛子
+// RoomDice 1个筛子 6个面
 message RoomDice {
-    repeated DiceFace df = 1;  //筛子结果
+    repeated DiceFace df = 1;  //筛子的6个面
 }
 
 //玩家信息
 message RoomPlayerInfo {
-    int32 user_id              = 1;   //玩家id
-    int32 seat                 = 2;   //玩家座位号
-    int32 hero_id              = 3;   //英雄id
-    int32 blood                = 4;   //血量
-    int32 cp                   = 5;   //战斗点数
-    repeated RoomCard cards    = 6;   //手牌列表
-    repeated RoomCard discards = 7;   //出牌列表
-    repeated RoomBuf buffs     = 8;   // buff列表
-    repeated RoomSkill skills  = 9;   //技能列表
-    repeated RoomDice dices    = 10;  //骰子列表
-    int32 left_card            = 11;  //剩余牌数
-    int32 left_time            = 12;  //剩余时间（s）
+    int32 user_id                 = 1;   //玩家id
+    int32 seat                    = 2;   //玩家座位号
+    int32 hero_id                 = 3;   //英雄id
+    int32 blood                   = 4;   //血量
+    int32 cp                      = 5;   //战斗点数
+    repeated RoomCard left_cards  = 6;   //牌堆列表
+    repeated RoomCard hand_cards  = 7;   //手牌列表
+    repeated RoomCard dis_cards   = 8;   //出牌列表
+    repeated RoomBuf buffs        = 9;   // buff列表
+    repeated RoomSkill skills     = 10;  //技能列表
+    repeated DiceFaceNumber dices = 11;  //掷骰子的结果（如： 1 ，1，1），根据英雄筛子的初始配置，拿到图案
+    int32 left_time               = 12;  //剩余时间（s）
 }
 
 //操作位置信息
@@ -279,6 +279,6 @@ message RoomInfo {
     int32 room_id                   = 1;  //房间id
     RoomMode mode                   = 2;  //房间模式
     repeated RoomPlayerInfo players = 3;  //房间玩家信息
-    OperateRecord record            = 4;  //操作记录信息
+    repeated OperateRecord record   = 4;  //操作记录信息
     RewardBall ball                 = 5;  //占卜球信息
 }
