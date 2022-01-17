@@ -20,9 +20,10 @@ const _ = grpc.SupportPackageIsVersion7
 type RoomClient interface {
 	NewRoom(ctx context.Context, in *NewRoomRequest, opts ...grpc.CallOption) (*NewRoomReply, error)
 	RoomInfo(ctx context.Context, in *RoomInfoRequest, opts ...grpc.CallOption) (*RoomInfoReply, error)
-	UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error)
+	CatchCard(ctx context.Context, in *CatchCardRequest, opts ...grpc.CallOption) (*CatchCardReply, error)
 	OutCard(ctx context.Context, in *OutCardRequest, opts ...grpc.CallOption) (*OutCardReply, error)
 	SellCard(ctx context.Context, in *SellCardRequest, opts ...grpc.CallOption) (*SellCardReply, error)
+	UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error)
 	UseSkill(ctx context.Context, in *UseSkillRequest, opts ...grpc.CallOption) (*UseSkillReply, error)
 	RollDice(ctx context.Context, in *RollDiceRequest, opts ...grpc.CallOption) (*RollDiceReply, error)
 	GiveUpDice(ctx context.Context, in *GiveUpDiceRequest, opts ...grpc.CallOption) (*GiveUpDiceReply, error)
@@ -56,9 +57,9 @@ func (c *roomClient) RoomInfo(ctx context.Context, in *RoomInfoRequest, opts ...
 	return out, nil
 }
 
-func (c *roomClient) UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error) {
-	out := new(UseBuffReply)
-	err := c.cc.Invoke(ctx, "/protocol.room.Room/UseBuff", in, out, opts...)
+func (c *roomClient) CatchCard(ctx context.Context, in *CatchCardRequest, opts ...grpc.CallOption) (*CatchCardReply, error) {
+	out := new(CatchCardReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/CatchCard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,6 +78,15 @@ func (c *roomClient) OutCard(ctx context.Context, in *OutCardRequest, opts ...gr
 func (c *roomClient) SellCard(ctx context.Context, in *SellCardRequest, opts ...grpc.CallOption) (*SellCardReply, error) {
 	out := new(SellCardReply)
 	err := c.cc.Invoke(ctx, "/protocol.room.Room/SellCard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roomClient) UseBuff(ctx context.Context, in *UseBuffRequest, opts ...grpc.CallOption) (*UseBuffReply, error) {
+	out := new(UseBuffReply)
+	err := c.cc.Invoke(ctx, "/protocol.room.Room/UseBuff", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,9 +144,10 @@ func (c *roomClient) SkipStage(ctx context.Context, in *SkipStageRequest, opts .
 type RoomServer interface {
 	NewRoom(context.Context, *NewRoomRequest) (*NewRoomReply, error)
 	RoomInfo(context.Context, *RoomInfoRequest) (*RoomInfoReply, error)
-	UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error)
+	CatchCard(context.Context, *CatchCardRequest) (*CatchCardReply, error)
 	OutCard(context.Context, *OutCardRequest) (*OutCardReply, error)
 	SellCard(context.Context, *SellCardRequest) (*SellCardReply, error)
+	UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error)
 	UseSkill(context.Context, *UseSkillRequest) (*UseSkillReply, error)
 	RollDice(context.Context, *RollDiceRequest) (*RollDiceReply, error)
 	GiveUpDice(context.Context, *GiveUpDiceRequest) (*GiveUpDiceReply, error)
@@ -155,14 +166,17 @@ func (UnimplementedRoomServer) NewRoom(context.Context, *NewRoomRequest) (*NewRo
 func (UnimplementedRoomServer) RoomInfo(context.Context, *RoomInfoRequest) (*RoomInfoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoomInfo not implemented")
 }
-func (UnimplementedRoomServer) UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UseBuff not implemented")
+func (UnimplementedRoomServer) CatchCard(context.Context, *CatchCardRequest) (*CatchCardReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CatchCard not implemented")
 }
 func (UnimplementedRoomServer) OutCard(context.Context, *OutCardRequest) (*OutCardReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OutCard not implemented")
 }
 func (UnimplementedRoomServer) SellCard(context.Context, *SellCardRequest) (*SellCardReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SellCard not implemented")
+}
+func (UnimplementedRoomServer) UseBuff(context.Context, *UseBuffRequest) (*UseBuffReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UseBuff not implemented")
 }
 func (UnimplementedRoomServer) UseSkill(context.Context, *UseSkillRequest) (*UseSkillReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UseSkill not implemented")
@@ -228,20 +242,20 @@ func _Room_RoomInfo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Room_UseBuff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UseBuffRequest)
+func _Room_CatchCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CatchCardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoomServer).UseBuff(ctx, in)
+		return srv.(RoomServer).CatchCard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protocol.room.Room/UseBuff",
+		FullMethod: "/protocol.room.Room/CatchCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomServer).UseBuff(ctx, req.(*UseBuffRequest))
+		return srv.(RoomServer).CatchCard(ctx, req.(*CatchCardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -278,6 +292,24 @@ func _Room_SellCard_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RoomServer).SellCard(ctx, req.(*SellCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room_UseBuff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UseBuffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).UseBuff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.room.Room/UseBuff",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).UseBuff(ctx, req.(*UseBuffRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -388,8 +420,8 @@ var Room_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Room_RoomInfo_Handler,
 		},
 		{
-			MethodName: "UseBuff",
-			Handler:    _Room_UseBuff_Handler,
+			MethodName: "CatchCard",
+			Handler:    _Room_CatchCard_Handler,
 		},
 		{
 			MethodName: "OutCard",
@@ -398,6 +430,10 @@ var Room_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SellCard",
 			Handler:    _Room_SellCard_Handler,
+		},
+		{
+			MethodName: "UseBuff",
+			Handler:    _Room_UseBuff_Handler,
 		},
 		{
 			MethodName: "UseSkill",

@@ -202,7 +202,7 @@ message RoomStartGamePush {
 
 //推送系统发牌
 message RoomSystemSendCardPush {
-    repeated common.RoomCard cards = 1;  //抓到的牌
+    map<int32, common.RoomCards> cards = 1;  // int32:seat 系统发送的卡牌
 }
 
 //推送轮到谁操作

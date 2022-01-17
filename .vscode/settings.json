@@ -1,3 +1,4 @@
 {
-    "editor.snippetSuggestions": "bottom"
+    "editor.snippetSuggestions": "bottom",
+    "python.analysis.extraPaths": ["E:\\Kingdom\\Proto\\tool"]
 }

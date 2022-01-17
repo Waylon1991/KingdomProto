@@ -11,9 +11,10 @@ service Room {
     rpc NewRoom(NewRoomRequest) returns (NewRoomReply);     //创建新房
     rpc RoomInfo(RoomInfoRequest) returns (RoomInfoReply);  //请求房间信息
 
-    rpc UseBuff(UseBuffRequest) returns (UseBuffReply);           //使用buff
+    rpc CatchCard(CatchCardRequest) returns (CatchCardReply);     //抓牌
     rpc OutCard(OutCardRequest) returns (OutCardReply);           //出牌
     rpc SellCard(SellCardRequest) returns (SellCardReply);        //售牌
+    rpc UseBuff(UseBuffRequest) returns (UseBuffReply);           //使用buff
     rpc UseSkill(UseSkillRequest) returns (UseSkillReply);        //技能
     rpc RollDice(RollDiceRequest) returns (RollDiceReply);        //骰子
     rpc GiveUpDice(GiveUpDiceRequest) returns (GiveUpDiceReply);  //放弃扔骰子
@@ -64,15 +65,14 @@ message RoomInfoReply {
     common.RoomInfo room_info = 1;  //房间信息
 }
 
-//请求使用buff
-message UseBuffRequest {
-    int32 buff_id            = 1 [(validate.rules).int32.gt = 0];  // buff id
-    repeated int32 obj_seats = 2;                                  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
-    int32 user_id            = 3 [(validate.rules).int32.gt = 0];  //使用者的玩家id
+//请求出牌
+message CatchCardRequest {
+    int32 user_id  = 1;  //使用者的玩家id
+    int32 card_num = 2;  //牌数量
 }
 
-//返回使用buff(客户端是否需要？)
-message UseBuffReply {
+//返回打出卡牌(客户端是否需要？)
+message CatchCardReply {
 }
 
 //请求出牌
@@ -94,6 +94,17 @@ message SellCardRequest {
 
 //返回出售卡牌结果
 message SellCardReply {
+}
+
+//请求使用buff
+message UseBuffRequest {
+    int32 buff_id            = 1 [(validate.rules).int32.gt = 0];  // buff id
+    repeated int32 obj_seats = 2;                                  //目标座位，不传就根据id来自动判断，如果判断不了会返回错误
+    int32 user_id            = 3 [(validate.rules).int32.gt = 0];  //使用者的玩家id
+}
+
+//返回使用buff(客户端是否需要？)
+message UseBuffReply {
 }
 
 //使用技能

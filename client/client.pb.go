@@ -1299,7 +1299,7 @@ type RoomSystemSendCardPush struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Cards []*common.RoomCard `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"` //抓到的牌
+	Cards map[int32]*common.RoomCards `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"` // int32:seat 系统发送的卡牌
 }
 
 func (x *RoomSystemSendCardPush) Reset() {
@@ -1334,7 +1334,7 @@ func (*RoomSystemSendCardPush) Descriptor() ([]byte, []int) {
 	return file_client_client_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *RoomSystemSendCardPush) GetCards() []*common.RoomCard {
+func (x *RoomSystemSendCardPush) GetCards() map[int32]*common.RoomCards {
 	if x != nil {
 		return x.Cards
 	}
@@ -3384,11 +3384,18 @@ var file_client_client_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f,
 	0x6d, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x13, 0x0a, 0x11, 0x52,
 	0x6f, 0x6f, 0x6d, 0x53, 0x74, 0x61, 0x72, 0x74, 0x47, 0x61, 0x6d, 0x65, 0x50, 0x75, 0x73, 0x68,
-	0x22, 0x49, 0x0a, 0x16, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x53, 0x65,
-	0x6e, 0x64, 0x43, 0x61, 0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x12, 0x2f, 0x0a, 0x05, 0x63, 0x61,
-	0x72, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d,
-	0x43, 0x61, 0x72, 0x64, 0x52, 0x05, 0x63, 0x61, 0x72, 0x64, 0x73, 0x22, 0x54, 0x0a, 0x13, 0x52,
+	0x22, 0xb8, 0x01, 0x0a, 0x16, 0x52, 0x6f, 0x6f, 0x6d, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x53,
+	0x65, 0x6e, 0x64, 0x43, 0x61, 0x72, 0x64, 0x50, 0x75, 0x73, 0x68, 0x12, 0x48, 0x0a, 0x05, 0x63,
+	0x61, 0x72, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x52, 0x6f, 0x6f,
+	0x6d, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x53, 0x65, 0x6e, 0x64, 0x43, 0x61, 0x72, 0x64, 0x50,
+	0x75, 0x73, 0x68, 0x2e, 0x43, 0x61, 0x72, 0x64, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05,
+	0x63, 0x61, 0x72, 0x64, 0x73, 0x1a, 0x54, 0x0a, 0x0a, 0x43, 0x61, 0x72, 0x64, 0x73, 0x45, 0x6e,
+	0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x30, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x52, 0x6f, 0x6f, 0x6d, 0x43, 0x61, 0x72, 0x64, 0x73,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x54, 0x0a, 0x13, 0x52,
 	0x6f, 0x6f, 0x6d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x50, 0x75,
 	0x73, 0x68, 0x12, 0x3d, 0x0a, 0x09, 0x73, 0x65, 0x61, 0x74, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c,
@@ -3647,7 +3654,7 @@ func file_client_client_proto_rawDescGZIP() []byte {
 }
 
 var file_client_client_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 61)
+var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 62)
 var file_client_client_proto_goTypes = []interface{}{
 	(CP)(0),                        // 0: protocol.client.CP
 	(*ErrorCodeResp)(nil),          // 1: protocol.client.ErrorCodeResp
@@ -3711,38 +3718,40 @@ var file_client_client_proto_goTypes = []interface{}{
 	(*RoomOperateRecordPush)(nil),  // 59: protocol.client.RoomOperateRecordPush
 	(*RoomGameOverPush)(nil),       // 60: protocol.client.RoomGameOverPush
 	nil,                            // 61: protocol.client.MatchSelectInfoPush.InfosEntry
-	(errcode.ErrorType)(0),         // 62: protocol.errcode.ErrorType
-	(common.RoomMode)(0),           // 63: protocol.common.RoomMode
-	(*common.Hero)(nil),            // 64: protocol.common.Hero
-	(*common.RoomInfo)(nil),        // 65: protocol.common.RoomInfo
-	(*common.RoomCard)(nil),        // 66: protocol.common.RoomCard
+	nil,                            // 62: protocol.client.RoomSystemSendCardPush.CardsEntry
+	(errcode.ErrorType)(0),         // 63: protocol.errcode.ErrorType
+	(common.RoomMode)(0),           // 64: protocol.common.RoomMode
+	(*common.Hero)(nil),            // 65: protocol.common.Hero
+	(*common.RoomInfo)(nil),        // 66: protocol.common.RoomInfo
 	(*common.OperateSeatInfo)(nil), // 67: protocol.common.OperateSeatInfo
 	(*common.DiceFace)(nil),        // 68: protocol.common.DiceFace
 	(common.GameStage)(0),          // 69: protocol.common.GameStage
 	(*common.RewardBall)(nil),      // 70: protocol.common.RewardBall
 	(*common.OperateRecord)(nil),   // 71: protocol.common.OperateRecord
+	(*common.RoomCards)(nil),       // 72: protocol.common.RoomCards
 }
 var file_client_client_proto_depIdxs = []int32{
-	62, // 0: protocol.client.ErrorCodeResp.code:type_name -> protocol.errcode.ErrorType
+	63, // 0: protocol.client.ErrorCodeResp.code:type_name -> protocol.errcode.ErrorType
 	0,  // 1: protocol.client.ErrorCodeResp.protocol_id:type_name -> protocol.client.CP
-	63, // 2: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
-	63, // 3: protocol.client.EnterMatchResp.mode:type_name -> protocol.common.RoomMode
-	63, // 4: protocol.client.MatchSucPush.mode:type_name -> protocol.common.RoomMode
-	64, // 5: protocol.client.MatchSucPush.heros:type_name -> protocol.common.Hero
+	64, // 2: protocol.client.EnterMatchReq.mode:type_name -> protocol.common.RoomMode
+	64, // 3: protocol.client.EnterMatchResp.mode:type_name -> protocol.common.RoomMode
+	64, // 4: protocol.client.MatchSucPush.mode:type_name -> protocol.common.RoomMode
+	65, // 5: protocol.client.MatchSucPush.heros:type_name -> protocol.common.Hero
 	61, // 6: protocol.client.MatchSelectInfoPush.infos:type_name -> protocol.client.MatchSelectInfoPush.InfosEntry
-	64, // 7: protocol.client.MatchSelectInfoPush.heros:type_name -> protocol.common.Hero
-	65, // 8: protocol.client.RoomEnterTablePush.info:type_name -> protocol.common.RoomInfo
-	66, // 9: protocol.client.RoomSystemSendCardPush.cards:type_name -> protocol.common.RoomCard
+	65, // 7: protocol.client.MatchSelectInfoPush.heros:type_name -> protocol.common.Hero
+	66, // 8: protocol.client.RoomEnterTablePush.info:type_name -> protocol.common.RoomInfo
+	62, // 9: protocol.client.RoomSystemSendCardPush.cards:type_name -> protocol.client.RoomSystemSendCardPush.CardsEntry
 	67, // 10: protocol.client.RoomOperateInfoPush.seat_info:type_name -> protocol.common.OperateSeatInfo
 	68, // 11: protocol.client.RoomRollDicePush.df:type_name -> protocol.common.DiceFace
 	69, // 12: protocol.client.RoomSkipStagePush.stage:type_name -> protocol.common.GameStage
 	70, // 13: protocol.client.RoomRewardBallPush.ball:type_name -> protocol.common.RewardBall
 	71, // 14: protocol.client.RoomOperateRecordPush.record:type_name -> protocol.common.OperateRecord
-	15, // [15:15] is the sub-list for method output_type
-	15, // [15:15] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	72, // 15: protocol.client.RoomSystemSendCardPush.CardsEntry.value:type_name -> protocol.common.RoomCards
+	16, // [16:16] is the sub-list for method output_type
+	16, // [16:16] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_client_client_proto_init() }
@@ -4478,7 +4487,7 @@ func file_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_client_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   61,
+			NumMessages:   62,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -204,6 +204,10 @@ message RoomCard {
     CardState state = 2;  //卡牌状态
 }
 
+message RoomCards {
+    repeated RoomCard cards = 1;  //卡牌数组
+}
+
 // RoomBuf buff
 message RoomBuf {
     int32 id        = 1;  // buff id
@@ -246,9 +250,10 @@ message RoomPlayerInfo {
 
 //操作位置信息
 message OperateSeatInfo {
-    int32 round_seat = 1;  //当前回合的操作玩家seat
+    int32 cur_round  = 1;  //当前回合
     GameStage stage  = 2;  //当前阶段
-    int32 stage_seat = 3;  //当前阶段玩家seat
+    int32 round_seat = 3;  //当前回合的操作玩家seat
+    int32 stage_seat = 4;  //当前阶段的操作玩家seat
 }
 
 // OperateInfo 操作信息
@@ -276,9 +281,10 @@ message RewardBall {
 
 //房间基本信息
 message RoomInfo {
-    int32 room_id                   = 1;  //房间id
-    RoomMode mode                   = 2;  //房间模式
-    repeated RoomPlayerInfo players = 3;  //房间玩家信息
-    repeated OperateRecord record   = 4;  //操作记录信息
-    RewardBall ball                 = 5;  //占卜球信息
+    int32 room_id                      = 1;  //房间id
+    RoomMode mode                      = 2;  //房间模式
+    map<int32, RoomPlayerInfo> players = 3;  //房间玩家信息 int32:seat
+    repeated OperateRecord record      = 4;  //操作记录信息
+    RewardBall ball                    = 5;  //占卜球信息
+    OperateSeatInfo cur_opt            = 6;  //当前操作信息
 }
